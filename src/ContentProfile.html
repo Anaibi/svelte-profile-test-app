@@ -1,0 +1,87 @@
+<nav>
+  <ul class="tab-nav">
+    {#each menu as item, i}
+    <li>
+      <button class="menu-item {item.active ? 'active' : ''}" on:click="toggleContent(i)">
+        <span class="icon">
+          {#if item.icon.svg}
+            {item.icon.svg}
+          {:elseif item.icon.img}
+            <img src="{item.icon.img}" alt="{item.icon.name}"/>
+          {:else}
+            {item.icon.name}
+          {/if}
+        </span>
+        <span class="text">
+          {item.icon.text}
+        </span>
+      </button>
+    </li>
+    {/each}
+  </ul>
+</nav>
+
+<div class="tab-content">
+  <svelte:component this="{selected}"/>
+</div>
+
+
+<style>
+  .tab-nav {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    height: 100px;
+  }
+  .tab-nav li {
+    flex: 1;
+  }
+  .active {
+    color: #3299CC;
+    background: #FAFAFA;
+  }
+</style>
+<script>
+  import ProfileInfo from './ProfileInfo.html';
+  import ProfileFeed from './ProfileFeed.html';
+  import ProfileAgenda from './ProfileAgenda.html';
+  import ProfileResume from './ProfileResume.html';
+
+  var components = {
+    ProfileInfo,
+    ProfileFeed,
+    ProfileAgenda,
+    ProfileResume
+  };
+
+  export default {
+    data() {
+      return {
+        selected: ProfileFeed
+      }
+    },
+    components: {
+      ProfileInfo,
+      ProfileFeed,
+      ProfileAgenda,
+      ProfileResume
+    },
+    methods: {
+      toggleContent(i) {
+        var menu = this.get().menu;
+        var clicked = menu[i];
+        if (clicked.active) { return; }
+        var activeItem = menu.find(x => x.active === true);
+        activeItem.active = '';
+        clicked.active = true;
+        this.set({menu});
+        var selected = components[clicked.link];
+        if (selected) this.set({selected});
+        else {
+          // error
+        }
+      }
+    }
+  }
+</script>

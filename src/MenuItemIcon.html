@@ -1,0 +1,30 @@
+<a class="menu-item {item.active}" href="{item.link}">
+  <span class="icon">
+    {#if item.icon.svg}
+      {item.icon.svg}
+    {:elseif item.icon.img}
+      <img src="{item.icon.img}" alt="{item.icon.name}"/>
+    {:else}
+      {item.icon.name}
+    {/if}
+  </span>
+</a>
+
+<style>
+  .menu-item {
+    height: 80px;
+    margin: 1px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: #797C8B;
+    border-bottom: 1px solid #1C1F24;
+    border-left: 3px solid var(--color);
+  }
+  .menu-item:hover,
+  .active.menu-item {
+    color: var(--color);
+		background: #292C33;
+  }
+</style>
