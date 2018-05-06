@@ -1,7 +1,10 @@
 <header>
 	<slot name="header">
 		<img class="profile-img img" src="{user.img}" alt="Profile Image"/>
-		<button class="btn"><span class="icon-follow"></span>Follow</button>
+		<button class="btn">
+			<span class="icon"><IconsSvg name="UserAdd"/></span>
+			Follow
+		</button>
 		<div class="info-row lg row">
 			<div class="col">
 				<h2>Follower</h2>
@@ -21,7 +24,7 @@
 
 <main>
 	<slot>
-		<h2><span class="icon-camera"></span> Projects</h2>
+		<h2><span class="icon"><IconsSvg name="Camera"/></span> Projects</h2>
 		<div class="tiles"></div>
 		<h2><span class="icon-star"></span> Boosts <a class="highlight right" href="/">More</a></h2>
 		<div class="rows"></div>
@@ -54,7 +57,12 @@
 		font-size: 21px;
 		line-height: 21px;
 	}
+	button:hover {
+		color: #3299CC;
+	}
 	h2 {
+		display: flex;
+		align-items: center;
 		font-size: 17px;
 		line-height: 17px;
 		text-transform: uppercase;
@@ -80,4 +88,20 @@
 	main {
 		margin-top: 30px;
 	}
+	.icon {
+		display: inline-block;
+		width: 20px;
+		height: 20px;
+		margin-right: 10px;
+	}
 </style>
+
+<script>
+	import IconsSvg from './IconsSvg.html';
+
+	export default {
+		components: {
+			IconsSvg
+		}
+	}
+</script>

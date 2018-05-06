@@ -3,7 +3,7 @@
 	<p>{user.title} <span class="icon-stars" use:setStars></span></p>
 </div>
 <div class="row">
-	<button><span class="icon-message"></span></button>
+	<button><span class="icon"><IconsSvg name='Message'/></span></button>
 	<button>Request</button>
 </div>
 
@@ -15,9 +15,28 @@
 		font-weight: normal;
 		color: #030303;
 	}
+	p {
+		margin-top: 18px;
+		font-size: 20px;
+		line-height: 20px;
+		color: #C3C3C3;
+	}
+	.icon {
+		width: 25px;
+		height: 25px;
+	}
+	.icon :global(.active) {
+		display: none;
+	}
 </style>
+
 <script>
+	import IconsSvg from './IconsSvg.html';
+
 	export default {
+		components: {
+			IconsSvg
+		},
 		actions: {
 			setStars(node) {
 				var stars = this.get().user.stars,
