@@ -1,0 +1,37 @@
+<svelte:component this="{svg}"/>
+
+<script>
+import Search from './Icons/SVG_Search.html';
+import Edit from './Icons/SVG_Edit.html';
+import Message from './Icons/SVG_Message.html';
+import Agenda from './Icons/SVG_Agenda.html';
+import Clipboard from './Icons/SVG_Clipboard.html';
+import Clip from './Icons/SVG_Clip.html';
+import UserAdd from './Icons/SVG_UserAdd.html';
+import Camera from './Icons/SVG_Camera.html';
+
+var icons = {
+	Search,
+	Edit,
+	Message,
+	Agenda,
+	Clipboard,
+	Clip,
+	UserAdd,
+	Camera
+};
+
+export default {
+	data() {
+		return {
+			svg: ''
+		}
+	},
+	components: {
+		Search
+	},
+	oncreate() {
+		this.set({svg: icons[this.get().name]});
+	}
+}
+</script>

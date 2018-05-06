@@ -3,15 +3,17 @@
     {#each menu as item, i}
     <li>
       <button class="menu-item {item.active ? 'active' : ''}" on:click="toggleContent(i)">
-        <span class="icon">
-          {#if item.icon.svg}
-            {item.icon.svg}
-          {:elseif item.icon.img}
+        {#if item.icon.svg}
+          <span class="icon">
+            <IconsSvg name="{item.icon.svg}"/>
+          </span>
+        {:elseif item.icon.img}
+          <span class="icon">
             <img src="{item.icon.img}" alt="{item.icon.name}"/>
-          {:else}
-            {item.icon.name}
-          {/if}
-        </span>
+          </span>
+        {:else}
+          {item.icon.name}
+        {/if}
         <span class="text">
           {item.icon.text}
         </span>
@@ -41,12 +43,18 @@
     color: #3299CC;
     background: #FAFAFA;
   }
+  .icon {
+    width: 30px;
+    height: 30px;
+  }
 </style>
+
 <script>
   import ProfileInfo from './ProfileInfo.html';
   import ProfileFeed from './ProfileFeed.html';
   import ProfileAgenda from './ProfileAgenda.html';
   import ProfileResume from './ProfileResume.html';
+  import IconsSvg from './IconsSvg.html';
 
   var components = {
     ProfileInfo,
@@ -65,7 +73,8 @@
       ProfileInfo,
       ProfileFeed,
       ProfileAgenda,
-      ProfileResume
+      ProfileResume,
+      IconsSvg
     },
     methods: {
       toggleContent(i) {

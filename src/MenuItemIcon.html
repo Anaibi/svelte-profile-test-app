@@ -1,13 +1,15 @@
 <a class="menu-item {item.active ? 'active' : ''}" href="{item.link}">
-  <span class="icon">
-    {#if item.icon.svg}
-      {item.icon.svg}
-    {:elseif item.icon.img}
+  {#if item.icon.svg}
+    <span class="icon">
+      <IconsSvg name="{item.icon.svg}"/>
+    </span>
+  {:elseif item.icon.img}
+    <span class="icon">
       <img src="{item.icon.img}" alt="{item.icon.name}"/>
-    {:else}
-      {item.icon.name}
-    {/if}
-  </span>
+    </span>
+  {:else}
+    {item.icon.name}
+  {/if}
 </a>
 
 <style>
@@ -26,5 +28,21 @@
   .active.menu-item {
     color: var(--color);
 		background: #292C33;
+    /* for svg bg */
+    --bg: #292C33;
+  }
+  .icon {
+    width: 25px;
+    height: 25px;
   }
 </style>
+
+<script>
+  import IconsSvg from './IconsSvg.html';
+
+  export default {
+    components: {
+      IconsSvg
+    }
+  }
+</script>
