@@ -2,7 +2,7 @@
 	<slot name="header">
 		<img class="profile-img img" src="{user.img}" alt="Profile Image"/>
 		<button class="btn"><span class="icon-follow"></span>Follow</button>
-		<div class="info row">
+		<div class="info-row lg row">
 			<div class="col">
 				<h2>Follower</h2>
 				<p class="highlight info">{user.followers}</p>
@@ -12,9 +12,9 @@
 				<p class="highlight info">{user.following}</p>
 			</div>
 		</div>
-		<div class="col">
+		<div class="col info-row">
 			<h2>Performance</h2>
-			<p><span class="highlight info">{user.perf}</span> <span class="note">and {user.reviews} reviews</span></p>
+			<p class="highlight info">{user.perf} <span class="note">and {user.reviews} reviews</span></p>
 		</div>
 	</slot>
 </header>
@@ -23,13 +23,14 @@
 	<slot>
 		<h2><span class="icon-camera"></span> Projects</h2>
 		<div class="tiles"></div>
-		<h2><span class="icon-star"></span> Boosts <a class="right" href="/">More</a></h2>
+		<h2><span class="icon-star"></span> Boosts <a class="highlight right" href="/">More</a></h2>
 		<div class="rows"></div>
 	</slot>
 </main>
 
 <style>
-	header{
+	header,
+	main {
 		width: 320px;
 		padding: 0 35px 0 38px;
 	}
@@ -58,13 +59,25 @@
 		line-height: 17px;
 		text-transform: uppercase;
 	}
-	.info.row {
-		border-bottom: 1px solid #F5F5F5;
+	.info-row {
+		padding-bottom: 10px;
+		margin-bottom: 20px;
+		border-bottom: 1px solid #F2F2F2;
+	}
+	.info-row.lg {
+		padding-bottom: 20px;
 	}
 	.highlight.info {
 		margin: 10px 0;
 		font-size: 25px;
 		line-height: 25px;
 		font-family: verdana;
+	}
+	.note {
+		color: #F98A01;
+		font-size: 15px;
+	}
+	main {
+		margin-top: 30px;
 	}
 </style>
