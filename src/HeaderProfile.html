@@ -3,8 +3,8 @@
 	<p>{user.title} <span class="icon-stars" use:setStars></span></p>
 </div>
 <div class="row">
-	<button><span class="icon"><IconsSvg name='Message'/></span></button>
-	<button>Request</button>
+	<button class="btn-icon"><span class="icon"><IconsSvg name='Message'/></span></button>
+	<button class="btn-primary">Request</button>
 </div>
 
 
@@ -19,7 +19,7 @@
 		margin-top: 18px;
 		font-size: 20px;
 		line-height: 20px;
-		color: #C3C3C3;
+		color: #C9C9C9;
 	}
 	.icon {
 		width: 25px;
@@ -27,6 +27,51 @@
 	}
 	.icon :global(.active) {
 		display: none;
+	}
+	.icon-stars {
+		margin-left: 6px;
+		position: relative;
+		top: 1pxl
+	}
+	:global(.icon-stars span) {
+		display: inline-block;
+		width: 20px;
+		height: 20px;
+		margin-right: 5px;
+		background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0zIC0yIDYwIDU4IiBzdHJva2Utd2lkdGg9IjMiPiAgPHBvbHlnb24gc3Ryb2tlPSIjQzlDOUM5IiBmaWxsPSJub25lIiBwb2ludHM9IjI2LjkzNCwxLjMxOCAzNS4yNTYsMTguMTgyIDUzLjg2NywyMC44ODcgNDAuNCwzNC4wMTMgNDMuNTc5LDUyLjU0OSAyNi45MzQsNDMuNzk4IDEwLjI4OCw1Mi41NDkgMTMuNDY3LDM0LjAxMyAwLDIwLjg4NyAxOC42MTEsMTguMTgyICIvPjwvc3ZnPg==);
+	}
+	.icon-stars :global(.fullstar) {
+		background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0zIC0yIDYwIDU4IiBzdHJva2Utd2lkdGg9IjMiPiAgPHBvbHlnb24gc3Ryb2tlPSIjRkE4QjAwIiBmaWxsPSIjRkE4QjAwIiBwb2ludHM9IjI2LjkzNCwxLjMxOCAzNS4yNTYsMTguMTgyIDUzLjg2NywyMC44ODcgNDAuNCwzNC4wMTMgNDMuNTc5LDUyLjU0OSAyNi45MzQsNDMuNzk4IDEwLjI4OCw1Mi41NDkgMTMuNDY3LDM0LjAxMyAwLDIwLjg4NyAxOC42MTEsMTguMTgyICIvPjwvc3ZnPg==);
+	}
+	.icon-stars :global(.halfstar) {
+		background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0zIC0yIDYwIDU4IiBzdHJva2Utd2lkdGg9IjMiPiAgPGRlZnM+ICAgIDxjbGlwUGF0aCBpZD0icmVjdCI+ICAgICAgPHJlY3QgeD0iLTMiIHk9Ii0yIiB3aWR0aD0iMzAiIGhlaWdodD0iNTgiLz4gICAgPC9jbGlwUGF0aD4gIDwvZGVmcz4gIDxwb2x5Z29uIHN0cm9rZT0iI0M5QzlDOSIgZmlsbD0ibm9uZSIgcG9pbnRzPSIyNi45MzQsMS4zMTggMzUuMjU2LDE4LjE4MiA1My44NjcsMjAuODg3IDQwLjQsMzQuMDEzIDQzLjU3OSw1Mi41NDkgMjYuOTM0LDQzLjc5OCAxMC4yODgsNTIuNTQ5IDEzLjQ2NywzNC4wMTMgMCwyMC44ODcgMTguNjExLDE4LjE4MiAiLz4gIDxwb2x5Z29uIGNsaXAtcGF0aD0idXJsKCNyZWN0KSIgZmlsbD0iI0ZBOEIwMCIgc3Ryb2tlPSIjRkE4QjAwIiBwb2ludHM9IjI2LjkzNCwxLjMxOCAzNS4yNTYsMTguMTgyIDUzLjg2NywyMC44ODcgNDAuNCwzNC4wMTMgNDMuNTc5LDUyLjU0OSAyNi45MzQsNDMuNzk4IDEwLjI4OCw1Mi41NDkgMTMuNDY3LDM0LjAxMyAwLDIwLjg4NyAxOC42MTEsMTguMTgyICIvPjwvc3ZnPg==);
+	}
+	button {
+		height: 45px;
+	}
+	.btn-icon {
+		width: 45px;
+		margin-right: 15px;
+	}
+	.btn-icon:hover {
+		color: #3299CC;
+		background: white;
+	}
+	.btn-icon .icon {
+		width: 18px;
+		height: 18px;
+		line-height: 18px;
+	}
+	.btn-primary {
+		width: 160px;
+		background: #41B1E3;
+		border-color: #41B1E3;
+		color: white;
+		font-size: 18px;
+		line-height: 18px;
+	}
+	.btn-primary:hover {
+		background: #3299CC;
 	}
 </style>
 
@@ -39,13 +84,11 @@
 		},
 		actions: {
 			setStars(node) {
-				var stars = this.get().user.stars,
-						create = (el) => document.createElement(el),
-						star;
+				var stars = this.get().user.stars; stars = 3.5;
 				for (var i=1; i<=stars; i++) {
 					addStar('fullstar');
 				}
-				if (i !== stars) {
+				if (i-1 !== stars && i-1 < stars) {
 					addStar('halfstar');
 					i += 1;
 				}

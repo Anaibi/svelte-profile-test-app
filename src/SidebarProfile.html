@@ -26,7 +26,7 @@
 	<slot>
 		<h2><span class="icon"><IconsSvg name="Camera"/></span> Projects</h2>
 		<div class="tiles"></div>
-		<h2><span class="icon-star"></span> Boosts <a class="highlight right" href="/">More</a></h2>
+		<h2><span class="icon icon-star"><IconsSvg name="Star"/></span> Boosts <a class="highlight right" href="/">More</a></h2>
 		<div class="rows"></div>
 	</slot>
 </main>
@@ -59,6 +59,7 @@
 	}
 	button:hover {
 		color: #3299CC;
+		background: white;
 	}
 	h2 {
 		display: flex;
@@ -93,6 +94,9 @@
 		width: 20px;
 		height: 20px;
 		margin-right: 10px;
+	}
+	.icon-star {
+		color: #505050;
 	}
 </style>
 
