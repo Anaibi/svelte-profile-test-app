@@ -1,5 +1,4 @@
 <aside class="sidebar">
-	<slot name="header"></slot>
 	<slot></slot>
 </aside>
 
@@ -7,5 +6,24 @@
 	.sidebar {
 		background: #FAFAFA;
 		border: 1px solid #F5F5F5;
+	}
+	:global(.title) {
+		position: relative;
+		display: flex;
+		align-items: center;
+		font-size: 17px;
+		line-height: 17px;
+		text-transform: uppercase;
+	}
+	:global(.title .right) {
+		position: absolute;
+		right: 0;
+	}
+	:global(.link) {
+		color: #3299CC;
+		text-transform: none;
+	}
+	:global(a.link) {
+		color: #3299CC;
 	}
 </style>

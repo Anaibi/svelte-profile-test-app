@@ -1,35 +1,34 @@
-<header>
-	<slot name="header">
-		<img class="profile-img img" src="{user.img}" alt="Profile Image"/>
+<slot>
+	<header>
+		<img class="profile-img img" src="{profile.img}" alt="Profile Image"/>
 		<button class="btn">
 			<span class="icon"><IconsSvg name="UserAdd"/></span>
 			Follow
 		</button>
 		<div class="info-row lg row">
 			<div class="col">
-				<h2>Follower</h2>
-				<p class="highlight info">{user.followers}</p>
+				<h2 class="title">Follower</h2>
+				<p class="highlight info">{profile.followers}</p>
 			</div>
 			<div class="col">
-				<h2>Folowing</h2>
-				<p class="highlight info">{user.following}</p>
+				<h2 class="title">Folowing</h2>
+				<p class="highlight info">{profile.following}</p>
 			</div>
 		</div>
 		<div class="col info-row">
-			<h2>Performance</h2>
-			<p class="highlight info">{user.perf} <span class="note">and {user.reviews} reviews</span></p>
+			<h2 class="title">Performance</h2>
+			<p class="highlight info">{profile.perf} <span class="note">and {profile.reviews} reviews</span></p>
 		</div>
-	</slot>
-</header>
+	</header>
 
-<main>
-	<slot>
-		<h2><span class="icon"><IconsSvg name="Camera"/></span> Projects</h2>
-		<div class="tiles"></div>
-		<h2><span class="icon icon-star"><IconsSvg name="Star"/></span> Boosts <a class="highlight right" href="/">More</a></h2>
-		<div class="rows"></div>
-	</slot>
-</main>
+	<main>
+		<h2 class="title"><span class="icon"><IconsSvg name="Camera"/></span> Projects</h2>
+			<Tiles tiles={profile.projects}/>
+		<h2 class="title"><span class="icon icon-star"><IconsSvg name="Star"/></span> Boosts <a class="right link" href="/">More</a></h2>
+		<div class="rows">
+		</div>
+	</main>
+</slot>
 
 <style>
 	header,
@@ -61,13 +60,7 @@
 		color: #3299CC;
 		background: white;
 	}
-	h2 {
-		display: flex;
-		align-items: center;
-		font-size: 17px;
-		line-height: 17px;
-		text-transform: uppercase;
-	}
+
 	.info-row {
 		padding-bottom: 10px;
 		margin-bottom: 20px;
@@ -86,7 +79,7 @@
 		color: #F98A01;
 		font-size: 15px;
 	}
-	main {
+	main h2 {
 		margin-top: 30px;
 	}
 	.icon {
@@ -102,10 +95,12 @@
 
 <script>
 	import IconsSvg from './IconsSvg.html';
+	import Tiles from './Tiles.html';
 
 	export default {
 		components: {
-			IconsSvg
+			IconsSvg,
+			Tiles,
 		}
 	}
 </script>
