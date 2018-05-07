@@ -5,14 +5,14 @@
 <div class="page sidenav">
 	<SideNav menu={mainNav} brand={brand} user={user}/>
 	<div class="scroll">
-		<Banner banner="{user.banner}"/>
+		<Banner banner="{profile.banner}"/>
 		<div class="row">
 			<Sidebar>
-				<SidebarProfile user={profileUser}/>
+				<SidebarProfile profile={profile}/>
 			</Sidebar>
 			<main>
 				<header class="row vCentered">
-					<HeaderProfile user={profileUser}/>
+					<HeaderProfile profile={profile}/>
 				</header>
 				<div class="row">
 					<div class="content">
@@ -123,23 +123,35 @@
 	import IconsSvg from './IconsSvg.html';
 
 	const USER = {
-		img: '',
-		banner: {
-			img: 'https://i.imgur.com/MbMnM74.jpg',
-			width: 130,
-			top: -60,
-			left: 0
-		}
+		img: ''
 	};
 	const PROFILE = {
-		img: '',
+		img: 'https://d3iw72m71ie81c.cloudfront.net/male-3.jpg',
 		name: 'Mario Mendez',
 		title: 'Senior Architect',
 		stars: 5,
 		followers: 320,
 		following: 147,
 		perf: 56,
-		reviews: 42
+		reviews: 42,
+		banner: {
+			img: 'https://i.imgur.com/MbMnM74.jpg',
+			width: 130,
+			top: -60,
+			left: 0
+		},
+		projects: [
+			{img: 'https://i.imgur.com/vZ8suUE.jpg', title: 'title', link: ''},
+			{img: 'https://i.imgur.com/kKvl97S.jpg', title: 'title', link: ''},
+			{img: 'https://i.imgur.com/6fQwQdQ.png', title: 'title', link: ''},
+			{img: 'https://i.imgur.com/6eA8rHj.jpg', title: 'title', link: ''},
+			{img: 'https://i.imgur.com/HZVeVDs.jpg', title: 'title', link: ''},
+			{img: 'https://i.imgur.com/3JueZBg.jpg', title: 'title', link: ''},
+			{img: 'https://i.imgur.com/mucT2Sl.jpg', title: 'title', link: ''},
+			{img: 'https://i.imgur.com/tA6OlVu.jpg', title: 'title', link: ''},
+			{img: 'https://i.imgur.com/w1bEuVW.jpg', title: 'title', link: ''},
+			{img: 'https://i.imgur.com/V2Mt6RJ.jpg', title: 'title', link: ''}
+		]
 	};
 
 	const ICONS = [
@@ -175,14 +187,13 @@
 					{link: '', icon: 'agenda'}
 				],
 				user: USER,
-				profileUser: PROFILE,
+				profile: PROFILE,
 				profileMenu: [
 					{link: 'ProfileInfo', icon: 'info'},
 					{link: 'ProfileFeed', icon: 'feed', active: true},
 					{link: 'ProfileAgenda', icon: 'agenda'},
 					{link: 'ProfileResume', icon: 'resume'}
 				],
-				// svg: IconsSvg
 			}
 		},
 		methods: {

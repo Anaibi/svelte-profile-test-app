@@ -1,6 +1,6 @@
 <div>
-	<h1>{user.name}</h1>
-	<p>{user.title} <span class="icon-stars" use:setStars></span></p>
+	<h1>{profile.name}</h1>
+	<p>{profile.title} <span class="icon-stars" use:setStars></span></p>
 </div>
 <div class="row">
 	<button class="btn-icon"><span class="icon"><IconsSvg name='Message'/></span></button>
@@ -84,7 +84,7 @@
 		},
 		actions: {
 			setStars(node) {
-				var stars = this.get().user.stars; stars = 3.5;
+				var stars = this.get().profile.stars; stars = 3.5;
 				for (var i=1; i<=stars; i++) {
 					addStar('fullstar');
 				}
