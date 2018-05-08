@@ -1,1 +1,25 @@
-ProfileFeed
+{#each profile.posts as post}
+  <article class="post">
+    {#if post.isSponsored}
+      <SponsoredPost post={post}/>
+    {:elseif post.isReview}
+      <ReviewPost post={post}/>
+    {:else}
+      <Post post={post}/>
+    {/if}
+  </article>
+{/each}
+
+<script>
+  import SponsoredPost from './Posts/SponsoredPost.html';
+  import ReviewPost from './Posts/ReviewPost.html';
+  import Post from './Posts/Post.html';
+
+  export default {
+    components: {
+      SponsoredPost,
+      ReviewPost,
+      Post
+    }
+  }
+</script>
