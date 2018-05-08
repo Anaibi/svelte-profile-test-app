@@ -5,7 +5,7 @@
 <div class="page sidenav">
 	<SideNav menu={mainNav} brand={brand} user={user}/>
 	<div class="scroll">
-		<Banner banner="{profile.banner}"/>
+		<Banner banner={profile.banner}/>
 		<div class="row">
 			<Sidebar>
 				<SidebarProfile profile={profile}/>
@@ -16,7 +16,7 @@
 				</header>
 				<div class="row">
 					<div class="content">
-						<ContentProfile menu="{profileMenu}"/>
+						<ContentProfile menu={profileMenu} profile={profile}/>
 					</div>
 					<Sidebar>
 						<SidebarContent/>
@@ -26,6 +26,7 @@
 		</div>
 	</div>
 </div>
+<Users />
 
 <style>
 	:global(body) {
@@ -122,16 +123,87 @@
 	import HeaderProfile from './HeaderProfile.html';
 	import ContentProfile from './ContentProfile.html';
 	import SidebarContent from './SidebarContent.html';
-	import IconsSvg from './IconsSvg.html';
+	import Users from './Users.html';
 
 	const USER = {
+		id: '01',
 		img: ''
 	};
+
+	const POSTS = [
+		{ user: {
+				id: '02',
+				name: 'Mario Mendez',
+				img: '',
+				link: ''
+			},
+			date: '2018-05-08T12:00:00Z',
+			content: {
+				text: '<p>New portfolio update with my last projects <strong>#architecture</strong> <strong>#portfolio</strong> <a class="link" href="https://www.architizes.com/MarioMendez" target="_blank">https://www.architizes.com/MarioMendez</a></p>'
+			},
+			stars: 3,
+			comments: {
+				total: 11
+			}
+		},
+		{ user: {
+				id: '02',
+				name: 'Mario Mendez',
+				img: '',
+				link: ''
+			},
+			isSponsored: true,
+			date: '2018-05-06T13:00:00Z',
+			content: {
+				text: '<p class="title">Architecture Services</p><p>Design and planning consultance, see more at ...<p>',
+				img: 'https://i.imgur.com/vZ8suUE.jpg'
+			},
+			stars: 36,
+			comments: {
+				total: 2,
+			},
+			answers: {
+				total: 5
+			},
+			recommendations: {
+				users: [
+					{id: '03', img: '', link: '', name: ''},
+					{id: '04', img: '', link: '', name: ''},
+					{id: '05', img: '', link: '', name: ''}
+				],
+				rating: 4.6,
+				total: 42
+			}
+		},
+		{	user: {
+				id: '02',
+				name: 'Mario Mendez',
+				img: '',
+				link: ''
+			},
+			isReview: true,
+			review: {
+				user: {
+					id: '03',
+					name: 'Jessica Simmons',
+					img: '',
+					link: ''
+				},
+				date: '2018-02-06T13:00:00Z',
+				text: '<p>It was a pleasure to work with Mario. Very professional and talented architect. I really suggest him!',
+				rating: 4.8,
+			}
+		}
+	];
+
+	const REVIEWS = [];
+
 	const PROFILE = {
+		id: '02',
 		img: 'https://d3iw72m71ie81c.cloudfront.net/male-3.jpg',
 		name: 'Mario Mendez',
 		title: 'Senior Architect',
-		stars: 5,
+		rating: 4.8,
 		followers: 320,
 		following: 147,
 		perf: 56,
@@ -153,7 +225,9 @@
 			{img: 'https://i.imgur.com/tA6OlVu.jpg', title: 'title', link: ''},
 			{img: 'https://i.imgur.com/w1bEuVW.jpg', title: 'title', link: ''},
 			{img: 'https://i.imgur.com/V2Mt6RJ.jpg', title: 'title', link: ''}
-		]
+		],
+		posts: POSTS,
+		reviews: REVIEWS
 	};
 
 	const ICONS = [
@@ -176,7 +250,7 @@
 			HeaderProfile,
 			ContentProfile,
 			SidebarContent,
-			IconsSvg
+			Users
 		},
 		data() {
 			return {
