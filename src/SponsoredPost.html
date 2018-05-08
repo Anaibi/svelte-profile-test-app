@@ -1,0 +1,48 @@
+<a href="{post.user.link}">
+  <img src="{post.user.img}" alt="{post.user.name}" />
+</a>
+<p class="row title">
+  <strong>{post.user.name} </strong><span class="note"><span class="icon"></span> {post.date}</span>
+  <span class="right note italic">Sponsored</span> <button class="icon-btn"></button>
+</p>
+<div class="box">
+  {#if post.content.img}
+    <div class="featured" style="background-image: url('{post.content.img}')">
+      {#if post.recommendations}
+        <div class="row">
+          {#each post.recommendations.users as user}
+            <a href="{user.link}"><img src="{user.img}" alt="{user.name}" /></a>
+          {/each}
+          <div>
+            {#if post.recommendations.rating}
+              <span class="icon-stars"></span>
+            {/if}
+            {#if post.recommendations.total > 0}
+              <p>({post.recommendations.total}) recommend this</p>
+            {/if}
+          </div>
+        </div>
+      {/if}
+    </div>
+  {:else}
+    <div class="row">
+      {#each post.recommendations.users as user}
+        <a href="{user.link}"><img src="{user.img}" alt="{user.name}" /></a>
+      {/each}
+      <div>
+        {#if post.recommendations.rating}
+          <span class="icon-stars"></span>
+        {/if}
+        {#if post.recommendations.total > 0}
+          <p>({post.recommendations.total}) recommend this</p>
+        {/if}
+      </div>
+    </div>
+  {/if}
+  <div class="row">
+    <div>
+      {{{post.content.text}}}
+    </div>
+    <button>Hire</button>
+  </div>
+</div>

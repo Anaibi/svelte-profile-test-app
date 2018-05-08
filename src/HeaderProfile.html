@@ -84,11 +84,13 @@
 		},
 		actions: {
 			setStars(node) {
-				var stars = this.get().profile.stars; stars = 3.5;
-				for (var i=1; i<=stars; i++) {
+				var rating = this.get().profile.rating,
+						addedStars = 0; rating = 3.5;
+				for (var i=1; i<=rating; i++) {
 					addStar('fullstar');
+					addedStars += 1;
 				}
-				if (i-1 !== stars && i-1 < stars) {
+				if (rating !== addedStars && rating > addedStars && rating - addedStars >= .5) {
 					addStar('halfstar');
 					i += 1;
 				}
