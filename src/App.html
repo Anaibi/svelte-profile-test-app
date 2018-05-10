@@ -72,6 +72,16 @@
 	:global(button):hover {
 		cursor: pointer;
 	}
+	:global(.link),
+	:global(a.link) {
+		color: #41B1E3;
+		text-transform: none;
+	}
+	:global(.link:hover),
+	:global(a.link:hover) {
+		color: #3299CC;
+		text-decoration: none;
+	}
 	:global(.row) {
 		display: flex;
 		justify-content: space-between;
@@ -131,39 +141,38 @@
 	};
 
 	const POSTS = [
-		{ user: {
-				id: '02',
-				name: 'Mario Mendez',
-				img: '',
-				link: ''
-			},
-			date: '2018-05-08T12:00:00Z',
+		{ date: '2018-05-09T12:00:00Z',
 			content: {
 				text: '<p>New portfolio update with my last projects <strong>#architecture</strong> <strong>#portfolio</strong> <a class="link" href="https://www.architizes.com/MarioMendez" target="_blank">https://www.architizes.com/MarioMendez</a></p>'
 			},
-			stars: 3,
-			comments: {
-				total: 11
+			details: {
+				stars: 2,
+				comments: {
+					total: 11,
+					link: ''
+				},
+				answers: {
+					total: 0,
+					link: ''
+				}
 			}
 		},
-		{ user: {
-				id: '02',
-				name: 'Mario Mendez',
-				img: '',
-				link: ''
-			},
-			isSponsored: true,
+		{ isSponsored: true,
 			date: '2018-05-06T13:00:00Z',
 			content: {
 				text: '<p class="title">Architecture Services</p><p>Design and planning consultance, see more at ...<p>',
 				img: 'https://i.imgur.com/vZ8suUE.jpg'
 			},
-			stars: 36,
-			comments: {
-				total: 2,
-			},
-			answers: {
-				total: 5
+			details: {
+				stars: 36,
+				comments: {
+					total: 2,
+					link: ''
+				},
+				answers: {
+					total: 5,
+					link: ''
+				}
 			},
 			recommendations: {
 				users: [
@@ -175,23 +184,30 @@
 				total: 42
 			}
 		},
-		{	user: {
-				id: '02',
-				name: 'Mario Mendez',
-				img: '',
-				link: ''
-			},
-			isReview: true,
+		{	isReview: true,
 			review: {
 				user: {
 					id: '03',
 					name: 'Jessica Simmons',
 					img: '',
+					link: '',
+				},
+				date: '2018-05-03T13:00:00Z',
+				content: {
+					text: '<p>It was a pleasure to work with Mario. Very professional and talented architect. I really suggest him!'
+				},
+				rating: 4.8,
+			},
+			details: {
+				stars: 6,
+				comments: {
+					total: 2,
 					link: ''
 				},
-				date: '2018-02-06T13:00:00Z',
-				text: '<p>It was a pleasure to work with Mario. Very professional and talented architect. I really suggest him!',
-				rating: 4.8,
+				answers: {
+					total: 2,
+					link: ''
+				}
 			}
 		}
 	];
@@ -199,10 +215,20 @@
 	const REVIEWS = [];
 
 	const PROFILE = {
-		id: '02',
-		img: 'https://d3iw72m71ie81c.cloudfront.net/male-3.jpg',
-		name: 'Mario Mendez',
-		title: 'Senior Architect',
+		user: {
+			id: '02',
+			img: 'https://d3iw72m71ie81c.cloudfront.net/male-3.jpg',
+			name: 'Mario Mendez',
+			title: 'Senior Architect',
+			link: ''
+		},
+		details: {
+			rating: 4.8,
+			followers: 320,
+			following: 147,
+			perf: 56,
+			reviews: 42,
+		},
 		rating: 4.8,
 		followers: 320,
 		following: 147,
@@ -238,7 +264,6 @@
 					{name: 'info', svg: 'Clipboard', text: 'Info'},
 					{name: 'feed', svg: 'Book', text: 'Feed'},
 					{name: 'resume', svg: 'Clip', text: 'Résumé'},
-					{name: 'follow', svg: 'UserAdd'}
 				];
 
 	export default {

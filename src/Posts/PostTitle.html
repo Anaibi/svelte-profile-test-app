@@ -1,0 +1,69 @@
+<p class="post-title">
+  <strong>{name} </strong><span class="note"><span class="icon"><IconsSvg name='Clock'/></span> {postPeriod}</span>
+  {#if isSponsored}
+    <span class="right note italic">Sponsored</span> <button class="icon-btn"></button>
+  {/if}
+</p>
+
+<style>
+  .post-title {
+    font-size: 16px;
+    line-height: 16px;
+    margin-bottom: 10px;
+  }
+  .note {
+    margin-left: 5px;
+    font-size: 12px;
+    line-height: 12px;
+    color: #CCCCCC;
+  }
+  .icon {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    position: relative;
+    top: 1px;
+  }
+</style>
+
+<script>
+  import IconsSvg from './../IconsSvg.html';
+
+  export default {
+    data() {
+      return {
+        isSponsored: false
+      }
+    },
+    components: {
+      IconsSvg
+    },
+    computed: {
+      postPeriod({date}) {
+				var today = new Date(),
+            postDate = new Date(date),
+            period = 0;
+        if (today.getFullYear() !== postDate.getFullYear()) {
+          period = today.getFullYear() - postDate.getFullYear();
+          period = period > 1 ? period + ' years' : period + ' year';
+        } else if (today.getMonth() !== postDate.getMonth()) {
+          period = today.getMonth() - postDate.getMonth();
+          period = period > 1 ? period + ' months' : period + ' month'
+        } else if (today.getDate() !== postDate.getDate()) {
+          period = today.getDate() - postDate.getDate();
+          period = period > 1 ? period + ' days' : period + ' day';
+        } else if (today.getHours() !== postDate.getHours()) {
+          period = today.getHours() - postDate.getHours();
+          period = period > 1 ? period + ' hours' : period + ' hour';
+        } else if (today.getMinutes() !== postDate.getMinutes()) {
+          period = today.getMinutes() - postDate.getMinutes();
+          period = period > 1 ? period + ' minutes' : period + ' minute';
+        } else if (today.getSeconds() !== postDate.getSeconds()) {
+          period = today.getSeconds() - postDate.getSeconds();
+          period = period > 1 ? period + ' seconds' : period + ' second';
+        }
+        return period;
+			}
+    }
+  }
+</script>
