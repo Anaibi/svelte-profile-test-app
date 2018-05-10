@@ -1,5 +1,5 @@
 <div class="details row">
-  <div class="left row">
+  <div class="row">
     <button class="{starsActive ? 'active' : ''}" on:click="addStar()">
       <span class="icon icon-star"><IconsSvg name="Star"/></span>
       <span class="text">{details.stars}</span>
@@ -14,7 +14,7 @@
     </a>
   </div>
 
-  <div class="right">
+  <div>
     <button><span class="icon"><IconsSvg name="More"/></span></button>
   </div>
 </div>
@@ -63,7 +63,7 @@
   .text {
     margin: 0 10px 0 5px;
     line-height: 17px;
-    font-family: verdana;
+    font-family: sans-serif;
     font-weight: bold;
     font-size: 12px;
     text-align: left;

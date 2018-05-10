@@ -1,9 +1,15 @@
-<p class="post-title">
-  <strong>{name} </strong><span class="note"><span class="icon"><IconsSvg name='Clock'/></span> {postPeriod}</span>
+<div class="post-title row">
+  <p>
+    <strong>{name} </strong>
+    <span class="note"><span class="icon note"><IconsSvg name='Clock'/></span> {postPeriod}</span>
+  </p>
   {#if isSponsored}
-    <span class="right note italic">Sponsored</span> <button class="icon-btn"></button>
+    <p class="row row-bottom italic note">
+      <span>Sponsored</span>
+      <button on:click="addBookmark()" class="{bookmarked ? 'active' : ''}"><span class="icon"><IconsSvg name="Bookmark"/></span></button>
+    </p>
   {/if}
-</p>
+</div>
 
 <style>
   .post-title {
@@ -13,16 +19,29 @@
   }
   .note {
     margin-left: 5px;
+    font-family: sans-serif;
     font-size: 12px;
     line-height: 12px;
     color: #CCCCCC;
   }
   .icon {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
     width: 10px;
     height: 10px;
     position: relative;
     top: 1px;
+  }
+  button {
+    height: 100%;
+    margin-left: 5px;
+    background: none;
+    border: none;
+    color: inherit;
+  }
+  button:hover,
+  button.active {
+    color: #3299CC;
   }
 </style>
 
@@ -32,7 +51,8 @@
   export default {
     data() {
       return {
-        isSponsored: false
+        isSponsored: false,
+        bookmarked: false
       }
     },
     components: {
@@ -64,6 +84,12 @@
         }
         return period;
 			}
+    },
+    methods: {
+      addBookmark() {
+        this.set({bookmarked: !this.get().bookmarked});
+        // do bookmarking
+      }
     }
   }
 </script>

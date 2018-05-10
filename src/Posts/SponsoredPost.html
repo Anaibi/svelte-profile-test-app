@@ -1,41 +1,48 @@
-  <div class="box">
-    {#if post.content.img}
-      <div class="featured" style="background-image: url('{post.content.img}')">
-        {#if post.recommendations}
-          <div class="row">
-            {#each post.recommendations.users as user}
-              <a href="{user.link}"><img src="{user.img}" alt="{user.name}" /></a>
-            {/each}
-            <div>
-              {#if post.recommendations.rating}
-                <span class="icon-stars"></span>
-              {/if}
-              {#if post.recommendations.total > 0}
-                <p>({post.recommendations.total}) recommend this</p>
-              {/if}
-            </div>
+<div class="box">
+  {#if post.content.img}
+    <div class="featured" style="background-image: url('{post.content.img}')">
+      {#if post.recommendations}
+        <div class="row">
+          {#each post.recommendations.users as user}
+            <a href="{user.link}"><img src="{user.img}" alt="{user.name}" /></a>
+          {/each}
+          <div>
+            {#if post.recommendations.rating}
+              <span class="icon-stars"></span>
+            {/if}
+            {#if post.recommendations.total > 0}
+              <p>({post.recommendations.total}) recommend this</p>
+            {/if}
           </div>
+        </div>
+      {/if}
+    </div>
+  {:else}
+    <div class="row">
+      {#each post.recommendations.users as user}
+        <a href="{user.link}"><img src="{user.img}" alt="{user.name}" /></a>
+      {/each}
+      <div>
+        {#if post.recommendations.rating}
+          <span class="icon-stars"></span>
+        {/if}
+        {#if post.recommendations.total > 0}
+          <p>({post.recommendations.total}) recommend this</p>
         {/if}
       </div>
-    {:else}
-      <div class="row">
-        {#each post.recommendations.users as user}
-          <a href="{user.link}"><img src="{user.img}" alt="{user.name}" /></a>
-        {/each}
-        <div>
-          {#if post.recommendations.rating}
-            <span class="icon-stars"></span>
-          {/if}
-          {#if post.recommendations.total > 0}
-            <p>({post.recommendations.total}) recommend this</p>
-          {/if}
-        </div>
-      </div>
-    {/if}
-    <div class="row">
-      <div>
-        {@html post.content.text}
-      </div>
-      <button>Hire</button>
     </div>
+  {/if}
+  <div class="row">
+    <div>
+      {@html post.content.text}
+    </div>
+    <button>Hire</button>
   </div>
+</div>
+
+<style>
+  .featured {
+    height: 250px;
+    background-size: cover;
+  }
+</style>
