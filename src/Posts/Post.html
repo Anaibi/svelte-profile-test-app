@@ -1,9 +1,16 @@
-<a href="{post.user.link}">
-  <img src="{post.user.img}" alt="{post.user.name}" />
-</a>
-<p class="row title">
-  <strong>{post.user.name} </strong><span class="note"><span class="icon"></span> {post.date}</span>
-</p>
-<div class="content">
-  {@html post.content.text}
-</div>
+  <div class="post-text">
+    {@html post.content.text}
+  </div>
+
+<style>
+  .content {
+    flex: 1;
+  }
+  .post-text {
+    font-size: 16px;
+    line-height: 20px;
+  }
+  .post-content a {
+    font-weight: bold;
+  }
+</style>

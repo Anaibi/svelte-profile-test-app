@@ -1,22 +1,27 @@
-<a class="tile-round" href="{post.review.user.link}">
-  <img src="{post.review.user.img}" alt="{post.review.user.name}" />
-</a>
-<div class="box">
-  <div class="row">
-    <div class="left row">
-      <a class="tile-round" href="{post.user.link}">
-        <img src="{post.user.img}" alt="{post.user.name}" />
-      </a>
-      <div>
-        <p>{post.user.name}</p>
-        <span class="icon-stars"></span>
+  <div class="box">
+    <div class="row">
+      <div class="left row">
+        <Avatar user={user}/>
+        <div>
+          <p>{user.name}</p>
+          <span class="icon-stars"></span>
+        </div>
+      </div>
+      <div class="right col">
+        <span>{post.review.rating}</span>
+        <span>RATED</span>
       </div>
     </div>
-    <div class="right col">
-      <span>{post.review.rating}</span>
-      <span>RATED</span>
-    </div>
+    <p>"{@html post.review.content.text}"</p>
+    <p class="italic"><strong>{post.review.user.name}</strong></p>
   </div>
-  <p>"{@html post.review.text}"</p>
-  <p class="italic"><strong>{post.review.user.name}</strong></p>
-</div>
+
+<script>
+  import Avatar from './../Avatar.html';
+
+  export default {
+    components: {
+      Avatar
+    }
+  }
+</script>

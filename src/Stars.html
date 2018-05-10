@@ -1,0 +1,54 @@
+<span class="icon-stars" use:setStars></span>
+
+<style>
+  .icon-stars {
+    margin-left: 6px;
+    position: relative;
+    top: 1pxl
+  }
+  :global(.icon-stars span) {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0zIC0yIDYwIDU4IiBzdHJva2Utd2lkdGg9IjMiPiAgPHBvbHlnb24gc3Ryb2tlPSIjQzlDOUM5IiBmaWxsPSJub25lIiBwb2ludHM9IjI2LjkzNCwxLjMxOCAzNS4yNTYsMTguMTgyIDUzLjg2NywyMC44ODcgNDAuNCwzNC4wMTMgNDMuNTc5LDUyLjU0OSAyNi45MzQsNDMuNzk4IDEwLjI4OCw1Mi41NDkgMTMuNDY3LDM0LjAxMyAwLDIwLjg4NyAxOC42MTEsMTguMTgyICIvPjwvc3ZnPg==);
+  }
+  .icon-stars :global(.fullstar) {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0zIC0yIDYwIDU4IiBzdHJva2Utd2lkdGg9IjMiPiAgPHBvbHlnb24gc3Ryb2tlPSIjRkE4QjAwIiBmaWxsPSIjRkE4QjAwIiBwb2ludHM9IjI2LjkzNCwxLjMxOCAzNS4yNTYsMTguMTgyIDUzLjg2NywyMC44ODcgNDAuNCwzNC4wMTMgNDMuNTc5LDUyLjU0OSAyNi45MzQsNDMuNzk4IDEwLjI4OCw1Mi41NDkgMTMuNDY3LDM0LjAxMyAwLDIwLjg4NyAxOC42MTEsMTguMTgyICIvPjwvc3ZnPg==);
+  }
+  .icon-stars :global(.halfstar) {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0zIC0yIDYwIDU4IiBzdHJva2Utd2lkdGg9IjMiPiAgPGRlZnM+ICAgIDxjbGlwUGF0aCBpZD0icmVjdCI+ICAgICAgPHJlY3QgeD0iLTMiIHk9Ii0yIiB3aWR0aD0iMzAiIGhlaWdodD0iNTgiLz4gICAgPC9jbGlwUGF0aD4gIDwvZGVmcz4gIDxwb2x5Z29uIHN0cm9rZT0iI0M5QzlDOSIgZmlsbD0ibm9uZSIgcG9pbnRzPSIyNi45MzQsMS4zMTggMzUuMjU2LDE4LjE4MiA1My44NjcsMjAuODg3IDQwLjQsMzQuMDEzIDQzLjU3OSw1Mi41NDkgMjYuOTM0LDQzLjc5OCAxMC4yODgsNTIuNTQ5IDEzLjQ2NywzNC4wMTMgMCwyMC44ODcgMTguNjExLDE4LjE4MiAiLz4gIDxwb2x5Z29uIGNsaXAtcGF0aD0idXJsKCNyZWN0KSIgZmlsbD0iI0ZBOEIwMCIgc3Ryb2tlPSIjRkE4QjAwIiBwb2ludHM9IjI2LjkzNCwxLjMxOCAzNS4yNTYsMTguMTgyIDUzLjg2NywyMC44ODcgNDAuNCwzNC4wMTMgNDMuNTc5LDUyLjU0OSAyNi45MzQsNDMuNzk4IDEwLjI4OCw1Mi41NDkgMTMuNDY3LDM0LjAxMyAwLDIwLjg4NyAxOC42MTEsMTguMTgyICIvPjwvc3ZnPg==);
+  }
+</style>
+
+<script>
+	import IconsSvg from './IconsSvg.html';
+
+	export default {
+		components: {
+			IconsSvg
+		},
+		actions: {
+			setStars(node) {
+				var rating = this.get().rating,
+						addedStars = 0;
+				for (var i=1; i<=rating; i++) {
+					addStar('fullstar');
+					addedStars += 1;
+				}
+				if (rating !== addedStars && rating > addedStars && rating - addedStars >= .5) {
+					addStar('halfstar');
+					i += 1;
+				}
+				for (i; i<6; i++) {
+					addStar();
+				}
+				function addStar(klass) {
+					var star = document.createElement('span');
+					if (klass) star.classList.add(klass);
+					node.append(star);
+				}
+			}
+		}
+	}
+</script>

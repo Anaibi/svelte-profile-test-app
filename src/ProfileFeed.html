@@ -1,25 +1,56 @@
 {#each profile.posts as post}
   <article class="post">
-    {#if post.isSponsored}
-      <SponsoredPost post={post}/>
-    {:elseif post.isReview}
-      <ReviewPost post={post}/>
+    {#if post.isReview}
+      <Avatar user={post.review.user}/>
     {:else}
-      <Post post={post}/>
+      <Avatar user={profile.user}/>
     {/if}
+
+    <div class="content">
+      {#if post.isReview}
+        <PostTitle name={post.review.user.name} date={post.review.date}/>
+      {:else}
+        <PostTitle isSponsored={post.isSponsored} name={profile.user.name} date={post.date}/>
+      {/if}
+
+      {#if post.isSponsored}
+        <SponsoredPost post={post}/>
+      {:elseif post.isReview}
+        <ReviewPost post={post} user={profile.user}/>
+      {:else}
+        <Post post={post}/>
+      {/if}
+
+      <PostDetails details={post.details}/>
+    </div>
   </article>
 {/each}
 
+<style>
+  .post {
+    display: flex;
+    padding: 20px 35px;
+    border-bottom: 1px solid #F5F5F5;
+    color: #666666;
+  }
+</style>
+
 <script>
+  import Avatar from './Avatar.html';
+  import PostTitle from './Posts/PostTitle.html';
   import SponsoredPost from './Posts/SponsoredPost.html';
   import ReviewPost from './Posts/ReviewPost.html';
   import Post from './Posts/Post.html';
+  import PostDetails from './Posts/PostDetails.html';
 
   export default {
     components: {
+      Avatar,
+      PostTitle,
       SponsoredPost,
       ReviewPost,
-      Post
+      Post,
+      PostDetails
     }
   }
 </script>
