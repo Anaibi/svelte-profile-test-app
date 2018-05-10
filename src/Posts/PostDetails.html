@@ -1,0 +1,97 @@
+<div class="details row">
+  <div class="left row">
+    <button class="{starsActive ? 'active' : ''}" on:click="addStar()">
+      <span class="icon icon-star"><IconsSvg name="Star"/></span>
+      <span class="text">{details.stars}</span>
+    </button>
+    <a class="link" href="{details.comments.link}">
+      <span class="icon icon-message"><IconsSvg name="MessageFull"/></span>
+      <span class="text">{details.comments.total > 0 ? details.comments.total : ''}</span>
+    </a>
+    <a href="details.answers.link">
+      <span class="icon"><IconsSvg name="Reply"/></span>
+      <span class="{details.answers.total > 0 ? details.answers.total : ''}"></span>
+    </a>
+  </div>
+
+  <div class="right">
+    <button><span class="icon"><IconsSvg name="More"/></span></button>
+  </div>
+</div>
+
+<style>
+  span, button {
+    color: #D9D9D9;
+  }
+  button {
+    background: transparent;
+    border: none;
+  }
+  a {
+    display: flex;
+    align-items: center;
+  }
+  a:hover {
+    text-decoration: none;
+    color: #3299CC;
+  }
+  a:hover .text,
+  a:hover .icon,
+  button:hover .icon {
+    color: #3299CC;
+  }
+  .details {
+    margin-top: 20px;
+  }
+  .icon,
+  .text {
+    display: inline-block;
+    height: 15px;
+  }
+  .icon {
+    width: 15px;
+    line-height: 15px;
+  }
+  .icon :global(svg) {
+    fill: CurrentColor;
+  }
+  button:hover .icon-star :global(svg),
+  button.active .icon-star :global(svg) {
+    fill: #FA8B00;
+    stroke: #FA8B00;
+  }
+  .text {
+    margin: 0 10px 0 5px;
+    line-height: 17px;
+    font-family: verdana;
+    font-weight: bold;
+    font-size: 12px;
+    text-align: left;
+  }
+</style>
+
+<script>
+  import IconsSvg from './../IconsSvg.html';
+
+  export default {
+    data() {
+      return {
+        starsActive: false
+      }
+    },
+    components: {
+      IconsSvg
+    },
+    methods: {
+      addStar() {
+        var details = this.get().details,
+            active = this.get().starsActive;
+        details.stars = active ? details.stars - 1 : details.stars + 1;
+        this.set({
+          details,
+          starsActive: !active
+        });
+      }
+    }
+  }
+</script>

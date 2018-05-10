@@ -1,41 +1,49 @@
 <svelte:component this="{svg}"/>
 
 <script>
-import Search from './Icons/SVG_Search.html';
-import Edit from './Icons/SVG_Edit.html';
-import Message from './Icons/SVG_Message.html';
-import Agenda from './Icons/SVG_Agenda.html';
-import Clipboard from './Icons/SVG_Clipboard.html';
-import Clip from './Icons/SVG_Clip.html';
-import UserAdd from './Icons/SVG_UserAdd.html';
-import Camera from './Icons/SVG_Camera.html';
-import Star from './Icons/SVG_Star.html';
-import Book from './Icons/SVG_Book.html';
+	import Search from './Icons/SVG_Search.html';
+	import Edit from './Icons/SVG_Edit.html';
+	import Message from './Icons/SVG_Message.html';
+	import Agenda from './Icons/SVG_Agenda.html';
+	import Clipboard from './Icons/SVG_Clipboard.html';
+	import Clip from './Icons/SVG_Clip.html';
+	import UserAdd from './Icons/SVG_UserAdd.html';
+	import Camera from './Icons/SVG_Camera.html';
+	import Star from './Icons/SVG_Star.html';
+	import Book from './Icons/SVG_Book.html';
+	import Clock from './Icons/SVG_Clock.html';
+	import MessageFull from './Icons/SVG_MessageFull.html';
+	import Reply from './Icons/SVG_Reply.html';
+	import More from './Icons/SVG_More.html';
 
-var icons = {
-	Search,
-	Edit,
-	Message,
-	Agenda,
-	Clipboard,
-	Clip,
-	UserAdd,
-	Camera,
-	Star,
-	Book
-};
+	var icons = {
+		Search,
+		Edit,
+		Message,
+		Agenda,
+		Clipboard,
+		Clip,
+		UserAdd,
+		Camera,
+		Star,
+		Book,
+		Clock,
+		MessageFull,
+		Reply,
+		More
+	};
 
-export default {
-	data() {
-		return {
-			svg: ''
+	export default {
+		data() {
+			return {
+				svg: ''
+			}
+		},
+		components: {
+			Search
+		},
+		oncreate() {
+			this.set({svg: icons[this.get().name]});
 		}
-	},
-	components: {
-		Search
-	},
-	oncreate() {
-		this.set({svg: icons[this.get().name]});
 	}
-}
 </script>

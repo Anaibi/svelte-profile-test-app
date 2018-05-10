@@ -1,6 +1,6 @@
 <slot>
 	<header>
-		<img class="profile-img img" src="{profile.img}" alt="Profile Image"/>
+		<img class="profile-img img" src="{profile.user.img}" alt="{profile.user.name}"/>
 		<button class="btn">
 			<span class="icon"><IconsSvg name="UserAdd"/></span>
 			Follow
@@ -8,16 +8,16 @@
 		<div class="info-row lg row">
 			<div class="col">
 				<h2 class="title">Follower</h2>
-				<p class="highlight info">{profile.followers}</p>
+				<p class="highlight info">{profile.details.followers}</p>
 			</div>
 			<div class="col">
 				<h2 class="title">Folowing</h2>
-				<p class="highlight info">{profile.following}</p>
+				<p class="highlight info">{profile.details.following}</p>
 			</div>
 		</div>
 		<div class="col info-row">
 			<h2 class="title">Performance</h2>
-			<p class="highlight info">{profile.perf} <span class="note">and {profile.reviews} reviews</span></p>
+			<p class="highlight info">{profile.details.perf} <span class="note">and {profile.details.reviews} reviews</span></p>
 		</div>
 	</header>
 
