@@ -2,6 +2,8 @@
 	 <link href="https://fonts.googleapis.com/css?family=Palanquin:300" rel="stylesheet">
 </svelte:head>
 
+<Users />
+
 <div class="page sidenav">
 	<SideNav menu={mainNav} brand={brand} user={user}/>
 	<div class="scroll">
@@ -26,7 +28,6 @@
 		</div>
 	</div>
 </div>
-<Users />
 
 <style>
 	:global(body) {
@@ -153,10 +154,7 @@
 	import SidebarContent from './SidebarContent.html';
 	import Users from './Users.html';
 
-	const USER = {
-		id: '01',
-		img: ''
-	};
+	const USER = {};
 
 	const POSTS = [
 		{ date: '2018-05-09T12:00:00Z',
@@ -193,10 +191,10 @@
 				}
 			},
 			recommendations: {
-				users: [
-					{id: '03', img: '', link: '', name: ''},
-					{id: '04', img: '', link: '', name: ''},
-					{id: '05', img: '', link: '', name: ''}
+				users: ['03', '04', '05', '10', '11'
+					// {id: '03', img: '', link: '', name: '', rating: ''},
+					// {id: '04', img: '', link: '', name: '', rating: ''},
+					// {id: '05', img: '', link: '', name: '', rating: ''}
 				],
 				rating: 4.6,
 				total: 42
@@ -233,13 +231,7 @@
 	const REVIEWS = [];
 
 	const PROFILE = {
-		user: {
-			id: '02',
-			img: 'https://d3iw72m71ie81c.cloudfront.net/male-3.jpg',
-			name: 'Mario Mendez',
-			title: 'Senior Architect',
-			link: ''
-		},
+		user: {},
 		details: {
 			rating: 4.8,
 			followers: 320,
@@ -247,11 +239,6 @@
 			perf: 56,
 			reviews: 42,
 		},
-		rating: 4.8,
-		followers: 320,
-		following: 147,
-		perf: 56,
-		reviews: 42,
 		banner: {
 			img: 'https://i.imgur.com/MbMnM74.jpg',
 			width: 130,
@@ -313,6 +300,9 @@
 					{link: 'ProfileAgenda', icon: 'agenda'},
 					{link: 'ProfileResume', icon: 'resume'}
 				],
+				userId: '01',
+				profileId: '02',
+				postLoadingInterval: 10
 			}
 		},
 		methods: {
@@ -325,9 +315,36 @@
 					else item.icon = {name: item.icon}
 				});
 				return menu;
+			},
+			setUser(id) {
+				if (!id) {
+					console.log('missing user id');
+					return;
+				}
+				var users = this.get().users;
+				var user = users.find(x => x.id === id);
+				if (user) this.set({user});
+				else console.log('no user');
+			},
+			setProfileUser(id) {
+				if (!id) {
+					console.log('missing profile user id');
+					return;
+				}
+				var users = this.get().users,
+						profile = this.get().profile;
+				var user = users.find(x => x.id === id);
+				if (user) {
+					profile.user = user;
+					this.set({profile});
+				}
+				else console.log('no user with id ', id);
 			}
 		},
 		oncreate() {
+			this.setUser(this.get().userId);
+			this.setProfileUser(this.get().profileId);
+
 			this.set({mainNav: this.getIcons(this.get().mainNav)});
 			this.set({profileMenu: this.getIcons(this.get().profileMenu)});
 		}

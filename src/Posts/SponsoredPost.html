@@ -1,37 +1,21 @@
 <div class="box">
-  {#if post.content.img}
-    <div class="featured" style="background-image: url('{post.content.img}')">
-      {#if post.recommendations}
-        <div class="row">
-          {#each post.recommendations.users as user}
-            <a href="{user.link}"><img src="{user.img}" alt="{user.name}" /></a>
-          {/each}
-          <div>
-            {#if post.recommendations.rating}
-              <span class="icon-stars"></span>
-            {/if}
-            {#if post.recommendations.total > 0}
-              <p>({post.recommendations.total}) recommend this</p>
-            {/if}
-          </div>
+  <div class="featured" style="background-image: url('{post.content.img}')">
+    {#if post.recommendations}
+      <div class="row">
+        {#each recommendationUsers as user}
+          <Avatar user={user}/>
+        {/each}
+        <div>
+          {#if post.recommendations.rating}
+            <Stars rating={post.recommendations.rating}/>
+          {/if}
+          {#if post.recommendations.total > 0}
+            <p>({post.recommendations.total}) recommend this</p>
+          {/if}
         </div>
-      {/if}
-    </div>
-  {:else}
-    <div class="row">
-      {#each post.recommendations.users as user}
-        <a href="{user.link}"><img src="{user.img}" alt="{user.name}" /></a>
-      {/each}
-      <div>
-        {#if post.recommendations.rating}
-          <span class="icon-stars"></span>
-        {/if}
-        {#if post.recommendations.total > 0}
-          <p>({post.recommendations.total}) recommend this</p>
-        {/if}
       </div>
-    </div>
-  {/if}
+    {/if}
+  </div>
   <div class="row">
     <div>
       {@html post.content.text}
@@ -46,3 +30,32 @@
     background-size: cover;
   }
 </style>
+
+<script>
+  import Avatar from './../Avatar.html';
+  import Stars from './../Stars.html';
+
+  export default {
+    data() {
+      return {
+        recommendationUsers: []
+      }
+    },
+    components: {
+      Avatar,
+      Stars
+    },
+    oncreate() {
+      var users = this.root.get().users,
+          recommendationUsers = this.get().post.recommendations.users,
+          found;
+      recommendationUsers = recommendationUsers.splice(0,3);
+      for (let i = 0; i < 3; i++) {
+        found = users.find(x => x.id === recommendationUsers[i]);
+        if (found) recommendationUsers[i] = found;
+      }
+      console.log(recommendationUsers);
+      this.set({recommendationUsers});
+    }
+  }
+</script>
