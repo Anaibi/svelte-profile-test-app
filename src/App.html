@@ -59,6 +59,12 @@
 	:global(button) {
 		margin: 0;
 		padding: 0;
+	}
+	:global(button):hover {
+		cursor: pointer;
+	}
+	:global(.btn) {
+		height: 45px;
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -67,14 +73,45 @@
 		border: 1px solid #EBEBEB;
 		box-shadow: 1px 1px 1px 1px EBEBEB;
 		border-radius: 3px;
+		font-size: 21px;
+		line-height: 21px;
 		font-weight: bold;
 		text-transform: uppercase;
 	}
-	:global(button):hover {
-		cursor: pointer;
+	:global(.btn:hover) {
+		color: #3299CC;
+		background: white;
+	}
+	:global(.btn-icon) {
+		width: 45px;
+		margin-right: 15px;
+	}
+	:global(.btn-icon:hover) {
+		color: #3299CC;
+		background: white;
+	}
+	:global(.btn-icon .icon) {
+		width: 18px;
+		height: 18px;
+		line-height: 18px;
+	}
+	:global(.btn-primary) {
+		width: 160px;
+		background: #41B1E3;
+		border-color: #41B1E3;
+		color: white;
+		font-size: 18px;
+		line-height: 18px;
+	}
+	:global(.btn-primary:hover) {
+		background: #3299CC;
 	}
 	:global(.link),
 	:global(a.link) {
+		display: inline-flex;
+    align-items: center;
+    background: transparent;
+    border: none;
 		color: #41B1E3;
 		text-transform: none;
 	}
@@ -82,6 +119,21 @@
 	:global(a.link:hover) {
 		color: #3299CC;
 		text-decoration: none;
+	}
+	:global(.ellipsis) {
+		display: flex;
+	}
+	:global(.ellipsis:after) {
+		content: '...';
+		margin-left: 2px;
+		align-self: flex-end;
+		letter-spacing: 2px;
+		color: inherit;
+	}
+	:global(.ellipsis-content) {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 	:global(.row) {
 		display: flex;
@@ -176,7 +228,7 @@
 		{ isSponsored: true,
 			date: '2018-05-06T13:00:00Z',
 			content: {
-				text: '<p class="title">Architecture Services</p><p>Design and planning consultance, see more at ...<p>',
+				text: '<p><strong>Architecture Services</strong></p><p>Design and planning consultance, see more at ...<p>',
 				img: 'https://i.imgur.com/vZ8suUE.jpg'
 			},
 			details: {
@@ -191,11 +243,7 @@
 				}
 			},
 			recommendations: {
-				users: ['03', '04', '05', '10', '11'
-					// {id: '03', img: '', link: '', name: '', rating: ''},
-					// {id: '04', img: '', link: '', name: '', rating: ''},
-					// {id: '05', img: '', link: '', name: '', rating: ''}
-				],
+				users: ['03', '04', '05', '10', '11'],
 				rating: 4.6,
 				total: 42
 			}

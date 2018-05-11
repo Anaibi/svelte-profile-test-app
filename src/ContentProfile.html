@@ -2,7 +2,7 @@
   <ul class="tab-nav">
     {#each menu as item, i}
     <li>
-      <button class="menu-item {item.active ? 'active' : ''}" on:click="toggleContent(i)">
+      <button class="btn menu-item {item.active ? 'active' : ''}" on:click="toggleContent(i)">
         {#if item.icon.svg}
           <span class="icon">
             <IconsSvg name="{item.icon.svg}"/>

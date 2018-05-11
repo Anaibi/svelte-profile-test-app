@@ -1,11 +1,11 @@
 <div class="box">
   <div class="featured" style="background-image: url('{post.content.img}')">
     {#if post.recommendations}
-      <div class="row">
+      <div class="row vCentered">
         {#each recommendationUsers as user}
           <Avatar user={user}/>
         {/each}
-        <div>
+        <div class="details">
           {#if post.recommendations.rating}
             <Stars rating={post.recommendations.rating}/>
           {/if}
@@ -16,11 +16,13 @@
       </div>
     {/if}
   </div>
-  <div class="row">
-    <div>
-      {@html post.content.text}
+  <div class="row featured-text">
+    <div class="content ellipsis">
+      <div class="ellipsis-content">
+        {@html post.content.text}
+      </div>
     </div>
-    <button>Hire</button>
+    <button class="btn">Hire</button>
   </div>
 </div>
 
@@ -28,6 +30,42 @@
   .featured {
     height: 250px;
     background-size: cover;
+    display: flex;
+    align-items: flex-end;
+    padding: 25px 30px;
+    color: #FEFEFE;
+    box-shadow: 0px -120px 80px -70px black inset;
+  }
+  .featured :global(a) {
+    margin-right: 8px;
+  }
+  .details {
+    margin-left: 20px;
+  }
+  .details :global(.icon-stars) {
+    margin-left: 0;
+  }
+  p {
+    font-size: 15px;
+    line-height: 15px;
+  }
+  .featured-text {
+    padding: 25px 30px;
+  }
+  .content {
+    max-width: 225px;
+    max-height: 40px;
+  }
+  .content {
+    font-size: 15px;
+    line-height: 20px;
+    color: #D3D3D3;
+  }
+  .content :global(strong) {
+    color: #4F4F4F;
+  }
+  button {
+    width: 160px;
   }
 </style>
 

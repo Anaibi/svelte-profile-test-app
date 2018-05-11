@@ -1985,31 +1985,31 @@ var app = (function () {
 					div_4 = createElement("div");
 				}
 				if (!slot_content_default) {
-					img.className = "profile-img img svelte-1gvdoqf";
+					img.className = "profile-img img svelte-176wm8a";
 					img.src = img_src_value = ctx.profile.user.img;
 					img.alt = img_alt_value = ctx.profile.user.name;
-					span.className = "icon svelte-1gvdoqf";
-					button.className = "btn svelte-1gvdoqf";
+					span.className = "icon svelte-176wm8a";
+					button.className = "btn svelte-176wm8a";
 					h2.className = "title";
-					p.className = "highlight info svelte-1gvdoqf";
+					p.className = "highlight info svelte-176wm8a";
 					div_1.className = "col";
 					h2_1.className = "title";
-					p_1.className = "highlight info svelte-1gvdoqf";
+					p_1.className = "highlight info svelte-176wm8a";
 					div_2.className = "col";
-					div.className = "info-row lg row svelte-1gvdoqf";
+					div.className = "info-row lg row svelte-176wm8a";
 					h2_2.className = "title";
-					span_1.className = "note svelte-1gvdoqf";
-					p_2.className = "highlight info svelte-1gvdoqf";
-					div_3.className = "col info-row svelte-1gvdoqf";
-					header.className = "svelte-1gvdoqf";
-					span_2.className = "icon svelte-1gvdoqf";
-					h2_3.className = "title svelte-1gvdoqf";
-					span_3.className = "icon icon-star svelte-1gvdoqf";
+					span_1.className = "note svelte-176wm8a";
+					p_2.className = "highlight info svelte-176wm8a";
+					div_3.className = "col info-row svelte-176wm8a";
+					header.className = "svelte-176wm8a";
+					span_2.className = "icon svelte-176wm8a";
+					h2_3.className = "title svelte-176wm8a";
+					span_3.className = "icon icon-star svelte-176wm8a";
 					a.className = "right link";
 					a.href = "/";
-					h2_4.className = "title svelte-1gvdoqf";
+					h2_4.className = "title svelte-176wm8a";
 					div_4.className = "rows";
-					main.className = "svelte-1gvdoqf";
+					main.className = "svelte-176wm8a";
 				}
 			},
 
@@ -2194,7 +2194,7 @@ var app = (function () {
 		return {
 			c: function create() {
 				span = createElement("span");
-				span.className = "icon-stars svelte-1m82sjx";
+				span.className = "icon-stars svelte-2zmrik";
 				setStars_action = setStars.call(component, span) || {};
 			},
 
@@ -2271,11 +2271,11 @@ var app = (function () {
 				text_6 = createText("\n\t");
 				button_1 = createElement("button");
 				button_1.textContent = "Request";
-				h1.className = "svelte-1822d7";
-				p.className = "svelte-1822d7";
-				span.className = "icon svelte-1822d7";
-				button.className = "btn-icon svelte-1822d7";
-				button_1.className = "btn-primary svelte-1822d7";
+				h1.className = "svelte-1j8i0yl";
+				p.className = "svelte-1j8i0yl";
+				span.className = "icon svelte-1j8i0yl";
+				button.className = "btn btn-icon svelte-1j8i0yl";
+				button_1.className = "btn btn-primary";
 				div_1.className = "row";
 			},
 
@@ -2611,7 +2611,7 @@ var app = (function () {
 				iconssvg._fragment.c();
 				span_1.className = "icon svelte-1bde89r";
 				addListener(button, "click", click_handler);
-				button.className = button_class_value = "" + (ctx.bookmarked ? 'active' : '') + " svelte-1bde89r";
+				button.className = button_class_value = "link " + (ctx.bookmarked ? 'active' : '') + " svelte-1bde89r";
 				p.className = "row row-bottom italic note svelte-1bde89r";
 			},
 
@@ -2625,7 +2625,7 @@ var app = (function () {
 			},
 
 			p: function update(changed, ctx) {
-				if ((changed.bookmarked) && button_class_value !== (button_class_value = "" + (ctx.bookmarked ? 'active' : '') + " svelte-1bde89r")) {
+				if ((changed.bookmarked) && button_class_value !== (button_class_value = "link " + (ctx.bookmarked ? 'active' : '') + " svelte-1bde89r")) {
 					button.className = button_class_value;
 				}
 			},
@@ -2707,7 +2707,7 @@ var app = (function () {
 	  this.set({recommendationUsers});
 	}
 	function create_main_fragment$27(component, ctx) {
-		var div, div_1, text_1, div_2, div_3, raw_value = ctx.post.content.text, text_3, button;
+		var div, div_1, text_1, div_2, div_3, div_4, raw_value = ctx.post.content.text, text_4, button;
 
 		var if_block = (ctx.post.recommendations) && create_if_block$3(component, ctx);
 
@@ -2719,12 +2719,16 @@ var app = (function () {
 				text_1 = createText("\n  ");
 				div_2 = createElement("div");
 				div_3 = createElement("div");
-				text_3 = createText("\n    ");
+				div_4 = createElement("div");
+				text_4 = createText("\n    ");
 				button = createElement("button");
 				button.textContent = "Hire";
-				div_1.className = "featured svelte-1asdi54";
+				div_1.className = "featured svelte-1v6ra7w";
 				setStyle(div_1, "background-image", "url('" + ctx.post.content.img + "')");
-				div_2.className = "row";
+				div_4.className = "ellipsis-content svelte-1v6ra7w";
+				div_3.className = "content ellipsis svelte-1v6ra7w";
+				button.className = "btn svelte-1v6ra7w";
+				div_2.className = "row featured-text svelte-1v6ra7w";
 				div.className = "box";
 			},
 
@@ -2735,8 +2739,9 @@ var app = (function () {
 				appendNode(text_1, div);
 				appendNode(div_2, div);
 				appendNode(div_3, div_2);
-				div_3.innerHTML = raw_value;
-				appendNode(text_3, div_2);
+				appendNode(div_4, div_3);
+				div_4.innerHTML = raw_value;
+				appendNode(text_4, div_2);
 				appendNode(button, div_2);
 			},
 
@@ -2760,12 +2765,12 @@ var app = (function () {
 				}
 
 				if ((changed.post) && raw_value !== (raw_value = ctx.post.content.text)) {
-					div_3.innerHTML = raw_value;
+					div_4.innerHTML = raw_value;
 				}
 			},
 
 			u: function unmount() {
-				div_3.innerHTML = '';
+				div_4.innerHTML = '';
 
 				detachNode(div);
 				if (if_block) if_block.u();
@@ -2855,6 +2860,7 @@ var app = (function () {
 				text = createText("(");
 				text_1 = createText(text_1_value);
 				text_2 = createText(") recommend this");
+				p.className = "svelte-1v6ra7w";
 			},
 
 			m: function mount(target, anchor) {
@@ -2907,7 +2913,8 @@ var app = (function () {
 				if (if_block) if_block.c();
 				text_1 = createText("\n          ");
 				if (if_block_1) if_block_1.c();
-				div.className = "row";
+				div_1.className = "details svelte-1v6ra7w";
+				div.className = "row vCentered";
 			},
 
 			m: function mount(target, anchor) {
@@ -3265,7 +3272,7 @@ var app = (function () {
 	};
 
 	function create_main_fragment$30(component, ctx) {
-		var div, div_1, button, span, text, span_1, text_1_value = ctx.details.stars, text_1, button_class_value, text_3, a, span_2, text_4, span_3, text_5_value = ctx.details.comments.total > 0 ? ctx.details.comments.total : '', text_5, a_href_value, text_7, a_1, span_4, text_8, span_5, span_5_class_value, text_11, div_2, button_1, span_6;
+		var div, div_1, button, span, text, span_1, text_1_value = ctx.details.stars, text_1, button_class_value, text_3, a, span_2, text_4, span_3, text_5_value = ctx.details.comments.total > 0 ? ctx.details.comments.total : '', text_5, a_href_value, text_7, a_1, span_4, text_8, span_5, span_5_class_value, a_1_href_value, text_11, div_2, button_1, span_6;
 
 		var iconssvg_initial_data = { name: "Star" };
 		var iconssvg = new IconsSvg({
@@ -3323,22 +3330,22 @@ var app = (function () {
 				button_1 = createElement("button");
 				span_6 = createElement("span");
 				iconssvg_3._fragment.c();
-				span.className = "icon icon-star svelte-aamq6k";
-				span_1.className = "text svelte-aamq6k";
+				span.className = "icon icon-star svelte-1dw7j8z";
+				span_1.className = "text svelte-1dw7j8z";
 				addListener(button, "click", click_handler);
-				button.className = button_class_value = "" + (ctx.starsActive ? 'active' : '') + " svelte-aamq6k";
-				span_2.className = "icon icon-message svelte-aamq6k";
-				span_3.className = "text svelte-aamq6k";
-				a.className = "link svelte-aamq6k";
+				button.className = button_class_value = "link " + (ctx.starsActive ? 'active' : '') + " svelte-1dw7j8z";
+				span_2.className = "icon icon-message svelte-1dw7j8z";
+				span_3.className = "text svelte-1dw7j8z";
+				a.className = "link svelte-1dw7j8z";
 				a.href = a_href_value = ctx.details.comments.link;
-				span_4.className = "icon svelte-aamq6k";
-				span_5.className = span_5_class_value = "" + (ctx.details.answers.total > 0 ? ctx.details.answers.total : '') + " svelte-aamq6k";
-				a_1.href = "details.answers.link";
-				a_1.className = "svelte-aamq6k";
+				span_4.className = "icon svelte-1dw7j8z";
+				span_5.className = span_5_class_value = "" + (ctx.details.answers.total > 0 ? ctx.details.answers.total : '') + " svelte-1dw7j8z";
+				a_1.className = "link svelte-1dw7j8z";
+				a_1.href = a_1_href_value = ctx.details.answers.link;
 				div_1.className = "row";
-				span_6.className = "icon svelte-aamq6k";
-				button_1.className = "svelte-aamq6k";
-				div.className = "details row svelte-aamq6k";
+				span_6.className = "icon svelte-1dw7j8z";
+				button_1.className = "link svelte-1dw7j8z";
+				div.className = "details row svelte-1dw7j8z";
 			},
 
 			m: function mount(target, anchor) {
@@ -3375,7 +3382,7 @@ var app = (function () {
 					text_1.data = text_1_value;
 				}
 
-				if ((changed.starsActive) && button_class_value !== (button_class_value = "" + (ctx.starsActive ? 'active' : '') + " svelte-aamq6k")) {
+				if ((changed.starsActive) && button_class_value !== (button_class_value = "link " + (ctx.starsActive ? 'active' : '') + " svelte-1dw7j8z")) {
 					button.className = button_class_value;
 				}
 
@@ -3387,8 +3394,12 @@ var app = (function () {
 					a.href = a_href_value;
 				}
 
-				if ((changed.details) && span_5_class_value !== (span_5_class_value = "" + (ctx.details.answers.total > 0 ? ctx.details.answers.total : '') + " svelte-aamq6k")) {
+				if ((changed.details) && span_5_class_value !== (span_5_class_value = "" + (ctx.details.answers.total > 0 ? ctx.details.answers.total : '') + " svelte-1dw7j8z")) {
 					span_5.className = span_5_class_value;
+				}
+
+				if ((changed.details) && a_1_href_value !== (a_1_href_value = ctx.details.answers.link)) {
+					a_1.href = a_1_href_value;
 				}
 			},
 
@@ -4176,7 +4187,7 @@ var app = (function () {
 				button._svelte = { component, ctx };
 
 				addListener(button, "click", click_handler);
-				button.className = button_class_value = "menu-item " + (ctx.item.active ? 'active' : '') + " svelte-w7r80x";
+				button.className = button_class_value = "btn menu-item " + (ctx.item.active ? 'active' : '') + " svelte-w7r80x";
 				li.className = "svelte-w7r80x";
 			},
 
@@ -4205,7 +4216,7 @@ var app = (function () {
 				}
 
 				button._svelte.ctx = ctx;
-				if ((changed.menu) && button_class_value !== (button_class_value = "menu-item " + (ctx.item.active ? 'active' : '') + " svelte-w7r80x")) {
+				if ((changed.menu) && button_class_value !== (button_class_value = "btn menu-item " + (ctx.item.active ? 'active' : '') + " svelte-w7r80x")) {
 					button.className = button_class_value;
 				}
 			},
@@ -4607,7 +4618,7 @@ var app = (function () {
 		{ isSponsored: true,
 			date: '2018-05-06T13:00:00Z',
 			content: {
-				text: '<p class="title">Architecture Services</p><p>Design and planning consultance, see more at ...<p>',
+				text: '<p><strong>Architecture Services</strong></p><p>Design and planning consultance, see more at ...<p>',
 				img: 'https://i.imgur.com/vZ8suUE.jpg'
 			},
 			details: {
@@ -4622,11 +4633,7 @@ var app = (function () {
 				}
 			},
 			recommendations: {
-				users: ['03', '04', '05', '10', '11'
-					// {id: '03', img: '', link: '', name: '', rating: ''},
-					// {id: '04', img: '', link: '', name: '', rating: ''},
-					// {id: '05', img: '', link: '', name: '', rating: ''}
-				],
+				users: ['03', '04', '05', '10', '11'],
 				rating: 4.6,
 				total: 42
 			}
@@ -4856,13 +4863,13 @@ var app = (function () {
 				sidebar_1._fragment.c();
 				link.href = "https://fonts.googleapis.com/css?family=Palanquin:300";
 				link.rel = "stylesheet";
-				header.className = "row vCentered svelte-181aq41";
-				div_4.className = "content svelte-181aq41";
+				header.className = "row vCentered svelte-bcvltv";
+				div_4.className = "content svelte-bcvltv";
 				div_3.className = "row";
-				main.className = "svelte-181aq41";
+				main.className = "svelte-bcvltv";
 				div_2.className = "row";
 				div_1.className = "scroll";
-				div.className = "page sidenav svelte-181aq41";
+				div.className = "page sidenav svelte-bcvltv";
 			},
 
 			m: function mount(target, anchor) {

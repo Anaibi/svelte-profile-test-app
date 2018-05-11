@@ -1,6 +1,6 @@
 <div class="details row">
   <div class="row">
-    <button class="{starsActive ? 'active' : ''}" on:click="addStar()">
+    <button class="link {starsActive ? 'active' : ''}" on:click="addStar()">
       <span class="icon icon-star"><IconsSvg name="Star"/></span>
       <span class="text">{details.stars}</span>
     </button>
@@ -8,36 +8,22 @@
       <span class="icon icon-message"><IconsSvg name="MessageFull"/></span>
       <span class="text">{details.comments.total > 0 ? details.comments.total : ''}</span>
     </a>
-    <a href="details.answers.link">
+    <a class="link" href="{details.answers.link}">
       <span class="icon"><IconsSvg name="Reply"/></span>
       <span class="{details.answers.total > 0 ? details.answers.total : ''}"></span>
     </a>
   </div>
 
   <div>
-    <button><span class="icon"><IconsSvg name="More"/></span></button>
+    <button class="link"><span class="icon"><IconsSvg name="More"/></span></button>
   </div>
 </div>
 
 <style>
-  span, button {
+  .link {
     color: #D9D9D9;
   }
-  button {
-    background: transparent;
-    border: none;
-  }
-  a {
-    display: flex;
-    align-items: center;
-  }
-  a:hover {
-    text-decoration: none;
-    color: #3299CC;
-  }
-  a:hover .text,
-  a:hover .icon,
-  button:hover .icon {
+  .link:hover {
     color: #3299CC;
   }
   .details {
@@ -47,6 +33,7 @@
   .text {
     display: inline-block;
     height: 15px;
+    color: inherit;
   }
   .icon {
     width: 15px;
