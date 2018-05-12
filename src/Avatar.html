@@ -1,6 +1,12 @@
-<a href="{user.link}">
-  <img src="{user.img}" alt="{user.name}" />
-</a>
+{#if isReview}
+  <a href="{reviewUser.link}">
+    <img src="{reviewUser.img}" alt="{reviewUser.name}" />
+  </a>
+{:else}
+  <a href="{user.link}">
+    <img src="{user.img}" alt="{user.name}" />
+  </a>
+{/if}
 
 <style>
   a {
@@ -16,3 +22,25 @@
     height: auto;
   }
 </style>
+
+<script>
+  export default {
+    data() {
+      return {
+        isReview: false,
+        reviewUser: {}
+      }
+    },
+    oncreate() {
+      if (!this.get().isReview) return;
+      var id = this.get().user;
+      if (!id) {
+        console.log('review has no user associated', this);
+        return;
+      }
+      var reviewUser = this.root.findUser(id);
+      if (reviewUser) this.set({reviewUser});
+      else console.log('user id is not found in users', id);
+    }
+  }
+</script>

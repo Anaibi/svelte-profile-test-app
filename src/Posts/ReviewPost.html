@@ -1,27 +1,73 @@
-  <div class="box">
-    <div class="row">
-      <div class="left row">
+  <div class="box-2">
+    <div class="row box-header">
+      <div class="user-info row vCentered">
         <Avatar user={user}/>
         <div>
           <p>{user.name}</p>
-          <span class="icon-stars"></span>
+          <Stars rating={post.review.rating}/>
         </div>
       </div>
-      <div class="right col">
-        <span>{post.review.rating}</span>
+      <div class="user-rating col">
+        <span>{rating}</span>
         <span>RATED</span>
       </div>
     </div>
-    <p>"{@html post.review.content.text}"</p>
-    <p class="italic"><strong>{post.review.user.name}</strong></p>
+    <div class="box-content">
+      <p class="quote">{@html post.review.content.text}</p>
+      <p class="signature italic"><strong>{reviewUser.name}</strong></p>
+    </div>
   </div>
+
+<style>
+  .box-header {
+    height: 95px;
+    border-bottom: 1px solid #F1F1F1;
+  }
+  .user-info {
+    flex: 1;
+    justify-content: flex-start;
+    height: 100%;
+    padding: 0 15px;
+    border-right: 1px solid #F1F1F1;
+  }
+  .user-rating {
+    width: 140px;
+  }
+  .box-content {
+    padding: 28px;
+  }
+  .quote::before,
+  .quote::after {
+    content: '"';
+  }
+  .signature::before {
+    content: '- ';
+  }
+</style>
 
 <script>
   import Avatar from './../Avatar.html';
+  import Stars from './../Stars.html';
 
   export default {
+    data() {
+      return {
+        reviewUser: ''
+      }
+    },
     components: {
-      Avatar
+      Avatar,
+      Stars
+    },
+    oncreate() {
+      var id = this.get().post.review.user;
+      if (!id) {
+        console.log('missing review user id', this);
+        return;
+      }
+      var reviewUser = this.root.findUser(id);
+      if (reviewUser) this.set({reviewUser});
+      else console.log('no review user with id ', id);
     }
   }
 </script>

@@ -145,6 +145,12 @@
 	:global(.row-bottom) {
 		align-items: flex-end;
 	}
+	:global(.col) {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
 	:global(.scroll) {
 		overflow: scroll;
 		/* hide scrollbar */
@@ -160,13 +166,14 @@
 	:global(.box) {
 		margin-top: 20px;
 		border-radius: 10px;
-		box-shadow: 0px 6px 12px 2px #F1F1F1;
+		box-shadow: 0px 5px 5px 2px #F1F1F1;
 		overflow: hidden;
 	}
+	/* same as box but with shadow all around */
 	:global(.box-2) {
 		margin-top: 20px;
 		border-radius: 10px;
-		box-shadow: 0px 0px 15px 3px #F1F1F1;
+		box-shadow: 0px 0px 10px 3px #F1F1F1;
 		overflow: hidden;
 	}
 	.page {
@@ -243,24 +250,21 @@
 				}
 			},
 			recommendations: {
+				// would be an array of 42 elements/users id
 				users: ['03', '04', '05', '10', '11'],
 				rating: 4.6,
+				// total = users.length
 				total: 42
 			}
 		},
 		{	isReview: true,
 			review: {
-				user: {
-					id: '03',
-					name: 'Jessica Simmons',
-					img: '',
-					link: '',
-				},
+				user: '03',
 				date: '2018-05-03T13:00:00Z',
 				content: {
-					text: '<p>It was a pleasure to work with Mario. Very professional and talented architect. I really suggest him!'
+					text: 'It was a pleasure to work with Mario. Very professional and talented architect. I really suggest him!'
 				},
-				rating: 4.8,
+				rating: 5,
 			},
 			details: {
 				stars: 6,
@@ -356,7 +360,7 @@
 		methods: {
 			getIcons(menu) {
 				var icons = this.get().icons;
-				if (menu.length === 0) { return; }
+				if (menu.length === 0) return;
 				menu.forEach(item => {
 					var found = icons.find(x => x.name === item.icon);
 					if (found) item.icon = found;
@@ -369,24 +373,26 @@
 					console.log('missing user id');
 					return;
 				}
-				var users = this.get().users;
-				var user = users.find(x => x.id === id);
+				var user = this.findUser(id)
 				if (user) this.set({user});
-				else console.log('no user');
+				else console.log('no user with id ', id);
 			},
 			setProfileUser(id) {
 				if (!id) {
 					console.log('missing profile user id');
 					return;
 				}
-				var users = this.get().users,
-						profile = this.get().profile;
-				var user = users.find(x => x.id === id);
+				var profile = this.get().profile,
+						user = this.findUser(id);
 				if (user) {
 					profile.user = user;
 					this.set({profile});
 				}
 				else console.log('no user with id ', id);
+			},
+			findUser(id) {
+				var found = this.get().users.find(x => x.id === id)
+				return found;
 			}
 		},
 		oncreate() {

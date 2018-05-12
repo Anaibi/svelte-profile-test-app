@@ -1,3 +1,11 @@
+{#if isReview}
+  <div class="post-title row">
+    <p>
+      <strong>{reviewUser.name} </strong>
+      <span class="note"><span class="icon note"><IconsSvg name='Clock'/></span> {postPeriod}</span>
+    </p>
+  </div>
+{:else}
 <div class="post-title row">
   <p>
     <strong>{name} </strong>
@@ -10,6 +18,7 @@
     </p>
   {/if}
 </div>
+{/if}
 
 <style>
   .post-title {
@@ -52,7 +61,10 @@
     data() {
       return {
         isSponsored: false,
-        bookmarked: false
+        bookmarked: false,
+        isReview: false,
+        reviewUser: {},
+        name: ''
       }
     },
     components: {
@@ -90,6 +102,20 @@
         this.set({bookmarked: !this.get().bookmarked});
         // do bookmarking
       }
-    }
+    },
+    oncreate() {
+      if (!this.get().isReview) return;
+      var id = this.get().user;
+      if (!id) {
+        console.log('review has no user id associated');
+        return;
+      }
+      var reviewUser = this.root.findUser(id);
+      if (!reviewUser) {
+        console.log('users has no user of id ', id);
+        return;
+      }
+      this.set({reviewUser});
+     }
   }
 </script>

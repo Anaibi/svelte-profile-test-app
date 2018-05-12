@@ -84,15 +84,16 @@
       Stars
     },
     oncreate() {
-      var users = this.root.get().users,
-          recommendationUsers = this.get().post.recommendations.users,
-          found;
-      recommendationUsers = recommendationUsers.splice(0,3);
+      if (!this.get().post.recommendations.total > 0) { return; }
+      var ids = this.get().post.recommendations.users,
+          recommendationUsers = [],
+          user;
+      ids = ids.splice(0,3);
       for (let i = 0; i < 3; i++) {
-        found = users.find(x => x.id === recommendationUsers[i]);
-        if (found) recommendationUsers[i] = found;
+        user = this.root.findUser(ids[i]);
+        if (user) recommendationUsers[i] = user;
+        else console.log('id not found in users', ids[i], this);
       }
-      console.log(recommendationUsers);
       this.set({recommendationUsers});
     }
   }
