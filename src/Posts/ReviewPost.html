@@ -3,12 +3,12 @@
       <div class="user-info row vCentered">
         <Avatar user={user}/>
         <div>
-          <p>{user.name}</p>
+          <p class="user-name">{user.name}</p>
           <Stars rating={post.review.rating}/>
         </div>
       </div>
       <div class="user-rating col">
-        <span>{rating}</span>
+        <span class="note">{rating}</span>
         <span>RATED</span>
       </div>
     </div>
@@ -23,6 +23,9 @@
     height: 95px;
     border-bottom: 1px solid #F1F1F1;
   }
+  .box-content {
+    padding: 28px;
+  }
   .user-info {
     flex: 1;
     justify-content: flex-start;
@@ -30,11 +33,33 @@
     padding: 0 15px;
     border-right: 1px solid #F1F1F1;
   }
+  .user-info :global(.avatar) {
+    width: 55px;
+    height: 55px;
+    margin-right: 12px;
+  }
+  .user-info :global(.icon-stars) {
+    margin-left: 0;
+  }
+  .user-name {
+    font-size: 18px;
+  }
   .user-rating {
     width: 140px;
+    color: #666666;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 15px;
   }
-  .box-content {
-    padding: 28px;
+  .note {
+    font-size: 30px;
+    line-height: 30px;
+    font-weight: normal;
+  }
+  .quote {
+    margin-bottom: 12px;
+    font-size: 15px;
+    line-height: 20px;
   }
   .quote::before,
   .quote::after {
@@ -43,6 +68,7 @@
   .signature::before {
     content: '- ';
   }
+
 </style>
 
 <script>
@@ -59,15 +85,14 @@
       Avatar,
       Stars
     },
-    oncreate() {
-      var id = this.get().post.review.user;
-      if (!id) {
-        console.log('missing review user id', this);
-        return;
+    methods: {
+      setReviewUser() {
+        var id = this.get().post.review.user;
+        this.root.setReviewUser(id, this);
       }
-      var reviewUser = this.root.findUser(id);
-      if (reviewUser) this.set({reviewUser});
-      else console.log('no review user with id ', id);
+    },
+    oncreate() {
+      if (this.get().isReview) this.setReviewUser();
     }
   }
 </script>

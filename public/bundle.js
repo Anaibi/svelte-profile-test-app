@@ -1897,7 +1897,7 @@ var app = (function () {
 
 
 	function create_main_fragment$21(component, ctx) {
-		var slot_content_default = component._slotted.default, slot_content_default_before, slot_content_default_after, header, img, img_src_value, img_alt_value, text, button, span, text_1, text_2, div, div_1, h2, text_4, p, text_5_value = ctx.profile.details.followers, text_5, text_7, div_2, h2_1, text_9, p_1, text_10_value = ctx.profile.details.following, text_10, text_13, div_3, h2_2, text_15, p_2, text_16_value = ctx.profile.details.perf, text_16, text_17, span_1, text_18, text_19_value = ctx.profile.details.reviews, text_19, text_20, text_23, main, h2_3, span_2, text_24, text_25, text_26, h2_4, span_3, text_27, a, text_29, div_4;
+		var slot_content_default = component._slotted.default, slot_content_default_before, slot_content_default_after, header, img, img_src_value, img_alt_value, text, button, span, text_1, text_2, div, div_1, h2, text_4, p, text_5_value = ctx.profile.details.followers, text_5, text_7, div_2, h2_1, text_9, p_1, text_10_value = ctx.profile.details.following, text_10, text_13, div_3, h2_2, text_15, p_2, text_16_value = ctx.profile.details.perf, text_16, text_17, span_1, text_18, text_19_value = ctx.profile.details.reviews, text_19, text_20, text_23, main, h2_3, span_2, text_24, text_25, text_26, h2_4, span_3, text_27, a, text_30, div_4;
 
 		var iconssvg_initial_data = { name: "UserAdd" };
 		var iconssvg = new IconsSvg({
@@ -1966,16 +1966,16 @@ var app = (function () {
 					span_2 = createElement("span");
 					iconssvg_1._fragment.c();
 					text_24 = createText(" Projects");
-					text_25 = createText("\n\t\t\t");
+					text_25 = createText("\n\t\t");
 					tiles._fragment.c();
-					text_26 = createText("\n\t\t");
+					text_26 = createText("\n\n\t\t");
 					h2_4 = createElement("h2");
 					span_3 = createElement("span");
 					iconssvg_2._fragment.c();
-					text_27 = createText(" Boosts ");
+					text_27 = createText(" Boosts\n\t\t\t");
 					a = createElement("a");
 					a.textContent = "More";
-					text_29 = createText("\n\t\t");
+					text_30 = createText("\n\t\t");
 					div_4 = createElement("div");
 				}
 				if (!slot_content_default) {
@@ -2054,7 +2054,7 @@ var app = (function () {
 					iconssvg_2._mount(span_3, null);
 					appendNode(text_27, h2_4);
 					appendNode(a, h2_4);
-					appendNode(text_29, main);
+					appendNode(text_30, main);
 					appendNode(div_4, main);
 				}
 
@@ -2400,19 +2400,18 @@ var app = (function () {
 	function data$1() {
 	  return {
 	    isReview: false,
-	    reviewUser: {}
+	    reviewUser: ''
 	  }
 	}
-	function oncreate$1() {
-	  if (!this.get().isReview) return;
-	  var id = this.get().user;
-	  if (!id) {
-	    console.log('review has no user associated', this);
-	    return;
+	var methods = {
+	  setReviewUser() {
+	    var id = this.get().user;
+	    this.root.setReviewUser(id, this);
 	  }
-	  var reviewUser = this.root.findUser(id);
-	  if (reviewUser) this.set({reviewUser});
-	  else console.log('user id is not found in users', id);
+	};
+
+	function oncreate$1() {
+	  if (this.get().isReview) this.setReviewUser();
 	}
 	function create_main_fragment$25(component, ctx) {
 		var if_block_anchor;
@@ -2469,9 +2468,9 @@ var app = (function () {
 				img = createElement("img");
 				img.src = img_src_value = ctx.reviewUser.img;
 				img.alt = img_alt_value = ctx.reviewUser.name;
-				img.className = "svelte-1iynk9m";
+				img.className = "svelte-7kaina";
+				a.className = "avatar svelte-7kaina";
 				a.href = a_href_value = ctx.reviewUser.link;
-				a.className = "svelte-1iynk9m";
 			},
 
 			m: function mount(target, anchor) {
@@ -2511,9 +2510,9 @@ var app = (function () {
 				img = createElement("img");
 				img.src = img_src_value = ctx.user.img;
 				img.alt = img_alt_value = ctx.user.name;
-				img.className = "svelte-1iynk9m";
+				img.className = "svelte-7kaina";
+				a.className = "avatar svelte-7kaina";
 				a.href = a_href_value = ctx.user.link;
-				a.className = "svelte-1iynk9m";
 			},
 
 			m: function mount(target, anchor) {
@@ -2573,6 +2572,7 @@ var app = (function () {
 	}
 
 	assign(Avatar.prototype, protoDev);
+	assign(Avatar.prototype, methods);
 
 	Avatar.prototype._checkReadOnly = function _checkReadOnly(newState) {
 	};
@@ -2604,83 +2604,123 @@ var app = (function () {
 	  }
 	  return period;
 				}
+
 	function data$2() {
 	  return {
 	    isSponsored: false,
 	    bookmarked: false,
 	    isReview: false,
-	    reviewUser: {},
 	    name: ''
 	  }
 	}
-	var methods = {
+	var methods$1 = {
 	  addBookmark() {
 	    this.set({bookmarked: !this.get().bookmarked});
 	    // do bookmarking
+	  },
+	  setReviewName() {
+	    if (!this.get().isReview) return;
+	    var id = this.get().user;
+	    if (!id) {
+	      console.log('review has no user id associated', this);
+	      return;
+	    }
+	    var reviewUser = this.root.findUser(id);
+	    if (!reviewUser) {
+	      console.log('users has no user of id ', id, this);
+	      return;
+	    }
+	    this.set({name: reviewUser.name});
 	  }
 	};
 
 	function oncreate$2() {
-	  if (!this.get().isReview) return;
-	  var id = this.get().user;
-	  if (!id) {
-	    console.log('review has no user id associated');
-	    return;
-	  }
-	  var reviewUser = this.root.findUser(id);
-	  if (!reviewUser) {
-	    console.log('users has no user of id ', id);
-	    return;
-	  }
-	  this.set({reviewUser});
-	 }
+	  this.setReviewName();
+	}
 	function create_main_fragment$26(component, ctx) {
-		var if_block_anchor;
+		var div, p, span, text, text_2, span_1, span_2, text_3, text_4, text_6;
 
-		function select_block_type(ctx) {
-			if (ctx.isReview) return create_if_block$3;
-			return create_if_block_1$2;
-		}
+		var iconssvg_initial_data = { name: "Clock" };
+		var iconssvg = new IconsSvg({
+			root: component.root,
+			data: iconssvg_initial_data
+		});
 
-		var current_block_type = select_block_type(ctx);
-		var if_block = current_block_type(component, ctx);
+		var if_block = (ctx.isSponsored) && create_if_block$3(component, ctx);
 
 		return {
 			c: function create() {
-				if_block.c();
-				if_block_anchor = createComment();
+				div = createElement("div");
+				p = createElement("p");
+				span = createElement("span");
+				text = createText(ctx.name);
+				text_2 = createText("\n    ");
+				span_1 = createElement("span");
+				span_2 = createElement("span");
+				iconssvg._fragment.c();
+				text_3 = createText(" ");
+				text_4 = createText(ctx.postPeriod);
+				text_6 = createText("\n  ");
+				if (if_block) if_block.c();
+				span.className = "user-name";
+				span_2.className = "icon note svelte-1bde89r";
+				span_1.className = "note svelte-1bde89r";
+				div.className = "post-title row svelte-1bde89r";
 			},
 
 			m: function mount(target, anchor) {
-				if_block.m(target, anchor);
-				insertNode(if_block_anchor, target, anchor);
+				insertNode(div, target, anchor);
+				appendNode(p, div);
+				appendNode(span, p);
+				appendNode(text, span);
+				appendNode(text_2, p);
+				appendNode(span_1, p);
+				appendNode(span_2, span_1);
+				iconssvg._mount(span_2, null);
+				appendNode(text_3, span_1);
+				appendNode(text_4, span_1);
+				appendNode(text_6, div);
+				if (if_block) if_block.m(div, null);
 			},
 
 			p: function update(changed, ctx) {
-				if (current_block_type === (current_block_type = select_block_type(ctx)) && if_block) {
-					if_block.p(changed, ctx);
-				} else {
+				if (changed.name) {
+					text.data = ctx.name;
+				}
+
+				if (changed.postPeriod) {
+					text_4.data = ctx.postPeriod;
+				}
+
+				if (ctx.isSponsored) {
+					if (if_block) {
+						if_block.p(changed, ctx);
+					} else {
+						if_block = create_if_block$3(component, ctx);
+						if_block.c();
+						if_block.m(div, null);
+					}
+				} else if (if_block) {
 					if_block.u();
 					if_block.d();
-					if_block = current_block_type(component, ctx);
-					if_block.c();
-					if_block.m(if_block_anchor.parentNode, if_block_anchor);
+					if_block = null;
 				}
 			},
 
 			u: function unmount() {
-				if_block.u();
-				detachNode(if_block_anchor);
+				detachNode(div);
+				if (if_block) if_block.u();
 			},
 
 			d: function destroy$$1() {
-				if_block.d();
+				iconssvg.destroy(false);
+				if (if_block) if_block.d();
 			}
 		};
 	}
 
-	// (14:2) {#if isSponsored}
-	function create_if_block_2$1(component, ctx) {
+	// (6:2) {#if isSponsored}
+	function create_if_block$3(component, ctx) {
 		var p, span, text_1, button, span_1, button_class_value;
 
 		var iconssvg_initial_data = { name: "Bookmark" };
@@ -2734,148 +2774,6 @@ var app = (function () {
 		};
 	}
 
-	// (1:0) {#if isReview}
-	function create_if_block$3(component, ctx) {
-		var div, p, strong, text_value = ctx.reviewUser.name, text, text_2, span, span_1, text_3, text_4;
-
-		var iconssvg_initial_data = { name: "Clock" };
-		var iconssvg = new IconsSvg({
-			root: component.root,
-			data: iconssvg_initial_data
-		});
-
-		return {
-			c: function create() {
-				div = createElement("div");
-				p = createElement("p");
-				strong = createElement("strong");
-				text = createText(text_value);
-				text_2 = createText("\n      ");
-				span = createElement("span");
-				span_1 = createElement("span");
-				iconssvg._fragment.c();
-				text_3 = createText(" ");
-				text_4 = createText(ctx.postPeriod);
-				span_1.className = "icon note svelte-1bde89r";
-				span.className = "note svelte-1bde89r";
-				div.className = "post-title row svelte-1bde89r";
-			},
-
-			m: function mount(target, anchor) {
-				insertNode(div, target, anchor);
-				appendNode(p, div);
-				appendNode(strong, p);
-				appendNode(text, strong);
-				appendNode(text_2, p);
-				appendNode(span, p);
-				appendNode(span_1, span);
-				iconssvg._mount(span_1, null);
-				appendNode(text_3, span);
-				appendNode(text_4, span);
-			},
-
-			p: function update(changed, ctx) {
-				if ((changed.reviewUser) && text_value !== (text_value = ctx.reviewUser.name)) {
-					text.data = text_value;
-				}
-
-				if (changed.postPeriod) {
-					text_4.data = ctx.postPeriod;
-				}
-			},
-
-			u: function unmount() {
-				detachNode(div);
-			},
-
-			d: function destroy$$1() {
-				iconssvg.destroy(false);
-			}
-		};
-	}
-
-	// (8:0) {:else}
-	function create_if_block_1$2(component, ctx) {
-		var div, p, strong, text, text_2, span, span_1, text_3, text_4, text_6;
-
-		var iconssvg_initial_data = { name: "Clock" };
-		var iconssvg = new IconsSvg({
-			root: component.root,
-			data: iconssvg_initial_data
-		});
-
-		var if_block = (ctx.isSponsored) && create_if_block_2$1(component, ctx);
-
-		return {
-			c: function create() {
-				div = createElement("div");
-				p = createElement("p");
-				strong = createElement("strong");
-				text = createText(ctx.name);
-				text_2 = createText("\n    ");
-				span = createElement("span");
-				span_1 = createElement("span");
-				iconssvg._fragment.c();
-				text_3 = createText(" ");
-				text_4 = createText(ctx.postPeriod);
-				text_6 = createText("\n  ");
-				if (if_block) if_block.c();
-				span_1.className = "icon note svelte-1bde89r";
-				span.className = "note svelte-1bde89r";
-				div.className = "post-title row svelte-1bde89r";
-			},
-
-			m: function mount(target, anchor) {
-				insertNode(div, target, anchor);
-				appendNode(p, div);
-				appendNode(strong, p);
-				appendNode(text, strong);
-				appendNode(text_2, p);
-				appendNode(span, p);
-				appendNode(span_1, span);
-				iconssvg._mount(span_1, null);
-				appendNode(text_3, span);
-				appendNode(text_4, span);
-				appendNode(text_6, div);
-				if (if_block) if_block.m(div, null);
-			},
-
-			p: function update(changed, ctx) {
-				if (changed.name) {
-					text.data = ctx.name;
-				}
-
-				if (changed.postPeriod) {
-					text_4.data = ctx.postPeriod;
-				}
-
-				if (ctx.isSponsored) {
-					if (if_block) {
-						if_block.p(changed, ctx);
-					} else {
-						if_block = create_if_block_2$1(component, ctx);
-						if_block.c();
-						if_block.m(div, null);
-					}
-				} else if (if_block) {
-					if_block.u();
-					if_block.d();
-					if_block = null;
-				}
-			},
-
-			u: function unmount() {
-				detachNode(div);
-				if (if_block) if_block.u();
-			},
-
-			d: function destroy$$1() {
-				iconssvg.destroy(false);
-				if (if_block) if_block.d();
-			}
-		};
-	}
-
 	function PostTitle(options) {
 		this._debugName = '<PostTitle>';
 		if (!options || (!options.target && !options.root)) throw new Error("'target' is a required option");
@@ -2883,10 +2781,8 @@ var app = (function () {
 		this._state = assign(data$2(), options.data);
 		this._recompute({ date: 1 }, this._state);
 		if (!('date' in this._state)) console.warn("<PostTitle> was created without expected data property 'date'");
-		if (!('isReview' in this._state)) console.warn("<PostTitle> was created without expected data property 'isReview'");
-		if (!('reviewUser' in this._state)) console.warn("<PostTitle> was created without expected data property 'reviewUser'");
-
 		if (!('name' in this._state)) console.warn("<PostTitle> was created without expected data property 'name'");
+
 		if (!('isSponsored' in this._state)) console.warn("<PostTitle> was created without expected data property 'isSponsored'");
 		if (!('bookmarked' in this._state)) console.warn("<PostTitle> was created without expected data property 'bookmarked'");
 
@@ -2917,7 +2813,7 @@ var app = (function () {
 	}
 
 	assign(PostTitle.prototype, protoDev);
-	assign(PostTitle.prototype, methods);
+	assign(PostTitle.prototype, methods$1);
 
 	PostTitle.prototype._checkReadOnly = function _checkReadOnly(newState) {
 		if ('postPeriod' in newState && !this._updatingReadonlyProperty) throw new Error("<PostTitle>: Cannot set read-only property 'postPeriod'");
@@ -2936,18 +2832,26 @@ var app = (function () {
 	    recommendationUsers: []
 	  }
 	}
-	function oncreate$3() {
-	  if (!this.get().post.recommendations.total > 0) { return; }
-	  var ids = this.get().post.recommendations.users,
-	      recommendationUsers = [],
-	      user;
-	  ids = ids.splice(0,3);
-	  for (let i = 0; i < 3; i++) {
-	    user = this.root.findUser(ids[i]);
-	    if (user) recommendationUsers[i] = user;
-	    else console.log('id not found in users', ids[i], this);
+	var methods$2 = {
+	  setRecommendationUsers() {
+	    var ids = this.get().post.recommendations.users,
+	        recommendationUsers = [],
+	        user;
+	    ids = ids.splice(0,3);
+	    for (let i = 0; i < 3; i++) {
+	      user = this.root.findUser(ids[i]);
+	      if (!user) {
+	        console.log('id not found in users. id: ', ids[i], this);
+	        user = this.root.newUser();
+	      }
+	      recommendationUsers[i] = user;
+	    }
+	    this.set({recommendationUsers});
 	  }
-	  this.set({recommendationUsers});
+	};
+
+	function oncreate$3() {
+	  if (this.get().post.recommendations.total > 0) this.setRecommendationUsers();
 	}
 	function create_main_fragment$27(component, ctx) {
 		var div, div_1, text_1, div_2, div_3, div_4, raw_value = ctx.post.content.text, text_4, button;
@@ -3060,7 +2964,7 @@ var app = (function () {
 	}
 
 	// (9:10) {#if post.recommendations.rating}
-	function create_if_block_1$3(component, ctx) {
+	function create_if_block_1$2(component, ctx) {
 
 		var stars_initial_data = { rating: ctx.post.recommendations.rating };
 		var stars = new Stars({
@@ -3094,7 +2998,7 @@ var app = (function () {
 	}
 
 	// (12:10) {#if post.recommendations.total > 0}
-	function create_if_block_2$2(component, ctx) {
+	function create_if_block_2$1(component, ctx) {
 		var p, text, text_1_value = ctx.post.recommendations.total, text_1, text_2;
 
 		return {
@@ -3139,9 +3043,9 @@ var app = (function () {
 			each_blocks[i] = create_each_block$2(component, get_each_context$2(ctx, each_value, i));
 		}
 
-		var if_block = (ctx.post.recommendations.rating) && create_if_block_1$3(component, ctx);
+		var if_block = (ctx.post.recommendations.rating) && create_if_block_1$2(component, ctx);
 
-		var if_block_1 = (ctx.post.recommendations.total > 0) && create_if_block_2$2(component, ctx);
+		var if_block_1 = (ctx.post.recommendations.total > 0) && create_if_block_2$1(component, ctx);
 
 		return {
 			c: function create() {
@@ -3201,7 +3105,7 @@ var app = (function () {
 					if (if_block) {
 						if_block.p(changed, ctx);
 					} else {
-						if_block = create_if_block_1$3(component, ctx);
+						if_block = create_if_block_1$2(component, ctx);
 						if_block.c();
 						if_block.m(div_1, text_1);
 					}
@@ -3215,7 +3119,7 @@ var app = (function () {
 					if (if_block_1) {
 						if_block_1.p(changed, ctx);
 					} else {
-						if_block_1 = create_if_block_2$2(component, ctx);
+						if_block_1 = create_if_block_2$1(component, ctx);
 						if_block_1.c();
 						if_block_1.m(div_1, null);
 					}
@@ -3289,6 +3193,7 @@ var app = (function () {
 	}
 
 	assign(SponsoredPost.prototype, protoDev);
+	assign(SponsoredPost.prototype, methods$2);
 
 	SponsoredPost.prototype._checkReadOnly = function _checkReadOnly(newState) {
 	};
@@ -3300,15 +3205,15 @@ var app = (function () {
 	    reviewUser: ''
 	  }
 	}
-	function oncreate$4() {
-	  var id = this.get().post.review.user;
-	  if (!id) {
-	    console.log('missing review user id', this);
-	    return;
+	var methods$3 = {
+	  setReviewUser() {
+	    var id = this.get().post.review.user;
+	    this.root.setReviewUser(id, this);
 	  }
-	  var reviewUser = this.root.findUser(id);
-	  if (reviewUser) this.set({reviewUser});
-	  else console.log('no review user with id ', id);
+	};
+
+	function oncreate$4() {
+	  if (this.get().isReview) this.setReviewUser();
 	}
 	function create_main_fragment$28(component, ctx) {
 		var div, div_1, div_2, text, div_3, p, text_1_value = ctx.user.name, text_1, text_2, text_5, div_4, span, text_6, text_7, span_1, text_11, div_5, p_1, raw_value = ctx.post.review.content.text, text_12, p_2, strong, text_13_value = ctx.reviewUser.name, text_13;
@@ -3351,12 +3256,14 @@ var app = (function () {
 				p_2 = createElement("p");
 				strong = createElement("strong");
 				text_13 = createText(text_13_value);
-				div_2.className = "user-info row vCentered svelte-ovryng";
-				div_4.className = "user-rating col svelte-ovryng";
-				div_1.className = "row box-header svelte-ovryng";
-				p_1.className = "quote svelte-ovryng";
-				p_2.className = "signature italic svelte-ovryng";
-				div_5.className = "box-content svelte-ovryng";
+				p.className = "user-name svelte-k5nvbj";
+				div_2.className = "user-info row vCentered svelte-k5nvbj";
+				span.className = "note svelte-k5nvbj";
+				div_4.className = "user-rating col svelte-k5nvbj";
+				div_1.className = "row box-header svelte-k5nvbj";
+				p_1.className = "quote svelte-k5nvbj";
+				p_2.className = "signature italic svelte-k5nvbj";
+				div_5.className = "box-content svelte-k5nvbj";
 				div.className = "box-2";
 			},
 
@@ -3463,6 +3370,7 @@ var app = (function () {
 	}
 
 	assign(ReviewPost.prototype, protoDev);
+	assign(ReviewPost.prototype, methods$3);
 
 	ReviewPost.prototype._checkReadOnly = function _checkReadOnly(newState) {
 	};
@@ -3524,10 +3432,12 @@ var app = (function () {
 
 	function data$5() {
 	  return {
-	    starsActive: false
+	    starsActive: false,
+	    commentsLink: '',
+	    answersLink: ''
 	  }
 	}
-	var methods$1 = {
+	var methods$4 = {
 	  addStar() {
 	    var details = this.get().details,
 	        active = this.get().starsActive;
@@ -3540,7 +3450,76 @@ var app = (function () {
 	};
 
 	function create_main_fragment$30(component, ctx) {
-		var div, div_1, button, span, text, span_1, text_1_value = ctx.details.stars, text_1, button_class_value, text_3, a, span_2, text_4, span_3, text_5_value = ctx.details.comments.total > 0 ? ctx.details.comments.total : '', text_5, a_href_value, text_7, a_1, span_4, text_8, span_5, span_5_class_value, a_1_href_value, text_11, div_2, button_1, span_6;
+		var div, div_1, text_1, div_2, button, span;
+
+		function select_block_type(ctx) {
+			if (ctx.details) return create_if_block$5;
+			return create_if_block_1$3;
+		}
+
+		var current_block_type = select_block_type(ctx);
+		var if_block = current_block_type(component, ctx);
+
+		var iconssvg_initial_data = { name: "More" };
+		var iconssvg = new IconsSvg({
+			root: component.root,
+			data: iconssvg_initial_data
+		});
+
+		return {
+			c: function create() {
+				div = createElement("div");
+				div_1 = createElement("div");
+				if_block.c();
+				text_1 = createText("\n\n  ");
+				div_2 = createElement("div");
+				button = createElement("button");
+				span = createElement("span");
+				iconssvg._fragment.c();
+				div_1.className = "row";
+				span.className = "icon svelte-1dw7j8z";
+				button.className = "link svelte-1dw7j8z";
+				div.className = "details row svelte-1dw7j8z";
+			},
+
+			m: function mount(target, anchor) {
+				insertNode(div, target, anchor);
+				appendNode(div_1, div);
+				if_block.m(div_1, null);
+				appendNode(text_1, div);
+				appendNode(div_2, div);
+				appendNode(button, div_2);
+				appendNode(span, button);
+				iconssvg._mount(span, null);
+			},
+
+			p: function update(changed, ctx) {
+				if (current_block_type === (current_block_type = select_block_type(ctx)) && if_block) {
+					if_block.p(changed, ctx);
+				} else {
+					if_block.u();
+					if_block.d();
+					if_block = current_block_type(component, ctx);
+					if_block.c();
+					if_block.m(div_1, null);
+				}
+			},
+
+			u: function unmount() {
+				detachNode(div);
+				if_block.u();
+			},
+
+			d: function destroy$$1() {
+				if_block.d();
+				iconssvg.destroy(false);
+			}
+		};
+	}
+
+	// (3:4) {#if details}
+	function create_if_block$5(component, ctx) {
+		var button, span, text, span_1, text_1_value = ctx.details.stars > 0 ? ctx.details.stars : '', text_1, button_class_value, text_3, a, span_2, text_4, span_3, text_5_value = ctx.details.comments.total > 0 ? ctx.details.comments.total : '', text_5, a_href_value, text_7, a_1, span_4, text_8, span_5, text_9_value = ctx.details.answers.total > 0 ? ctx.details.answers.total : '', text_9, a_1_href_value;
 
 		var iconssvg_initial_data = { name: "Star" };
 		var iconssvg = new IconsSvg({
@@ -3564,40 +3543,28 @@ var app = (function () {
 			data: iconssvg_2_initial_data
 		});
 
-		var iconssvg_3_initial_data = { name: "More" };
-		var iconssvg_3 = new IconsSvg({
-			root: component.root,
-			data: iconssvg_3_initial_data
-		});
-
 		return {
 			c: function create() {
-				div = createElement("div");
-				div_1 = createElement("div");
 				button = createElement("button");
 				span = createElement("span");
 				iconssvg._fragment.c();
-				text = createText("\n      ");
+				text = createText("\n        ");
 				span_1 = createElement("span");
 				text_1 = createText(text_1_value);
-				text_3 = createText("\n    ");
+				text_3 = createText("\n      ");
 				a = createElement("a");
 				span_2 = createElement("span");
 				iconssvg_1._fragment.c();
-				text_4 = createText("\n      ");
+				text_4 = createText("\n        ");
 				span_3 = createElement("span");
 				text_5 = createText(text_5_value);
-				text_7 = createText("\n    ");
+				text_7 = createText("\n      ");
 				a_1 = createElement("a");
 				span_4 = createElement("span");
 				iconssvg_2._fragment.c();
-				text_8 = createText("\n      ");
+				text_8 = createText("\n        ");
 				span_5 = createElement("span");
-				text_11 = createText("\n\n  ");
-				div_2 = createElement("div");
-				button_1 = createElement("button");
-				span_6 = createElement("span");
-				iconssvg_3._fragment.c();
+				text_9 = createText(text_9_value);
 				span.className = "icon icon-star svelte-1dw7j8z";
 				span_1.className = "text svelte-1dw7j8z";
 				addListener(button, "click", click_handler);
@@ -3607,46 +3574,36 @@ var app = (function () {
 				a.className = "link svelte-1dw7j8z";
 				a.href = a_href_value = ctx.details.comments.link;
 				span_4.className = "icon svelte-1dw7j8z";
-				span_5.className = span_5_class_value = "" + (ctx.details.answers.total > 0 ? ctx.details.answers.total : '') + " svelte-1dw7j8z";
+				span_5.className = "text svelte-1dw7j8z";
 				a_1.className = "link svelte-1dw7j8z";
 				a_1.href = a_1_href_value = ctx.details.answers.link;
-				div_1.className = "row";
-				span_6.className = "icon svelte-1dw7j8z";
-				button_1.className = "link svelte-1dw7j8z";
-				div.className = "details row svelte-1dw7j8z";
 			},
 
 			m: function mount(target, anchor) {
-				insertNode(div, target, anchor);
-				appendNode(div_1, div);
-				appendNode(button, div_1);
+				insertNode(button, target, anchor);
 				appendNode(span, button);
 				iconssvg._mount(span, null);
 				appendNode(text, button);
 				appendNode(span_1, button);
 				appendNode(text_1, span_1);
-				appendNode(text_3, div_1);
-				appendNode(a, div_1);
+				insertNode(text_3, target, anchor);
+				insertNode(a, target, anchor);
 				appendNode(span_2, a);
 				iconssvg_1._mount(span_2, null);
 				appendNode(text_4, a);
 				appendNode(span_3, a);
 				appendNode(text_5, span_3);
-				appendNode(text_7, div_1);
-				appendNode(a_1, div_1);
+				insertNode(text_7, target, anchor);
+				insertNode(a_1, target, anchor);
 				appendNode(span_4, a_1);
 				iconssvg_2._mount(span_4, null);
 				appendNode(text_8, a_1);
 				appendNode(span_5, a_1);
-				appendNode(text_11, div);
-				appendNode(div_2, div);
-				appendNode(button_1, div_2);
-				appendNode(span_6, button_1);
-				iconssvg_3._mount(span_6, null);
+				appendNode(text_9, span_5);
 			},
 
 			p: function update(changed, ctx) {
-				if ((changed.details) && text_1_value !== (text_1_value = ctx.details.stars)) {
+				if ((changed.details) && text_1_value !== (text_1_value = ctx.details.stars > 0 ? ctx.details.stars : '')) {
 					text_1.data = text_1_value;
 				}
 
@@ -3662,8 +3619,8 @@ var app = (function () {
 					a.href = a_href_value;
 				}
 
-				if ((changed.details) && span_5_class_value !== (span_5_class_value = "" + (ctx.details.answers.total > 0 ? ctx.details.answers.total : '') + " svelte-1dw7j8z")) {
-					span_5.className = span_5_class_value;
+				if ((changed.details) && text_9_value !== (text_9_value = ctx.details.answers.total > 0 ? ctx.details.answers.total : '')) {
+					text_9.data = text_9_value;
 				}
 
 				if ((changed.details) && a_1_href_value !== (a_1_href_value = ctx.details.answers.link)) {
@@ -3672,7 +3629,11 @@ var app = (function () {
 			},
 
 			u: function unmount() {
-				detachNode(div);
+				detachNode(button);
+				detachNode(text_3);
+				detachNode(a);
+				detachNode(text_7);
+				detachNode(a_1);
 			},
 
 			d: function destroy$$1() {
@@ -3680,7 +3641,116 @@ var app = (function () {
 				removeListener(button, "click", click_handler);
 				iconssvg_1.destroy(false);
 				iconssvg_2.destroy(false);
-				iconssvg_3.destroy(false);
+			}
+		};
+	}
+
+	// (16:4) {:else}
+	function create_if_block_1$3(component, ctx) {
+		var button, span, text, span_1, button_class_value, text_2, a, span_2, text_3, span_3, text_5, a_1, span_4, text_6, span_5;
+
+		var iconssvg_initial_data = { name: "Star" };
+		var iconssvg = new IconsSvg({
+			root: component.root,
+			data: iconssvg_initial_data
+		});
+
+		function click_handler(event) {
+			component.addStar();
+		}
+
+		var iconssvg_1_initial_data = { name: "MessageFull" };
+		var iconssvg_1 = new IconsSvg({
+			root: component.root,
+			data: iconssvg_1_initial_data
+		});
+
+		var iconssvg_2_initial_data = { name: "Reply" };
+		var iconssvg_2 = new IconsSvg({
+			root: component.root,
+			data: iconssvg_2_initial_data
+		});
+
+		return {
+			c: function create() {
+				button = createElement("button");
+				span = createElement("span");
+				iconssvg._fragment.c();
+				text = createText("\n        ");
+				span_1 = createElement("span");
+				text_2 = createText("\n      ");
+				a = createElement("a");
+				span_2 = createElement("span");
+				iconssvg_1._fragment.c();
+				text_3 = createText("\n        ");
+				span_3 = createElement("span");
+				text_5 = createText("\n      ");
+				a_1 = createElement("a");
+				span_4 = createElement("span");
+				iconssvg_2._fragment.c();
+				text_6 = createText("\n        ");
+				span_5 = createElement("span");
+				span.className = "icon icon-star svelte-1dw7j8z";
+				span_1.className = "text svelte-1dw7j8z";
+				addListener(button, "click", click_handler);
+				button.className = button_class_value = "link " + (ctx.starsActive ? 'active' : '') + " svelte-1dw7j8z";
+				span_2.className = "icon icon-message svelte-1dw7j8z";
+				span_3.className = "text svelte-1dw7j8z";
+				a.className = "link svelte-1dw7j8z";
+				a.href = ctx.commentsLink;
+				span_4.className = "icon svelte-1dw7j8z";
+				span_5.className = "text svelte-1dw7j8z";
+				a_1.className = "link svelte-1dw7j8z";
+				a_1.href = ctx.answersLink;
+			},
+
+			m: function mount(target, anchor) {
+				insertNode(button, target, anchor);
+				appendNode(span, button);
+				iconssvg._mount(span, null);
+				appendNode(text, button);
+				appendNode(span_1, button);
+				insertNode(text_2, target, anchor);
+				insertNode(a, target, anchor);
+				appendNode(span_2, a);
+				iconssvg_1._mount(span_2, null);
+				appendNode(text_3, a);
+				appendNode(span_3, a);
+				insertNode(text_5, target, anchor);
+				insertNode(a_1, target, anchor);
+				appendNode(span_4, a_1);
+				iconssvg_2._mount(span_4, null);
+				appendNode(text_6, a_1);
+				appendNode(span_5, a_1);
+			},
+
+			p: function update(changed, ctx) {
+				if ((changed.starsActive) && button_class_value !== (button_class_value = "link " + (ctx.starsActive ? 'active' : '') + " svelte-1dw7j8z")) {
+					button.className = button_class_value;
+				}
+
+				if (changed.commentsLink) {
+					a.href = ctx.commentsLink;
+				}
+
+				if (changed.answersLink) {
+					a_1.href = ctx.answersLink;
+				}
+			},
+
+			u: function unmount() {
+				detachNode(button);
+				detachNode(text_2);
+				detachNode(a);
+				detachNode(text_5);
+				detachNode(a_1);
+			},
+
+			d: function destroy$$1() {
+				iconssvg.destroy(false);
+				removeListener(button, "click", click_handler);
+				iconssvg_1.destroy(false);
+				iconssvg_2.destroy(false);
 			}
 		};
 	}
@@ -3690,8 +3760,10 @@ var app = (function () {
 		if (!options || (!options.target && !options.root)) throw new Error("'target' is a required option");
 		init(this, options);
 		this._state = assign(data$5(), options.data);
-		if (!('starsActive' in this._state)) console.warn("<PostDetails> was created without expected data property 'starsActive'");
 		if (!('details' in this._state)) console.warn("<PostDetails> was created without expected data property 'details'");
+		if (!('starsActive' in this._state)) console.warn("<PostDetails> was created without expected data property 'starsActive'");
+		if (!('commentsLink' in this._state)) console.warn("<PostDetails> was created without expected data property 'commentsLink'");
+		if (!('answersLink' in this._state)) console.warn("<PostDetails> was created without expected data property 'answersLink'");
 
 		if (!options.root) {
 			this._oncreate = [];
@@ -3715,19 +3787,22 @@ var app = (function () {
 	}
 
 	assign(PostDetails.prototype, protoDev);
-	assign(PostDetails.prototype, methods$1);
+	assign(PostDetails.prototype, methods$4);
 
 	PostDetails.prototype._checkReadOnly = function _checkReadOnly(newState) {
 	};
 
 	/* src/ProfileFeed.html generated by Svelte v2.4.4 */
 
-	var methods$2 = {
+	var methods$5 = {
 	  loadPosts() {
 	    // TODO: load only x posts on create, and load rest on demand
 	  }
 	};
 
+	function oncreate$5() {
+	  this.loadPosts();
+	}
 	function create_main_fragment$31(component, ctx) {
 		var each_anchor;
 
@@ -3799,7 +3874,7 @@ var app = (function () {
 		var article, text, div, text_1, text_2;
 
 		function select_block_type(ctx) {
-			if (ctx.post.isReview) return create_if_block$5;
+			if (ctx.post.isReview) return create_if_block$6;
 			return create_if_block_1$4;
 		}
 
@@ -3807,7 +3882,7 @@ var app = (function () {
 		var if_block = current_block_type(component, ctx);
 
 		function select_block_type_1(ctx) {
-			if (ctx.post.isReview) return create_if_block_2$3;
+			if (ctx.post.isReview) return create_if_block_2$2;
 			return create_if_block_3;
 		}
 
@@ -3909,7 +3984,7 @@ var app = (function () {
 	}
 
 	// (3:4) {#if post.isReview}
-	function create_if_block$5(component, ctx) {
+	function create_if_block$6(component, ctx) {
 
 		var avatar_initial_data = { user: ctx.post.review.user, isReview: "true" };
 		var avatar = new Avatar({
@@ -3977,7 +4052,7 @@ var app = (function () {
 	}
 
 	// (10:6) {#if post.isReview}
-	function create_if_block_2$3(component, ctx) {
+	function create_if_block_2$2(component, ctx) {
 
 		var posttitle_initial_data = {
 		 	isReview: "true",
@@ -4186,6 +4261,11 @@ var app = (function () {
 
 		this._fragment = create_main_fragment$31(this, this._state);
 
+		this.root._oncreate.push(() => {
+			oncreate$5.call(this);
+			this.fire("update", { changed: assignTrue({}, this._state), current: this._state });
+		});
+
 		if (options.target) {
 			if (options.hydrate) throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
 			this._fragment.c();
@@ -4200,7 +4280,7 @@ var app = (function () {
 	}
 
 	assign(ProfileFeed.prototype, protoDev);
-	assign(ProfileFeed.prototype, methods$2);
+	assign(ProfileFeed.prototype, methods$5);
 
 	ProfileFeed.prototype._checkReadOnly = function _checkReadOnly(newState) {
 	};
@@ -4307,7 +4387,7 @@ var app = (function () {
 	    selected: ProfileFeed
 	  }
 	}
-	var methods$3 = {
+	var methods$6 = {
 	  toggleContent(i) {
 	    var menu = this.get().menu;
 	    var clicked = menu[i];
@@ -4446,9 +4526,9 @@ var app = (function () {
 		var li, button, text, span, text_1_value = ctx.item.icon.text, text_1, button_class_value;
 
 		function select_block_type(ctx) {
-			if (ctx.item.icon.svg) return create_if_block$6;
+			if (ctx.item.icon.svg) return create_if_block$7;
 			if (ctx.item.icon.img) return create_if_block_1$5;
-			return create_if_block_2$4;
+			return create_if_block_2$3;
 		}
 
 		var current_block_type = select_block_type(ctx);
@@ -4514,7 +4594,7 @@ var app = (function () {
 	}
 
 	// (6:8) {#if item.icon.svg}
-	function create_if_block$6(component, ctx) {
+	function create_if_block$7(component, ctx) {
 		var span;
 
 		var iconssvg_initial_data = { name: ctx.item.icon.svg };
@@ -4588,7 +4668,7 @@ var app = (function () {
 	}
 
 	// (14:8) {:else}
-	function create_if_block_2$4(component, ctx) {
+	function create_if_block_2$3(component, ctx) {
 		var text_value = ctx.item.icon.name, text;
 
 		return {
@@ -4659,7 +4739,7 @@ var app = (function () {
 	}
 
 	assign(ContentProfile.prototype, protoDev);
-	assign(ContentProfile.prototype, methods$3);
+	assign(ContentProfile.prototype, methods$6);
 
 	ContentProfile.prototype._checkReadOnly = function _checkReadOnly(newState) {
 	};
@@ -4825,7 +4905,7 @@ var app = (function () {
 	    users: USERS
 	  }
 	}
-	function oncreate$5() {
+	function oncreate$6() {
 	  this.root.set({users: this.get().users});
 	}
 	function create_main_fragment$36(component, ctx) {
@@ -4856,7 +4936,7 @@ var app = (function () {
 		this._fragment = create_main_fragment$36(this, this._state);
 
 		this.root._oncreate.push(() => {
-			oncreate$5.call(this);
+			oncreate$6.call(this);
 			this.fire("update", { changed: assignTrue({}, this._state), current: this._state });
 		});
 
@@ -4876,10 +4956,23 @@ var app = (function () {
 
 	/* src/App.html generated by Svelte v2.4.4 */
 
+	class User {
+	    constructor() {
+	      this.id = 'id';
+	      this.img = '';
+	      this.name = 'name';
+	      this.title = '';
+	      this.link = '';
+	      this.tags = [];
+	      this.location = '';
+	    }
+	  }
+
 	const USER = {};
 
 	const POSTS = [
-		{ date: '2018-05-09T12:00:00Z',
+		{ post_id: '',
+			date: '2018-05-09T12:00:00Z',
 			content: {
 				text: '<p>New portfolio update with my last projects <strong>#architecture</strong> <strong>#portfolio</strong> <a class="link" href="https://www.architizes.com/MarioMendez" target="_blank">https://www.architizes.com/MarioMendez</a></p>'
 			},
@@ -4895,7 +4988,8 @@ var app = (function () {
 				}
 			}
 		},
-		{ isSponsored: true,
+		{ post_id: '',
+			isSponsored: true,
 			date: '2018-05-06T13:00:00Z',
 			content: {
 				text: '<p><strong>Architecture Services</strong></p><p>Design and planning consultance, see more at ...<p>',
@@ -4920,7 +5014,8 @@ var app = (function () {
 				total: 42
 			}
 		},
-		{	isReview: true,
+		{	post_id: '001',
+			isReview: true,
 			review: {
 				user: '03',
 				date: '2018-05-03T13:00:00Z',
@@ -4940,10 +5035,45 @@ var app = (function () {
 					link: ''
 				}
 			}
+		},
+		{	post_id: '002',
+			isReview: true,
+			review: {
+				user: '04',
+				date: '2018-05-02T14:00:00Z',
+				content: {
+					text: 'I worked with him for a project ...'
+				},
+				rating: 5,
+			}
+		},
+		{	post_id: '003',
+			isReview: true,
+			review: {
+				user: '05',
+				date: '2018-05-01T14:00:00Z',
+				content: {
+					text: 'I contacted him for a project ...'
+				},
+				rating: 4,
+			}
 		}
 	];
 
 	const REVIEWS = [];
+
+	const PROJECTS = [
+		{img: 'https://i.imgur.com/vZ8suUE.jpg', title: 'title', link: ''},
+		{img: 'https://i.imgur.com/kKvl97S.jpg', title: 'title', link: ''},
+		{img: 'https://i.imgur.com/6fQwQdQ.png', title: 'title', link: ''},
+		{img: 'https://i.imgur.com/6eA8rHj.jpg', title: 'title', link: ''},
+		{img: 'https://i.imgur.com/HZVeVDs.jpg', title: 'title', link: ''},
+		{img: 'https://i.imgur.com/3JueZBg.jpg', title: 'title', link: ''},
+		{img: 'https://i.imgur.com/mucT2Sl.jpg', title: 'title', link: ''},
+		{img: 'https://i.imgur.com/tA6OlVu.jpg', title: 'title', link: ''},
+		{img: 'https://i.imgur.com/w1bEuVW.jpg', title: 'title', link: ''},
+		{img: 'https://i.imgur.com/V2Mt6RJ.jpg', title: 'title', link: ''}
+	];
 
 	const PROFILE = {
 		user: {},
@@ -4960,31 +5090,20 @@ var app = (function () {
 			top: -60,
 			left: 0
 		},
-		projects: [
-			{img: 'https://i.imgur.com/vZ8suUE.jpg', title: 'title', link: ''},
-			{img: 'https://i.imgur.com/kKvl97S.jpg', title: 'title', link: ''},
-			{img: 'https://i.imgur.com/6fQwQdQ.png', title: 'title', link: ''},
-			{img: 'https://i.imgur.com/6eA8rHj.jpg', title: 'title', link: ''},
-			{img: 'https://i.imgur.com/HZVeVDs.jpg', title: 'title', link: ''},
-			{img: 'https://i.imgur.com/3JueZBg.jpg', title: 'title', link: ''},
-			{img: 'https://i.imgur.com/mucT2Sl.jpg', title: 'title', link: ''},
-			{img: 'https://i.imgur.com/tA6OlVu.jpg', title: 'title', link: ''},
-			{img: 'https://i.imgur.com/w1bEuVW.jpg', title: 'title', link: ''},
-			{img: 'https://i.imgur.com/V2Mt6RJ.jpg', title: 'title', link: ''}
-		],
+		projects: PROJECTS,
 		posts: POSTS,
 		reviews: REVIEWS
 	};
 
 	const ICONS = [
-					{name: 'search', color: '#42A5D2', svg: 'Search'},
-					{name: 'edit', color: '#FDAA29', svg: 'Edit'},
-					{name: 'messages', color: '#F26C4F', svg: 'Message'},
-					{name: 'agenda', color: '#058E85', svg: 'Agenda', 'text': 'Agenda'},
-					{name: 'info', svg: 'Clipboard', text: 'Info'},
-					{name: 'feed', svg: 'Book', text: 'Feed'},
-					{name: 'resume', svg: 'Clip', text: 'Résumé'},
-				];
+		{name: 'search', color: '#42A5D2', svg: 'Search'},
+		{name: 'edit', color: '#FDAA29', svg: 'Edit'},
+		{name: 'messages', color: '#F26C4F', svg: 'Message'},
+		{name: 'agenda', color: '#058E85', svg: 'Agenda', 'text': 'Agenda'},
+		{name: 'info', svg: 'Clipboard', text: 'Info'},
+		{name: 'feed', svg: 'Book', text: 'Feed'},
+		{name: 'resume', svg: 'Clip', text: 'Résumé'},
+	];
 
 	function data$8() {
 		return {
@@ -5005,11 +5124,10 @@ var app = (function () {
 				{link: 'ProfileResume', icon: 'resume'}
 			],
 			userId: '01',
-			profileId: '02',
-			postLoadingInterval: 10
+			profileId: '02'
 		}
 	}
-	var methods$4 = {
+	var methods$7 = {
 		getIcons(menu) {
 			var icons = this.get().icons;
 			if (menu.length === 0) return;
@@ -5045,10 +5163,22 @@ var app = (function () {
 		findUser(id) {
 			var found = this.get().users.find(x => x.id === id);
 			return found;
+		},
+		setReviewUser(id, el) {
+	        if (!id) console.log('missing review user id', this);
+	        var reviewUser = this.root.findUser(id);
+			if (!reviewUser) {
+				console.log('no review user with id ', id, el);
+				reviewUser = new User();
+			}
+			el.set({reviewUser});
+	      },
+		newUser() {
+			return new User();
 		}
 	};
 
-	function oncreate$6() {
+	function oncreate$7() {
 		this.setUser(this.get().userId);
 		this.setProfileUser(this.get().profileId);
 
@@ -5142,13 +5272,13 @@ var app = (function () {
 				sidebar_1._fragment.c();
 				link.href = "https://fonts.googleapis.com/css?family=Palanquin:300";
 				link.rel = "stylesheet";
-				header.className = "row vCentered svelte-4afnhw";
-				div_4.className = "content svelte-4afnhw";
+				header.className = "row vCentered svelte-1rt8hcy";
+				div_4.className = "content svelte-1rt8hcy";
 				div_3.className = "row";
-				main.className = "svelte-4afnhw";
+				main.className = "svelte-1rt8hcy";
 				div_2.className = "row";
 				div_1.className = "scroll";
-				div.className = "page sidenav svelte-4afnhw";
+				div.className = "page sidenav svelte-1rt8hcy";
 			},
 
 			m: function mount(target, anchor) {
@@ -5249,7 +5379,7 @@ var app = (function () {
 		this._fragment = create_main_fragment$37(this, this._state);
 
 		this.root._oncreate.push(() => {
-			oncreate$6.call(this);
+			oncreate$7.call(this);
 			this.fire("update", { changed: assignTrue({}, this._state), current: this._state });
 		});
 
@@ -5267,7 +5397,7 @@ var app = (function () {
 	}
 
 	assign(App.prototype, protoDev);
-	assign(App.prototype, methods$4);
+	assign(App.prototype, methods$7);
 
 	App.prototype._checkReadOnly = function _checkReadOnly(newState) {
 	};

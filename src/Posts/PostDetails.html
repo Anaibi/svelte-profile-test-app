@@ -1,23 +1,40 @@
 <div class="details row">
   <div class="row">
-    <button class="link {starsActive ? 'active' : ''}" on:click="addStar()">
-      <span class="icon icon-star"><IconsSvg name="Star"/></span>
-      <span class="text">{details.stars}</span>
-    </button>
-    <a class="link" href="{details.comments.link}">
-      <span class="icon icon-message"><IconsSvg name="MessageFull"/></span>
-      <span class="text">{details.comments.total > 0 ? details.comments.total : ''}</span>
-    </a>
-    <a class="link" href="{details.answers.link}">
-      <span class="icon"><IconsSvg name="Reply"/></span>
-      <span class="{details.answers.total > 0 ? details.answers.total : ''}"></span>
-    </a>
+    {#if details}
+      <button class="link {starsActive ? 'active' : ''}" on:click="addStar()">
+        <span class="icon icon-star"><IconsSvg name="Star"/></span>
+        <span class="text">{details.stars > 0 ? details.stars : ''}</span>
+      </button>
+      <a class="link" href="{details.comments.link}">
+        <span class="icon icon-message"><IconsSvg name="MessageFull"/></span>
+        <span class="text">{details.comments.total > 0 ? details.comments.total : ''}</span>
+      </a>
+      <a class="link" href="{details.answers.link}">
+        <span class="icon"><IconsSvg name="Reply"/></span>
+        <span class="text">{details.answers.total > 0 ? details.answers.total : ''}</span>
+      </a>
+    {:else}
+      <button class="link {starsActive ? 'active' : ''}" on:click="addStar()">
+        <span class="icon icon-star"><IconsSvg name="Star"/></span>
+        <span class="text"></span>
+      </button>
+      <a class="link" href="{commentsLink}">
+        <span class="icon icon-message"><IconsSvg name="MessageFull"/></span>
+        <span class="text"></span>
+      </a>
+      <a class="link" href="{answersLink}">
+        <span class="icon"><IconsSvg name="Reply"/></span>
+        <span class="text"></span>
+      </a>
+    {/if}
   </div>
 
   <div>
     <button class="link"><span class="icon"><IconsSvg name="More"/></span></button>
   </div>
 </div>
+
+
 
 <style>
   .link {
@@ -63,7 +80,9 @@
   export default {
     data() {
       return {
-        starsActive: false
+        starsActive: false,
+        commentsLink: '',
+        answersLink: ''
       }
     },
     components: {

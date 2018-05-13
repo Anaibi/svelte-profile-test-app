@@ -1,14 +1,6 @@
-{#if isReview}
-  <div class="post-title row">
-    <p>
-      <strong>{reviewUser.name} </strong>
-      <span class="note"><span class="icon note"><IconsSvg name='Clock'/></span> {postPeriod}</span>
-    </p>
-  </div>
-{:else}
 <div class="post-title row">
   <p>
-    <strong>{name} </strong>
+    <span class="user-name">{name} </span>
     <span class="note"><span class="icon note"><IconsSvg name='Clock'/></span> {postPeriod}</span>
   </p>
   {#if isSponsored}
@@ -18,7 +10,6 @@
     </p>
   {/if}
 </div>
-{/if}
 
 <style>
   .post-title {
@@ -63,7 +54,6 @@
         isSponsored: false,
         bookmarked: false,
         isReview: false,
-        reviewUser: {},
         name: ''
       }
     },
@@ -71,7 +61,7 @@
       IconsSvg
     },
     computed: {
-      postPeriod({date}) {
+      postPeriod: ({date}) => {
 				var today = new Date(),
             postDate = new Date(date),
             period = 0;
@@ -101,21 +91,24 @@
       addBookmark() {
         this.set({bookmarked: !this.get().bookmarked});
         // do bookmarking
+      },
+      setReviewName() {
+        if (!this.get().isReview) return;
+        var id = this.get().user;
+        if (!id) {
+          console.log('review has no user id associated', this);
+          return;
+        }
+        var reviewUser = this.root.findUser(id);
+        if (!reviewUser) {
+          console.log('users has no user of id ', id, this);
+          return;
+        }
+        this.set({name: reviewUser.name});
       }
     },
     oncreate() {
-      if (!this.get().isReview) return;
-      var id = this.get().user;
-      if (!id) {
-        console.log('review has no user id associated');
-        return;
-      }
-      var reviewUser = this.root.findUser(id);
-      if (!reviewUser) {
-        console.log('users has no user of id ', id);
-        return;
-      }
-      this.set({reviewUser});
-     }
+      this.setReviewName();
+    }
   }
 </script>

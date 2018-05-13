@@ -176,6 +176,14 @@
 		box-shadow: 0px 0px 10px 3px #F1F1F1;
 		overflow: hidden;
 	}
+	:global(.user-name) {
+		color: #323232;
+		font-weight: bold;
+	}
+	:global(.note){
+		color: #CCCCCC;
+		font-family: sans-serif;
+	}
 	.page {
 		max-width: 1360px;
 		margin: auto;
@@ -213,10 +221,23 @@
 	import SidebarContent from './SidebarContent.html';
 	import Users from './Users.html';
 
+	class User {
+    constructor() {
+      this.id = 'id';
+      this.img = '';
+      this.name = 'name';
+      this.title = '';
+      this.link = '';
+      this.tags = [];
+      this.location = '';
+    }
+  }
+
 	const USER = {};
 
 	const POSTS = [
-		{ date: '2018-05-09T12:00:00Z',
+		{ post_id: '',
+			date: '2018-05-09T12:00:00Z',
 			content: {
 				text: '<p>New portfolio update with my last projects <strong>#architecture</strong> <strong>#portfolio</strong> <a class="link" href="https://www.architizes.com/MarioMendez" target="_blank">https://www.architizes.com/MarioMendez</a></p>'
 			},
@@ -232,7 +253,8 @@
 				}
 			}
 		},
-		{ isSponsored: true,
+		{ post_id: '',
+			isSponsored: true,
 			date: '2018-05-06T13:00:00Z',
 			content: {
 				text: '<p><strong>Architecture Services</strong></p><p>Design and planning consultance, see more at ...<p>',
@@ -257,7 +279,8 @@
 				total: 42
 			}
 		},
-		{	isReview: true,
+		{	post_id: '001',
+			isReview: true,
 			review: {
 				user: '03',
 				date: '2018-05-03T13:00:00Z',
@@ -277,10 +300,45 @@
 					link: ''
 				}
 			}
+		},
+		{	post_id: '002',
+			isReview: true,
+			review: {
+				user: '04',
+				date: '2018-05-02T14:00:00Z',
+				content: {
+					text: 'I worked with him for a project ...'
+				},
+				rating: 5,
+			}
+		},
+		{	post_id: '003',
+			isReview: true,
+			review: {
+				user: '05',
+				date: '2018-05-01T14:00:00Z',
+				content: {
+					text: 'I contacted him for a project ...'
+				},
+				rating: 4,
+			}
 		}
 	];
 
 	const REVIEWS = [];
+
+	const PROJECTS = [
+		{img: 'https://i.imgur.com/vZ8suUE.jpg', title: 'title', link: ''},
+		{img: 'https://i.imgur.com/kKvl97S.jpg', title: 'title', link: ''},
+		{img: 'https://i.imgur.com/6fQwQdQ.png', title: 'title', link: ''},
+		{img: 'https://i.imgur.com/6eA8rHj.jpg', title: 'title', link: ''},
+		{img: 'https://i.imgur.com/HZVeVDs.jpg', title: 'title', link: ''},
+		{img: 'https://i.imgur.com/3JueZBg.jpg', title: 'title', link: ''},
+		{img: 'https://i.imgur.com/mucT2Sl.jpg', title: 'title', link: ''},
+		{img: 'https://i.imgur.com/tA6OlVu.jpg', title: 'title', link: ''},
+		{img: 'https://i.imgur.com/w1bEuVW.jpg', title: 'title', link: ''},
+		{img: 'https://i.imgur.com/V2Mt6RJ.jpg', title: 'title', link: ''}
+	];
 
 	const PROFILE = {
 		user: {},
@@ -297,31 +355,20 @@
 			top: -60,
 			left: 0
 		},
-		projects: [
-			{img: 'https://i.imgur.com/vZ8suUE.jpg', title: 'title', link: ''},
-			{img: 'https://i.imgur.com/kKvl97S.jpg', title: 'title', link: ''},
-			{img: 'https://i.imgur.com/6fQwQdQ.png', title: 'title', link: ''},
-			{img: 'https://i.imgur.com/6eA8rHj.jpg', title: 'title', link: ''},
-			{img: 'https://i.imgur.com/HZVeVDs.jpg', title: 'title', link: ''},
-			{img: 'https://i.imgur.com/3JueZBg.jpg', title: 'title', link: ''},
-			{img: 'https://i.imgur.com/mucT2Sl.jpg', title: 'title', link: ''},
-			{img: 'https://i.imgur.com/tA6OlVu.jpg', title: 'title', link: ''},
-			{img: 'https://i.imgur.com/w1bEuVW.jpg', title: 'title', link: ''},
-			{img: 'https://i.imgur.com/V2Mt6RJ.jpg', title: 'title', link: ''}
-		],
+		projects: PROJECTS,
 		posts: POSTS,
 		reviews: REVIEWS
 	};
 
 	const ICONS = [
-					{name: 'search', color: '#42A5D2', svg: 'Search'},
-					{name: 'edit', color: '#FDAA29', svg: 'Edit'},
-					{name: 'messages', color: '#F26C4F', svg: 'Message'},
-					{name: 'agenda', color: '#058E85', svg: 'Agenda', 'text': 'Agenda'},
-					{name: 'info', svg: 'Clipboard', text: 'Info'},
-					{name: 'feed', svg: 'Book', text: 'Feed'},
-					{name: 'resume', svg: 'Clip', text: 'Résumé'},
-				];
+		{name: 'search', color: '#42A5D2', svg: 'Search'},
+		{name: 'edit', color: '#FDAA29', svg: 'Edit'},
+		{name: 'messages', color: '#F26C4F', svg: 'Message'},
+		{name: 'agenda', color: '#058E85', svg: 'Agenda', 'text': 'Agenda'},
+		{name: 'info', svg: 'Clipboard', text: 'Info'},
+		{name: 'feed', svg: 'Book', text: 'Feed'},
+		{name: 'resume', svg: 'Clip', text: 'Résumé'},
+	];
 
 	export default {
 		components: {
@@ -353,8 +400,7 @@
 					{link: 'ProfileResume', icon: 'resume'}
 				],
 				userId: '01',
-				profileId: '02',
-				postLoadingInterval: 10
+				profileId: '02'
 			}
 		},
 		methods: {
@@ -393,6 +439,18 @@
 			findUser(id) {
 				var found = this.get().users.find(x => x.id === id)
 				return found;
+			},
+			setReviewUser(id, el) {
+        if (!id) console.log('missing review user id', this);
+        var reviewUser = this.root.findUser(id);
+				if (!reviewUser) {
+					console.log('no review user with id ', id, el);
+					reviewUser = new User();
+				}
+				el.set({reviewUser});
+      },
+			newUser() {
+				return new User();
 			}
 		},
 		oncreate() {

@@ -59,6 +59,9 @@
       loadPosts() {
         // TODO: load only x posts on create, and load rest on demand
       }
+    },
+    oncreate() {
+      this.loadPosts();
     }
   }
 </script>
