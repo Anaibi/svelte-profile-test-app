@@ -1,27 +1,98 @@
-  <div class="box">
-    <div class="row">
-      <div class="left row">
+  <div class="box-2">
+    <div class="row box-header">
+      <div class="user-info row vCentered">
         <Avatar user={user}/>
         <div>
-          <p>{user.name}</p>
-          <span class="icon-stars"></span>
+          <p class="user-name">{user.name}</p>
+          <Stars rating={post.review.rating}/>
         </div>
       </div>
-      <div class="right col">
-        <span>{post.review.rating}</span>
+      <div class="user-rating col">
+        <span class="note">{rating}</span>
         <span>RATED</span>
       </div>
     </div>
-    <p>"{@html post.review.content.text}"</p>
-    <p class="italic"><strong>{post.review.user.name}</strong></p>
+    <div class="box-content">
+      <p class="quote">{@html post.review.content.text}</p>
+      <p class="signature italic"><strong>{reviewUser.name}</strong></p>
+    </div>
   </div>
+
+<style>
+  .box-header {
+    height: 95px;
+    border-bottom: 1px solid #F1F1F1;
+  }
+  .box-content {
+    padding: 28px;
+  }
+  .user-info {
+    flex: 1;
+    justify-content: flex-start;
+    height: 100%;
+    padding: 0 15px;
+    border-right: 1px solid #F1F1F1;
+  }
+  .user-info :global(.avatar) {
+    width: 55px;
+    height: 55px;
+    margin-right: 12px;
+  }
+  .user-info :global(.icon-stars) {
+    margin-left: 0;
+  }
+  .user-name {
+    font-size: 18px;
+  }
+  .user-rating {
+    width: 140px;
+    color: #666666;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 15px;
+  }
+  .note {
+    font-size: 30px;
+    line-height: 30px;
+    font-weight: normal;
+  }
+  .quote {
+    margin-bottom: 12px;
+    font-size: 15px;
+    line-height: 20px;
+  }
+  .quote::before,
+  .quote::after {
+    content: '"';
+  }
+  .signature::before {
+    content: '- ';
+  }
+
+</style>
 
 <script>
   import Avatar from './../Avatar.html';
+  import Stars from './../Stars.html';
 
   export default {
+    data() {
+      return {
+        reviewUser: ''
+      }
+    },
     components: {
-      Avatar
+      Avatar,
+      Stars
+    },
+    methods: {
+      setReviewUser() {
+        var id = this.get().post.review.user;
+        this.root.setReviewUser(id, this);
+      }
+    },
+    oncreate() {
+      if (this.get().isReview) this.setReviewUser();
     }
   }
 </script>

@@ -1,9 +1,15 @@
-<a href="{user.link}">
-  <img src="{user.img}" alt="{user.name}" />
-</a>
+{#if isReview}
+  <a class="avatar" href="{reviewUser.link}">
+    <img src="{reviewUser.img}" alt="{reviewUser.name}" />
+  </a>
+{:else}
+  <a class="avatar" href="{user.link}">
+    <img src="{user.img}" alt="{user.name}" />
+  </a>
+{/if}
 
 <style>
-  a {
+  .avatar {
     display: inline-block;
     width: 40px;
 		height: 40px;
@@ -16,3 +22,23 @@
     height: auto;
   }
 </style>
+
+<script>
+  export default {
+    data() {
+      return {
+        isReview: false,
+        reviewUser: ''
+      }
+    },
+    methods: {
+      setReviewUser() {
+        var id = this.get().user;
+        this.root.setReviewUser(id, this);
+      }
+    },
+    oncreate() {
+      if (this.get().isReview) this.setReviewUser();
+    }
+  }
+</script>

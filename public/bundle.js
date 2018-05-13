@@ -25,12 +25,6 @@ var app = (function () {
 		node.parentNode.removeChild(node);
 	}
 
-	function detachBetween(before, after) {
-		while (before.nextSibling && before.nextSibling !== after) {
-			before.parentNode.removeChild(before.nextSibling);
-		}
-	}
-
 	function reinsertBetween(before, after, target) {
 		while (before.nextSibling && before.nextSibling !== after) {
 			target.appendChild(before.parentNode.removeChild(before.nextSibling));
@@ -1903,7 +1897,7 @@ var app = (function () {
 
 
 	function create_main_fragment$21(component, ctx) {
-		var slot_content_default = component._slotted.default, slot_content_default_before, slot_content_default_after, header, img, img_src_value, img_alt_value, text, button, span, text_1, text_2, div, div_1, h2, text_4, p, text_5_value = ctx.profile.details.followers, text_5, text_7, div_2, h2_1, text_9, p_1, text_10_value = ctx.profile.details.following, text_10, text_13, div_3, h2_2, text_15, p_2, text_16_value = ctx.profile.details.perf, text_16, text_17, span_1, text_18, text_19_value = ctx.profile.details.reviews, text_19, text_20, text_23, main, h2_3, span_2, text_24, text_25, text_26, h2_4, span_3, text_27, a, text_29, div_4;
+		var slot_content_default = component._slotted.default, slot_content_default_before, slot_content_default_after, header, img, img_src_value, img_alt_value, text, button, span, text_1, text_2, div, div_1, h2, text_4, p, text_5_value = ctx.profile.details.followers, text_5, text_7, div_2, h2_1, text_9, p_1, text_10_value = ctx.profile.details.following, text_10, text_13, div_3, h2_2, text_15, p_2, text_16_value = ctx.profile.details.perf, text_16, text_17, span_1, text_18, text_19_value = ctx.profile.details.reviews, text_19, text_20, text_23, main, h2_3, span_2, text_24, text_25, text_26, h2_4, span_3, text_27, a, text_30, div_4;
 
 		var iconssvg_initial_data = { name: "UserAdd" };
 		var iconssvg = new IconsSvg({
@@ -1972,44 +1966,44 @@ var app = (function () {
 					span_2 = createElement("span");
 					iconssvg_1._fragment.c();
 					text_24 = createText(" Projects");
-					text_25 = createText("\n\t\t\t");
+					text_25 = createText("\n\t\t");
 					tiles._fragment.c();
-					text_26 = createText("\n\t\t");
+					text_26 = createText("\n\n\t\t");
 					h2_4 = createElement("h2");
 					span_3 = createElement("span");
 					iconssvg_2._fragment.c();
-					text_27 = createText(" Boosts ");
+					text_27 = createText(" Boosts\n\t\t\t");
 					a = createElement("a");
 					a.textContent = "More";
-					text_29 = createText("\n\t\t");
+					text_30 = createText("\n\t\t");
 					div_4 = createElement("div");
 				}
 				if (!slot_content_default) {
-					img.className = "profile-img img svelte-1gvdoqf";
+					img.className = "profile-img img svelte-176wm8a";
 					img.src = img_src_value = ctx.profile.user.img;
 					img.alt = img_alt_value = ctx.profile.user.name;
-					span.className = "icon svelte-1gvdoqf";
-					button.className = "btn svelte-1gvdoqf";
+					span.className = "icon svelte-176wm8a";
+					button.className = "btn svelte-176wm8a";
 					h2.className = "title";
-					p.className = "highlight info svelte-1gvdoqf";
+					p.className = "highlight info svelte-176wm8a";
 					div_1.className = "col";
 					h2_1.className = "title";
-					p_1.className = "highlight info svelte-1gvdoqf";
+					p_1.className = "highlight info svelte-176wm8a";
 					div_2.className = "col";
-					div.className = "info-row lg row svelte-1gvdoqf";
+					div.className = "info-row lg row svelte-176wm8a";
 					h2_2.className = "title";
-					span_1.className = "note svelte-1gvdoqf";
-					p_2.className = "highlight info svelte-1gvdoqf";
-					div_3.className = "col info-row svelte-1gvdoqf";
-					header.className = "svelte-1gvdoqf";
-					span_2.className = "icon svelte-1gvdoqf";
-					h2_3.className = "title svelte-1gvdoqf";
-					span_3.className = "icon icon-star svelte-1gvdoqf";
+					span_1.className = "note svelte-176wm8a";
+					p_2.className = "highlight info svelte-176wm8a";
+					div_3.className = "col info-row svelte-176wm8a";
+					header.className = "svelte-176wm8a";
+					span_2.className = "icon svelte-176wm8a";
+					h2_3.className = "title svelte-176wm8a";
+					span_3.className = "icon icon-star svelte-176wm8a";
 					a.className = "right link";
 					a.href = "/";
-					h2_4.className = "title svelte-1gvdoqf";
+					h2_4.className = "title svelte-176wm8a";
 					div_4.className = "rows";
-					main.className = "svelte-1gvdoqf";
+					main.className = "svelte-176wm8a";
 				}
 			},
 
@@ -2060,7 +2054,7 @@ var app = (function () {
 					iconssvg_2._mount(span_3, null);
 					appendNode(text_27, h2_4);
 					appendNode(a, h2_4);
-					appendNode(text_29, main);
+					appendNode(text_30, main);
 					appendNode(div_4, main);
 				}
 
@@ -2194,7 +2188,7 @@ var app = (function () {
 		return {
 			c: function create() {
 				span = createElement("span");
-				span.className = "icon-stars svelte-1m82sjx";
+				span.className = "icon-stars svelte-2zmrik";
 				setStars_action = setStars.call(component, span) || {};
 			},
 
@@ -2271,11 +2265,11 @@ var app = (function () {
 				text_6 = createText("\n\t");
 				button_1 = createElement("button");
 				button_1.textContent = "Request";
-				h1.className = "svelte-1822d7";
-				p.className = "svelte-1822d7";
-				span.className = "icon svelte-1822d7";
-				button.className = "btn-icon svelte-1822d7";
-				button_1.className = "btn-primary svelte-1822d7";
+				h1.className = "svelte-1j8i0yl";
+				p.className = "svelte-1j8i0yl";
+				span.className = "icon svelte-1j8i0yl";
+				button.className = "btn btn-icon svelte-1j8i0yl";
+				button_1.className = "btn btn-primary";
 				div_1.className = "row";
 			},
 
@@ -2403,7 +2397,111 @@ var app = (function () {
 
 	/* src/Avatar.html generated by Svelte v2.4.4 */
 
+	function data$1() {
+	  return {
+	    isReview: false,
+	    reviewUser: ''
+	  }
+	}
+	var methods = {
+	  setReviewUser() {
+	    var id = this.get().user;
+	    this.root.setReviewUser(id, this);
+	  }
+	};
+
+	function oncreate$1() {
+	  if (this.get().isReview) this.setReviewUser();
+	}
 	function create_main_fragment$25(component, ctx) {
+		var if_block_anchor;
+
+		function select_block_type(ctx) {
+			if (ctx.isReview) return create_if_block$2;
+			return create_if_block_1$1;
+		}
+
+		var current_block_type = select_block_type(ctx);
+		var if_block = current_block_type(component, ctx);
+
+		return {
+			c: function create() {
+				if_block.c();
+				if_block_anchor = createComment();
+			},
+
+			m: function mount(target, anchor) {
+				if_block.m(target, anchor);
+				insertNode(if_block_anchor, target, anchor);
+			},
+
+			p: function update(changed, ctx) {
+				if (current_block_type === (current_block_type = select_block_type(ctx)) && if_block) {
+					if_block.p(changed, ctx);
+				} else {
+					if_block.u();
+					if_block.d();
+					if_block = current_block_type(component, ctx);
+					if_block.c();
+					if_block.m(if_block_anchor.parentNode, if_block_anchor);
+				}
+			},
+
+			u: function unmount() {
+				if_block.u();
+				detachNode(if_block_anchor);
+			},
+
+			d: function destroy$$1() {
+				if_block.d();
+			}
+		};
+	}
+
+	// (1:0) {#if isReview}
+	function create_if_block$2(component, ctx) {
+		var a, img, img_src_value, img_alt_value, a_href_value;
+
+		return {
+			c: function create() {
+				a = createElement("a");
+				img = createElement("img");
+				img.src = img_src_value = ctx.reviewUser.img;
+				img.alt = img_alt_value = ctx.reviewUser.name;
+				img.className = "svelte-7kaina";
+				a.className = "avatar svelte-7kaina";
+				a.href = a_href_value = ctx.reviewUser.link;
+			},
+
+			m: function mount(target, anchor) {
+				insertNode(a, target, anchor);
+				appendNode(img, a);
+			},
+
+			p: function update(changed, ctx) {
+				if ((changed.reviewUser) && img_src_value !== (img_src_value = ctx.reviewUser.img)) {
+					img.src = img_src_value;
+				}
+
+				if ((changed.reviewUser) && img_alt_value !== (img_alt_value = ctx.reviewUser.name)) {
+					img.alt = img_alt_value;
+				}
+
+				if ((changed.reviewUser) && a_href_value !== (a_href_value = ctx.reviewUser.link)) {
+					a.href = a_href_value;
+				}
+			},
+
+			u: function unmount() {
+				detachNode(a);
+			},
+
+			d: noop
+		};
+	}
+
+	// (5:0) {:else}
+	function create_if_block_1$1(component, ctx) {
 		var a, img, img_src_value, img_alt_value, a_href_value;
 
 		return {
@@ -2412,9 +2510,9 @@ var app = (function () {
 				img = createElement("img");
 				img.src = img_src_value = ctx.user.img;
 				img.alt = img_alt_value = ctx.user.name;
-				img.className = "svelte-1iynk9m";
+				img.className = "svelte-7kaina";
+				a.className = "avatar svelte-7kaina";
 				a.href = a_href_value = ctx.user.link;
-				a.className = "svelte-1iynk9m";
 			},
 
 			m: function mount(target, anchor) {
@@ -2448,19 +2546,33 @@ var app = (function () {
 		this._debugName = '<Avatar>';
 		if (!options || (!options.target && !options.root)) throw new Error("'target' is a required option");
 		init(this, options);
-		this._state = assign({}, options.data);
+		this._state = assign(data$1(), options.data);
+		if (!('isReview' in this._state)) console.warn("<Avatar> was created without expected data property 'isReview'");
+		if (!('reviewUser' in this._state)) console.warn("<Avatar> was created without expected data property 'reviewUser'");
 		if (!('user' in this._state)) console.warn("<Avatar> was created without expected data property 'user'");
 
+		if (!options.root) {
+			this._oncreate = [];
+		}
+
 		this._fragment = create_main_fragment$25(this, this._state);
+
+		this.root._oncreate.push(() => {
+			oncreate$1.call(this);
+			this.fire("update", { changed: assignTrue({}, this._state), current: this._state });
+		});
 
 		if (options.target) {
 			if (options.hydrate) throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
 			this._fragment.c();
 			this._mount(options.target, options.anchor);
+
+			callAll(this._oncreate);
 		}
 	}
 
 	assign(Avatar.prototype, protoDev);
+	assign(Avatar.prototype, methods);
 
 	Avatar.prototype._checkReadOnly = function _checkReadOnly(newState) {
 	};
@@ -2492,21 +2604,41 @@ var app = (function () {
 	  }
 	  return period;
 				}
-	function data$1() {
+
+	function data$2() {
 	  return {
 	    isSponsored: false,
-	    bookmarked: false
+	    bookmarked: false,
+	    isReview: false,
+	    name: ''
 	  }
 	}
-	var methods = {
+	var methods$1 = {
 	  addBookmark() {
 	    this.set({bookmarked: !this.get().bookmarked});
 	    // do bookmarking
+	  },
+	  setReviewName() {
+	    if (!this.get().isReview) return;
+	    var id = this.get().user;
+	    if (!id) {
+	      console.log('review has no user id associated', this);
+	      return;
+	    }
+	    var reviewUser = this.root.findUser(id);
+	    if (!reviewUser) {
+	      console.log('users has no user of id ', id, this);
+	      return;
+	    }
+	    this.set({name: reviewUser.name});
 	  }
 	};
 
+	function oncreate$2() {
+	  this.setReviewName();
+	}
 	function create_main_fragment$26(component, ctx) {
-		var div, p, strong, text, text_2, span, span_1, text_3, text_4, text_6;
+		var div, p, span, text, text_2, span_1, span_2, text_3, text_4, text_6;
 
 		var iconssvg_initial_data = { name: "Clock" };
 		var iconssvg = new IconsSvg({
@@ -2514,38 +2646,39 @@ var app = (function () {
 			data: iconssvg_initial_data
 		});
 
-		var if_block = (ctx.isSponsored) && create_if_block$2(component, ctx);
+		var if_block = (ctx.isSponsored) && create_if_block$3(component, ctx);
 
 		return {
 			c: function create() {
 				div = createElement("div");
 				p = createElement("p");
-				strong = createElement("strong");
+				span = createElement("span");
 				text = createText(ctx.name);
 				text_2 = createText("\n    ");
-				span = createElement("span");
 				span_1 = createElement("span");
+				span_2 = createElement("span");
 				iconssvg._fragment.c();
 				text_3 = createText(" ");
 				text_4 = createText(ctx.postPeriod);
 				text_6 = createText("\n  ");
 				if (if_block) if_block.c();
-				span_1.className = "icon note svelte-1bde89r";
-				span.className = "note svelte-1bde89r";
+				span.className = "user-name";
+				span_2.className = "icon note svelte-1bde89r";
+				span_1.className = "note svelte-1bde89r";
 				div.className = "post-title row svelte-1bde89r";
 			},
 
 			m: function mount(target, anchor) {
 				insertNode(div, target, anchor);
 				appendNode(p, div);
-				appendNode(strong, p);
-				appendNode(text, strong);
-				appendNode(text_2, p);
 				appendNode(span, p);
-				appendNode(span_1, span);
-				iconssvg._mount(span_1, null);
-				appendNode(text_3, span);
-				appendNode(text_4, span);
+				appendNode(text, span);
+				appendNode(text_2, p);
+				appendNode(span_1, p);
+				appendNode(span_2, span_1);
+				iconssvg._mount(span_2, null);
+				appendNode(text_3, span_1);
+				appendNode(text_4, span_1);
 				appendNode(text_6, div);
 				if (if_block) if_block.m(div, null);
 			},
@@ -2563,7 +2696,7 @@ var app = (function () {
 					if (if_block) {
 						if_block.p(changed, ctx);
 					} else {
-						if_block = create_if_block$2(component, ctx);
+						if_block = create_if_block$3(component, ctx);
 						if_block.c();
 						if_block.m(div, null);
 					}
@@ -2587,7 +2720,7 @@ var app = (function () {
 	}
 
 	// (6:2) {#if isSponsored}
-	function create_if_block$2(component, ctx) {
+	function create_if_block$3(component, ctx) {
 		var p, span, text_1, button, span_1, button_class_value;
 
 		var iconssvg_initial_data = { name: "Bookmark" };
@@ -2611,7 +2744,7 @@ var app = (function () {
 				iconssvg._fragment.c();
 				span_1.className = "icon svelte-1bde89r";
 				addListener(button, "click", click_handler);
-				button.className = button_class_value = "" + (ctx.bookmarked ? 'active' : '') + " svelte-1bde89r";
+				button.className = button_class_value = "link " + (ctx.bookmarked ? 'active' : '') + " svelte-1bde89r";
 				p.className = "row row-bottom italic note svelte-1bde89r";
 			},
 
@@ -2625,7 +2758,7 @@ var app = (function () {
 			},
 
 			p: function update(changed, ctx) {
-				if ((changed.bookmarked) && button_class_value !== (button_class_value = "" + (ctx.bookmarked ? 'active' : '') + " svelte-1bde89r")) {
+				if ((changed.bookmarked) && button_class_value !== (button_class_value = "link " + (ctx.bookmarked ? 'active' : '') + " svelte-1bde89r")) {
 					button.className = button_class_value;
 				}
 			},
@@ -2645,7 +2778,7 @@ var app = (function () {
 		this._debugName = '<PostTitle>';
 		if (!options || (!options.target && !options.root)) throw new Error("'target' is a required option");
 		init(this, options);
-		this._state = assign(data$1(), options.data);
+		this._state = assign(data$2(), options.data);
 		this._recompute({ date: 1 }, this._state);
 		if (!('date' in this._state)) console.warn("<PostTitle> was created without expected data property 'date'");
 		if (!('name' in this._state)) console.warn("<PostTitle> was created without expected data property 'name'");
@@ -2661,6 +2794,11 @@ var app = (function () {
 
 		this._fragment = create_main_fragment$26(this, this._state);
 
+		this.root._oncreate.push(() => {
+			oncreate$2.call(this);
+			this.fire("update", { changed: assignTrue({}, this._state), current: this._state });
+		});
+
 		if (options.target) {
 			if (options.hydrate) throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
 			this._fragment.c();
@@ -2675,7 +2813,7 @@ var app = (function () {
 	}
 
 	assign(PostTitle.prototype, protoDev);
-	assign(PostTitle.prototype, methods);
+	assign(PostTitle.prototype, methods$1);
 
 	PostTitle.prototype._checkReadOnly = function _checkReadOnly(newState) {
 		if ('postPeriod' in newState && !this._updatingReadonlyProperty) throw new Error("<PostTitle>: Cannot set read-only property 'postPeriod'");
@@ -2689,135 +2827,178 @@ var app = (function () {
 
 	/* src/Posts/SponsoredPost.html generated by Svelte v2.4.4 */
 
+	function data$3() {
+	  return {
+	    recommendationUsers: []
+	  }
+	}
+	var methods$2 = {
+	  setRecommendationUsers() {
+	    var ids = this.get().post.recommendations.users,
+	        recommendationUsers = [],
+	        user;
+	    ids = ids.splice(0,3);
+	    for (let i = 0; i < 3; i++) {
+	      user = this.root.findUser(ids[i]);
+	      if (!user) {
+	        console.log('id not found in users. id: ', ids[i], this);
+	        user = this.root.newUser();
+	      }
+	      recommendationUsers[i] = user;
+	    }
+	    this.set({recommendationUsers});
+	  }
+	};
+
+	function oncreate$3() {
+	  if (this.get().post.recommendations.total > 0) this.setRecommendationUsers();
+	}
 	function create_main_fragment$27(component, ctx) {
-		var div, text, div_1, div_2, raw_value = ctx.post.content.text, text_2, button;
+		var div, div_1, text_1, div_2, div_3, div_4, raw_value = ctx.post.content.text, text_4, button;
 
-		function select_block_type(ctx) {
-			if (ctx.post.content.img) return create_if_block$3;
-			return create_if_block_4;
-		}
-
-		var current_block_type = select_block_type(ctx);
-		var if_block = current_block_type(component, ctx);
+		var if_block = (ctx.post.recommendations) && create_if_block$4(component, ctx);
 
 		return {
 			c: function create() {
 				div = createElement("div");
-				if_block.c();
-				text = createText("\n  ");
 				div_1 = createElement("div");
+				if (if_block) if_block.c();
+				text_1 = createText("\n  ");
 				div_2 = createElement("div");
-				text_2 = createText("\n    ");
+				div_3 = createElement("div");
+				div_4 = createElement("div");
+				text_4 = createText("\n    ");
 				button = createElement("button");
 				button.textContent = "Hire";
-				div_1.className = "row";
+				div_1.className = "featured svelte-1v6ra7w";
+				setStyle(div_1, "background-image", "url('" + ctx.post.content.img + "')");
+				div_4.className = "ellipsis-content svelte-1v6ra7w";
+				div_3.className = "content ellipsis svelte-1v6ra7w";
+				button.className = "btn svelte-1v6ra7w";
+				div_2.className = "row featured-text svelte-1v6ra7w";
 				div.className = "box";
 			},
 
 			m: function mount(target, anchor) {
 				insertNode(div, target, anchor);
-				if_block.m(div, null);
-				appendNode(text, div);
 				appendNode(div_1, div);
-				appendNode(div_2, div_1);
-				div_2.innerHTML = raw_value;
-				appendNode(text_2, div_1);
-				appendNode(button, div_1);
+				if (if_block) if_block.m(div_1, null);
+				appendNode(text_1, div);
+				appendNode(div_2, div);
+				appendNode(div_3, div_2);
+				appendNode(div_4, div_3);
+				div_4.innerHTML = raw_value;
+				appendNode(text_4, div_2);
+				appendNode(button, div_2);
 			},
 
 			p: function update(changed, ctx) {
-				if (current_block_type === (current_block_type = select_block_type(ctx)) && if_block) {
-					if_block.p(changed, ctx);
-				} else {
+				if (ctx.post.recommendations) {
+					if (if_block) {
+						if_block.p(changed, ctx);
+					} else {
+						if_block = create_if_block$4(component, ctx);
+						if_block.c();
+						if_block.m(div_1, null);
+					}
+				} else if (if_block) {
 					if_block.u();
 					if_block.d();
-					if_block = current_block_type(component, ctx);
-					if_block.c();
-					if_block.m(div, text);
+					if_block = null;
+				}
+
+				if (changed.post) {
+					setStyle(div_1, "background-image", "url('" + ctx.post.content.img + "')");
 				}
 
 				if ((changed.post) && raw_value !== (raw_value = ctx.post.content.text)) {
-					div_2.innerHTML = raw_value;
+					div_4.innerHTML = raw_value;
 				}
 			},
 
 			u: function unmount() {
-				div_2.innerHTML = '';
+				div_4.innerHTML = '';
 
 				detachNode(div);
-				if_block.u();
+				if (if_block) if_block.u();
 			},
 
 			d: function destroy$$1() {
-				if_block.d();
+				if (if_block) if_block.d();
 			}
 		};
 	}
 
-	// (6:10) {#each post.recommendations.users as user}
+	// (5:8) {#each recommendationUsers as user}
 	function create_each_block$2(component, ctx) {
-		var a, img, img_src_value, img_alt_value, a_href_value;
+
+		var avatar_initial_data = { user: ctx.user };
+		var avatar = new Avatar({
+			root: component.root,
+			data: avatar_initial_data
+		});
 
 		return {
 			c: function create() {
-				a = createElement("a");
-				img = createElement("img");
-				img.src = img_src_value = ctx.user.img;
-				img.alt = img_alt_value = ctx.user.name;
-				a.href = a_href_value = ctx.user.link;
+				avatar._fragment.c();
 			},
 
 			m: function mount(target, anchor) {
-				insertNode(a, target, anchor);
-				appendNode(img, a);
+				avatar._mount(target, anchor);
 			},
 
 			p: function update(changed, ctx) {
-				if ((changed.post) && img_src_value !== (img_src_value = ctx.user.img)) {
-					img.src = img_src_value;
-				}
-
-				if ((changed.post) && img_alt_value !== (img_alt_value = ctx.user.name)) {
-					img.alt = img_alt_value;
-				}
-
-				if ((changed.post) && a_href_value !== (a_href_value = ctx.user.link)) {
-					a.href = a_href_value;
-				}
+				var avatar_changes = {};
+				if (changed.recommendationUsers) avatar_changes.user = ctx.user;
+				avatar._set(avatar_changes);
 			},
 
 			u: function unmount() {
-				detachNode(a);
+				avatar._unmount();
 			},
 
-			d: noop
+			d: function destroy$$1() {
+				avatar.destroy(false);
+			}
 		};
 	}
 
-	// (10:12) {#if post.recommendations.rating}
-	function create_if_block_2$1(component, ctx) {
-		var span;
+	// (9:10) {#if post.recommendations.rating}
+	function create_if_block_1$2(component, ctx) {
+
+		var stars_initial_data = { rating: ctx.post.recommendations.rating };
+		var stars = new Stars({
+			root: component.root,
+			data: stars_initial_data
+		});
 
 		return {
 			c: function create() {
-				span = createElement("span");
-				span.className = "icon-stars";
+				stars._fragment.c();
 			},
 
 			m: function mount(target, anchor) {
-				insertNode(span, target, anchor);
+				stars._mount(target, anchor);
+			},
+
+			p: function update(changed, ctx) {
+				var stars_changes = {};
+				if (changed.post) stars_changes.rating = ctx.post.recommendations.rating;
+				stars._set(stars_changes);
 			},
 
 			u: function unmount() {
-				detachNode(span);
+				stars._unmount();
 			},
 
-			d: noop
+			d: function destroy$$1() {
+				stars.destroy(false);
+			}
 		};
 	}
 
-	// (13:12) {#if post.recommendations.total > 0}
-	function create_if_block_3(component, ctx) {
+	// (12:10) {#if post.recommendations.total > 0}
+	function create_if_block_2$1(component, ctx) {
 		var p, text, text_1_value = ctx.post.recommendations.total, text_1, text_2;
 
 		return {
@@ -2826,6 +3007,7 @@ var app = (function () {
 				text = createText("(");
 				text_1 = createText(text_1_value);
 				text_2 = createText(") recommend this");
+				p.className = "svelte-1v6ra7w";
 			},
 
 			m: function mount(target, anchor) {
@@ -2849,11 +3031,11 @@ var app = (function () {
 		};
 	}
 
-	// (4:6) {#if post.recommendations}
-	function create_if_block_1$1(component, ctx) {
+	// (3:4) {#if post.recommendations}
+	function create_if_block$4(component, ctx) {
 		var div, text, div_1, text_1;
 
-		var each_value = ctx.post.recommendations.users;
+		var each_value = ctx.recommendationUsers;
 
 		var each_blocks = [];
 
@@ -2861,9 +3043,9 @@ var app = (function () {
 			each_blocks[i] = create_each_block$2(component, get_each_context$2(ctx, each_value, i));
 		}
 
-		var if_block = (ctx.post.recommendations.rating) && create_if_block_2$1(component, ctx);
+		var if_block = (ctx.post.recommendations.rating) && create_if_block_1$2(component, ctx);
 
-		var if_block_1 = (ctx.post.recommendations.total > 0) && create_if_block_3(component, ctx);
+		var if_block_1 = (ctx.post.recommendations.total > 0) && create_if_block_2$1(component, ctx);
 
 		return {
 			c: function create() {
@@ -2873,12 +3055,13 @@ var app = (function () {
 					each_blocks[i].c();
 				}
 
-				text = createText("\n          ");
+				text = createText("\n        ");
 				div_1 = createElement("div");
 				if (if_block) if_block.c();
-				text_1 = createText("\n            ");
+				text_1 = createText("\n          ");
 				if (if_block_1) if_block_1.c();
-				div.className = "row";
+				div_1.className = "details svelte-1v6ra7w";
+				div.className = "row vCentered";
 			},
 
 			m: function mount(target, anchor) {
@@ -2896,8 +3079,8 @@ var app = (function () {
 			},
 
 			p: function update(changed, ctx) {
-				if (changed.post) {
-					each_value = ctx.post.recommendations.users;
+				if (changed.recommendationUsers) {
+					each_value = ctx.recommendationUsers;
 
 					for (var i = 0; i < each_value.length; i += 1) {
 						const child_ctx = get_each_context$2(ctx, each_value, i);
@@ -2919,269 +3102,10 @@ var app = (function () {
 				}
 
 				if (ctx.post.recommendations.rating) {
-					if (!if_block) {
-						if_block = create_if_block_2$1(component, ctx);
-						if_block.c();
-						if_block.m(div_1, text_1);
-					}
-				} else if (if_block) {
-					if_block.u();
-					if_block.d();
-					if_block = null;
-				}
-
-				if (ctx.post.recommendations.total > 0) {
-					if (if_block_1) {
-						if_block_1.p(changed, ctx);
-					} else {
-						if_block_1 = create_if_block_3(component, ctx);
-						if_block_1.c();
-						if_block_1.m(div_1, null);
-					}
-				} else if (if_block_1) {
-					if_block_1.u();
-					if_block_1.d();
-					if_block_1 = null;
-				}
-			},
-
-			u: function unmount() {
-				detachNode(div);
-
-				for (var i = 0; i < each_blocks.length; i += 1) {
-					each_blocks[i].u();
-				}
-
-				if (if_block) if_block.u();
-				if (if_block_1) if_block_1.u();
-			},
-
-			d: function destroy$$1() {
-				destroyEach(each_blocks);
-
-				if (if_block) if_block.d();
-				if (if_block_1) if_block_1.d();
-			}
-		};
-	}
-
-	// (22:6) {#each post.recommendations.users as user}
-	function create_each_block_1(component, ctx) {
-		var a, img, img_src_value, img_alt_value, a_href_value;
-
-		return {
-			c: function create() {
-				a = createElement("a");
-				img = createElement("img");
-				img.src = img_src_value = ctx.user.img;
-				img.alt = img_alt_value = ctx.user.name;
-				a.href = a_href_value = ctx.user.link;
-			},
-
-			m: function mount(target, anchor) {
-				insertNode(a, target, anchor);
-				appendNode(img, a);
-			},
-
-			p: function update(changed, ctx) {
-				if ((changed.post) && img_src_value !== (img_src_value = ctx.user.img)) {
-					img.src = img_src_value;
-				}
-
-				if ((changed.post) && img_alt_value !== (img_alt_value = ctx.user.name)) {
-					img.alt = img_alt_value;
-				}
-
-				if ((changed.post) && a_href_value !== (a_href_value = ctx.user.link)) {
-					a.href = a_href_value;
-				}
-			},
-
-			u: function unmount() {
-				detachNode(a);
-			},
-
-			d: noop
-		};
-	}
-
-	// (26:8) {#if post.recommendations.rating}
-	function create_if_block_5(component, ctx) {
-		var span;
-
-		return {
-			c: function create() {
-				span = createElement("span");
-				span.className = "icon-stars";
-			},
-
-			m: function mount(target, anchor) {
-				insertNode(span, target, anchor);
-			},
-
-			u: function unmount() {
-				detachNode(span);
-			},
-
-			d: noop
-		};
-	}
-
-	// (29:8) {#if post.recommendations.total > 0}
-	function create_if_block_6(component, ctx) {
-		var p, text, text_1_value = ctx.post.recommendations.total, text_1, text_2;
-
-		return {
-			c: function create() {
-				p = createElement("p");
-				text = createText("(");
-				text_1 = createText(text_1_value);
-				text_2 = createText(") recommend this");
-			},
-
-			m: function mount(target, anchor) {
-				insertNode(p, target, anchor);
-				appendNode(text, p);
-				appendNode(text_1, p);
-				appendNode(text_2, p);
-			},
-
-			p: function update(changed, ctx) {
-				if ((changed.post) && text_1_value !== (text_1_value = ctx.post.recommendations.total)) {
-					text_1.data = text_1_value;
-				}
-			},
-
-			u: function unmount() {
-				detachNode(p);
-			},
-
-			d: noop
-		};
-	}
-
-	// (2:2) {#if post.content.img}
-	function create_if_block$3(component, ctx) {
-		var div;
-
-		var if_block = (ctx.post.recommendations) && create_if_block_1$1(component, ctx);
-
-		return {
-			c: function create() {
-				div = createElement("div");
-				if (if_block) if_block.c();
-				div.className = "featured svelte-1asdi54";
-				setStyle(div, "background-image", "url('" + ctx.post.content.img + "')");
-			},
-
-			m: function mount(target, anchor) {
-				insertNode(div, target, anchor);
-				if (if_block) if_block.m(div, null);
-			},
-
-			p: function update(changed, ctx) {
-				if (ctx.post.recommendations) {
 					if (if_block) {
 						if_block.p(changed, ctx);
 					} else {
-						if_block = create_if_block_1$1(component, ctx);
-						if_block.c();
-						if_block.m(div, null);
-					}
-				} else if (if_block) {
-					if_block.u();
-					if_block.d();
-					if_block = null;
-				}
-
-				if (changed.post) {
-					setStyle(div, "background-image", "url('" + ctx.post.content.img + "')");
-				}
-			},
-
-			u: function unmount() {
-				detachNode(div);
-				if (if_block) if_block.u();
-			},
-
-			d: function destroy$$1() {
-				if (if_block) if_block.d();
-			}
-		};
-	}
-
-	// (20:2) {:else}
-	function create_if_block_4(component, ctx) {
-		var div, text, div_1, text_1;
-
-		var each_value_1 = ctx.post.recommendations.users;
-
-		var each_blocks = [];
-
-		for (var i = 0; i < each_value_1.length; i += 1) {
-			each_blocks[i] = create_each_block_1(component, get_each_context_1(ctx, each_value_1, i));
-		}
-
-		var if_block = (ctx.post.recommendations.rating) && create_if_block_5(component, ctx);
-
-		var if_block_1 = (ctx.post.recommendations.total > 0) && create_if_block_6(component, ctx);
-
-		return {
-			c: function create() {
-				div = createElement("div");
-
-				for (var i = 0; i < each_blocks.length; i += 1) {
-					each_blocks[i].c();
-				}
-
-				text = createText("\n      ");
-				div_1 = createElement("div");
-				if (if_block) if_block.c();
-				text_1 = createText("\n        ");
-				if (if_block_1) if_block_1.c();
-				div.className = "row";
-			},
-
-			m: function mount(target, anchor) {
-				insertNode(div, target, anchor);
-
-				for (var i = 0; i < each_blocks.length; i += 1) {
-					each_blocks[i].m(div, null);
-				}
-
-				appendNode(text, div);
-				appendNode(div_1, div);
-				if (if_block) if_block.m(div_1, null);
-				appendNode(text_1, div_1);
-				if (if_block_1) if_block_1.m(div_1, null);
-			},
-
-			p: function update(changed, ctx) {
-				if (changed.post) {
-					each_value_1 = ctx.post.recommendations.users;
-
-					for (var i = 0; i < each_value_1.length; i += 1) {
-						const child_ctx = get_each_context_1(ctx, each_value_1, i);
-
-						if (each_blocks[i]) {
-							each_blocks[i].p(changed, child_ctx);
-						} else {
-							each_blocks[i] = create_each_block_1(component, child_ctx);
-							each_blocks[i].c();
-							each_blocks[i].m(div, text);
-						}
-					}
-
-					for (; i < each_blocks.length; i += 1) {
-						each_blocks[i].u();
-						each_blocks[i].d();
-					}
-					each_blocks.length = each_value_1.length;
-				}
-
-				if (ctx.post.recommendations.rating) {
-					if (!if_block) {
-						if_block = create_if_block_5(component, ctx);
+						if_block = create_if_block_1$2(component, ctx);
 						if_block.c();
 						if_block.m(div_1, text_1);
 					}
@@ -3195,7 +3119,7 @@ var app = (function () {
 					if (if_block_1) {
 						if_block_1.p(changed, ctx);
 					} else {
-						if_block_1 = create_if_block_6(component, ctx);
+						if_block_1 = create_if_block_2$1(component, ctx);
 						if_block_1.c();
 						if_block_1.m(div_1, null);
 					}
@@ -3234,46 +3158,76 @@ var app = (function () {
 		});
 	}
 
-	function get_each_context_1(ctx, list, i) {
-		return assign(assign({}, ctx), {
-			user: list[i],
-			each_value_1: list,
-			user_index_1: i
-		});
-	}
-
 	function SponsoredPost(options) {
 		this._debugName = '<SponsoredPost>';
 		if (!options || (!options.target && !options.root)) throw new Error("'target' is a required option");
 		init(this, options);
-		this._state = assign({}, options.data);
+		this._state = assign(data$3(), options.data);
 		if (!('post' in this._state)) console.warn("<SponsoredPost> was created without expected data property 'post'");
+		if (!('recommendationUsers' in this._state)) console.warn("<SponsoredPost> was created without expected data property 'recommendationUsers'");
+
+		if (!options.root) {
+			this._oncreate = [];
+			this._beforecreate = [];
+			this._aftercreate = [];
+		}
 
 		this._fragment = create_main_fragment$27(this, this._state);
+
+		this.root._oncreate.push(() => {
+			oncreate$3.call(this);
+			this.fire("update", { changed: assignTrue({}, this._state), current: this._state });
+		});
 
 		if (options.target) {
 			if (options.hydrate) throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
 			this._fragment.c();
 			this._mount(options.target, options.anchor);
+
+			this._lock = true;
+			callAll(this._beforecreate);
+			callAll(this._oncreate);
+			callAll(this._aftercreate);
+			this._lock = false;
 		}
 	}
 
 	assign(SponsoredPost.prototype, protoDev);
+	assign(SponsoredPost.prototype, methods$2);
 
 	SponsoredPost.prototype._checkReadOnly = function _checkReadOnly(newState) {
 	};
 
 	/* src/Posts/ReviewPost.html generated by Svelte v2.4.4 */
 
+	function data$4() {
+	  return {
+	    reviewUser: ''
+	  }
+	}
+	var methods$3 = {
+	  setReviewUser() {
+	    var id = this.get().post.review.user;
+	    this.root.setReviewUser(id, this);
+	  }
+	};
 
-
+	function oncreate$4() {
+	  if (this.get().isReview) this.setReviewUser();
+	}
 	function create_main_fragment$28(component, ctx) {
-		var div, div_1, div_2, text, div_3, p, text_1_value = ctx.user.name, text_1, text_2, span, text_5, div_4, span_1, text_6_value = ctx.post.review.rating, text_6, text_7, span_2, text_11, p_1, text_12, raw_value = ctx.post.review.content.text, raw_before, raw_after, text_13, text_14, p_2, strong, text_15_value = ctx.post.review.user.name, text_15;
+		var div, div_1, div_2, text, div_3, p, text_1_value = ctx.user.name, text_1, text_2, text_5, div_4, span, text_6, text_7, span_1, text_11, div_5, p_1, raw_value = ctx.post.review.content.text, text_12, p_2, strong, text_13_value = ctx.reviewUser.name, text_13;
 
 		var avatar_initial_data = { user: ctx.user };
 		var avatar = new Avatar({
 			root: component.root,
 			data: avatar_initial_data
+		});
+
+		var stars_initial_data = { rating: ctx.post.review.rating };
+		var stars = new Stars({
+			root: component.root,
+			data: stars_initial_data
 		});
 
 		return {
@@ -3287,30 +3241,30 @@ var app = (function () {
 				p = createElement("p");
 				text_1 = createText(text_1_value);
 				text_2 = createText("\n          ");
-				span = createElement("span");
+				stars._fragment.c();
 				text_5 = createText("\n      ");
 				div_4 = createElement("div");
-				span_1 = createElement("span");
-				text_6 = createText(text_6_value);
+				span = createElement("span");
+				text_6 = createText(ctx.rating);
 				text_7 = createText("\n        ");
-				span_2 = createElement("span");
-				span_2.textContent = "RATED";
+				span_1 = createElement("span");
+				span_1.textContent = "RATED";
 				text_11 = createText("\n    ");
+				div_5 = createElement("div");
 				p_1 = createElement("p");
-				text_12 = createText("\"");
-				raw_before = createElement('noscript');
-				raw_after = createElement('noscript');
-				text_13 = createText("\"");
-				text_14 = createText("\n    ");
+				text_12 = createText("\n      ");
 				p_2 = createElement("p");
 				strong = createElement("strong");
-				text_15 = createText(text_15_value);
-				span.className = "icon-stars";
-				div_2.className = "left row";
-				div_4.className = "right col";
-				div_1.className = "row";
-				p_2.className = "italic";
-				div.className = "box";
+				text_13 = createText(text_13_value);
+				p.className = "user-name svelte-k5nvbj";
+				div_2.className = "user-info row vCentered svelte-k5nvbj";
+				span.className = "note svelte-k5nvbj";
+				div_4.className = "user-rating col svelte-k5nvbj";
+				div_1.className = "row box-header svelte-k5nvbj";
+				p_1.className = "quote svelte-k5nvbj";
+				p_2.className = "signature italic svelte-k5nvbj";
+				div_5.className = "box-content svelte-k5nvbj";
+				div.className = "box-2";
 			},
 
 			m: function mount(target, anchor) {
@@ -3323,24 +3277,21 @@ var app = (function () {
 				appendNode(p, div_3);
 				appendNode(text_1, p);
 				appendNode(text_2, div_3);
-				appendNode(span, div_3);
+				stars._mount(div_3, null);
 				appendNode(text_5, div_1);
 				appendNode(div_4, div_1);
-				appendNode(span_1, div_4);
-				appendNode(text_6, span_1);
+				appendNode(span, div_4);
+				appendNode(text_6, span);
 				appendNode(text_7, div_4);
-				appendNode(span_2, div_4);
+				appendNode(span_1, div_4);
 				appendNode(text_11, div);
-				appendNode(p_1, div);
-				appendNode(text_12, p_1);
-				appendNode(raw_before, p_1);
-				raw_before.insertAdjacentHTML("afterend", raw_value);
-				appendNode(raw_after, p_1);
-				appendNode(text_13, p_1);
-				appendNode(text_14, div);
-				appendNode(p_2, div);
+				appendNode(div_5, div);
+				appendNode(p_1, div_5);
+				p_1.innerHTML = raw_value;
+				appendNode(text_12, div_5);
+				appendNode(p_2, div_5);
 				appendNode(strong, p_2);
-				appendNode(text_15, strong);
+				appendNode(text_13, strong);
 			},
 
 			p: function update(changed, ctx) {
@@ -3352,28 +3303,32 @@ var app = (function () {
 					text_1.data = text_1_value;
 				}
 
-				if ((changed.post) && text_6_value !== (text_6_value = ctx.post.review.rating)) {
-					text_6.data = text_6_value;
+				var stars_changes = {};
+				if (changed.post) stars_changes.rating = ctx.post.review.rating;
+				stars._set(stars_changes);
+
+				if (changed.rating) {
+					text_6.data = ctx.rating;
 				}
 
 				if ((changed.post) && raw_value !== (raw_value = ctx.post.review.content.text)) {
-					detachBetween(raw_before, raw_after);
-					raw_before.insertAdjacentHTML("afterend", raw_value);
+					p_1.innerHTML = raw_value;
 				}
 
-				if ((changed.post) && text_15_value !== (text_15_value = ctx.post.review.user.name)) {
-					text_15.data = text_15_value;
+				if ((changed.reviewUser) && text_13_value !== (text_13_value = ctx.reviewUser.name)) {
+					text_13.data = text_13_value;
 				}
 			},
 
 			u: function unmount() {
-				detachBetween(raw_before, raw_after);
+				p_1.innerHTML = '';
 
 				detachNode(div);
 			},
 
 			d: function destroy$$1() {
 				avatar.destroy(false);
+				stars.destroy(false);
 			}
 		};
 	}
@@ -3382,9 +3337,11 @@ var app = (function () {
 		this._debugName = '<ReviewPost>';
 		if (!options || (!options.target && !options.root)) throw new Error("'target' is a required option");
 		init(this, options);
-		this._state = assign({}, options.data);
+		this._state = assign(data$4(), options.data);
 		if (!('user' in this._state)) console.warn("<ReviewPost> was created without expected data property 'user'");
 		if (!('post' in this._state)) console.warn("<ReviewPost> was created without expected data property 'post'");
+		if (!('rating' in this._state)) console.warn("<ReviewPost> was created without expected data property 'rating'");
+		if (!('reviewUser' in this._state)) console.warn("<ReviewPost> was created without expected data property 'reviewUser'");
 
 		if (!options.root) {
 			this._oncreate = [];
@@ -3393,6 +3350,11 @@ var app = (function () {
 		}
 
 		this._fragment = create_main_fragment$28(this, this._state);
+
+		this.root._oncreate.push(() => {
+			oncreate$4.call(this);
+			this.fire("update", { changed: assignTrue({}, this._state), current: this._state });
+		});
 
 		if (options.target) {
 			if (options.hydrate) throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -3408,6 +3370,7 @@ var app = (function () {
 	}
 
 	assign(ReviewPost.prototype, protoDev);
+	assign(ReviewPost.prototype, methods$3);
 
 	ReviewPost.prototype._checkReadOnly = function _checkReadOnly(newState) {
 	};
@@ -3467,12 +3430,14 @@ var app = (function () {
 
 	/* src/Posts/PostDetails.html generated by Svelte v2.4.4 */
 
-	function data$2() {
+	function data$5() {
 	  return {
-	    starsActive: false
+	    starsActive: false,
+	    commentsLink: '',
+	    answersLink: ''
 	  }
 	}
-	var methods$1 = {
+	var methods$4 = {
 	  addStar() {
 	    var details = this.get().details,
 	        active = this.get().starsActive;
@@ -3485,7 +3450,76 @@ var app = (function () {
 	};
 
 	function create_main_fragment$30(component, ctx) {
-		var div, div_1, button, span, text, span_1, text_1_value = ctx.details.stars, text_1, button_class_value, text_3, a, span_2, text_4, span_3, text_5_value = ctx.details.comments.total > 0 ? ctx.details.comments.total : '', text_5, a_href_value, text_7, a_1, span_4, text_8, span_5, span_5_class_value, text_11, div_2, button_1, span_6;
+		var div, div_1, text_1, div_2, button, span;
+
+		function select_block_type(ctx) {
+			if (ctx.details) return create_if_block$5;
+			return create_if_block_1$3;
+		}
+
+		var current_block_type = select_block_type(ctx);
+		var if_block = current_block_type(component, ctx);
+
+		var iconssvg_initial_data = { name: "More" };
+		var iconssvg = new IconsSvg({
+			root: component.root,
+			data: iconssvg_initial_data
+		});
+
+		return {
+			c: function create() {
+				div = createElement("div");
+				div_1 = createElement("div");
+				if_block.c();
+				text_1 = createText("\n\n  ");
+				div_2 = createElement("div");
+				button = createElement("button");
+				span = createElement("span");
+				iconssvg._fragment.c();
+				div_1.className = "row";
+				span.className = "icon svelte-1dw7j8z";
+				button.className = "link svelte-1dw7j8z";
+				div.className = "details row svelte-1dw7j8z";
+			},
+
+			m: function mount(target, anchor) {
+				insertNode(div, target, anchor);
+				appendNode(div_1, div);
+				if_block.m(div_1, null);
+				appendNode(text_1, div);
+				appendNode(div_2, div);
+				appendNode(button, div_2);
+				appendNode(span, button);
+				iconssvg._mount(span, null);
+			},
+
+			p: function update(changed, ctx) {
+				if (current_block_type === (current_block_type = select_block_type(ctx)) && if_block) {
+					if_block.p(changed, ctx);
+				} else {
+					if_block.u();
+					if_block.d();
+					if_block = current_block_type(component, ctx);
+					if_block.c();
+					if_block.m(div_1, null);
+				}
+			},
+
+			u: function unmount() {
+				detachNode(div);
+				if_block.u();
+			},
+
+			d: function destroy$$1() {
+				if_block.d();
+				iconssvg.destroy(false);
+			}
+		};
+	}
+
+	// (3:4) {#if details}
+	function create_if_block$5(component, ctx) {
+		var button, span, text, span_1, text_1_value = ctx.details.stars > 0 ? ctx.details.stars : '', text_1, button_class_value, text_3, a, span_2, text_4, span_3, text_5_value = ctx.details.comments.total > 0 ? ctx.details.comments.total : '', text_5, a_href_value, text_7, a_1, span_4, text_8, span_5, text_9_value = ctx.details.answers.total > 0 ? ctx.details.answers.total : '', text_9, a_1_href_value;
 
 		var iconssvg_initial_data = { name: "Star" };
 		var iconssvg = new IconsSvg({
@@ -3509,93 +3543,71 @@ var app = (function () {
 			data: iconssvg_2_initial_data
 		});
 
-		var iconssvg_3_initial_data = { name: "More" };
-		var iconssvg_3 = new IconsSvg({
-			root: component.root,
-			data: iconssvg_3_initial_data
-		});
-
 		return {
 			c: function create() {
-				div = createElement("div");
-				div_1 = createElement("div");
 				button = createElement("button");
 				span = createElement("span");
 				iconssvg._fragment.c();
-				text = createText("\n      ");
+				text = createText("\n        ");
 				span_1 = createElement("span");
 				text_1 = createText(text_1_value);
-				text_3 = createText("\n    ");
+				text_3 = createText("\n      ");
 				a = createElement("a");
 				span_2 = createElement("span");
 				iconssvg_1._fragment.c();
-				text_4 = createText("\n      ");
+				text_4 = createText("\n        ");
 				span_3 = createElement("span");
 				text_5 = createText(text_5_value);
-				text_7 = createText("\n    ");
+				text_7 = createText("\n      ");
 				a_1 = createElement("a");
 				span_4 = createElement("span");
 				iconssvg_2._fragment.c();
-				text_8 = createText("\n      ");
+				text_8 = createText("\n        ");
 				span_5 = createElement("span");
-				text_11 = createText("\n\n  ");
-				div_2 = createElement("div");
-				button_1 = createElement("button");
-				span_6 = createElement("span");
-				iconssvg_3._fragment.c();
-				span.className = "icon icon-star svelte-aamq6k";
-				span_1.className = "text svelte-aamq6k";
+				text_9 = createText(text_9_value);
+				span.className = "icon icon-star svelte-1dw7j8z";
+				span_1.className = "text svelte-1dw7j8z";
 				addListener(button, "click", click_handler);
-				button.className = button_class_value = "" + (ctx.starsActive ? 'active' : '') + " svelte-aamq6k";
-				span_2.className = "icon icon-message svelte-aamq6k";
-				span_3.className = "text svelte-aamq6k";
-				a.className = "link svelte-aamq6k";
+				button.className = button_class_value = "link " + (ctx.starsActive ? 'active' : '') + " svelte-1dw7j8z";
+				span_2.className = "icon icon-message svelte-1dw7j8z";
+				span_3.className = "text svelte-1dw7j8z";
+				a.className = "link svelte-1dw7j8z";
 				a.href = a_href_value = ctx.details.comments.link;
-				span_4.className = "icon svelte-aamq6k";
-				span_5.className = span_5_class_value = "" + (ctx.details.answers.total > 0 ? ctx.details.answers.total : '') + " svelte-aamq6k";
-				a_1.href = "details.answers.link";
-				a_1.className = "svelte-aamq6k";
-				div_1.className = "row";
-				span_6.className = "icon svelte-aamq6k";
-				button_1.className = "svelte-aamq6k";
-				div.className = "details row svelte-aamq6k";
+				span_4.className = "icon svelte-1dw7j8z";
+				span_5.className = "text svelte-1dw7j8z";
+				a_1.className = "link svelte-1dw7j8z";
+				a_1.href = a_1_href_value = ctx.details.answers.link;
 			},
 
 			m: function mount(target, anchor) {
-				insertNode(div, target, anchor);
-				appendNode(div_1, div);
-				appendNode(button, div_1);
+				insertNode(button, target, anchor);
 				appendNode(span, button);
 				iconssvg._mount(span, null);
 				appendNode(text, button);
 				appendNode(span_1, button);
 				appendNode(text_1, span_1);
-				appendNode(text_3, div_1);
-				appendNode(a, div_1);
+				insertNode(text_3, target, anchor);
+				insertNode(a, target, anchor);
 				appendNode(span_2, a);
 				iconssvg_1._mount(span_2, null);
 				appendNode(text_4, a);
 				appendNode(span_3, a);
 				appendNode(text_5, span_3);
-				appendNode(text_7, div_1);
-				appendNode(a_1, div_1);
+				insertNode(text_7, target, anchor);
+				insertNode(a_1, target, anchor);
 				appendNode(span_4, a_1);
 				iconssvg_2._mount(span_4, null);
 				appendNode(text_8, a_1);
 				appendNode(span_5, a_1);
-				appendNode(text_11, div);
-				appendNode(div_2, div);
-				appendNode(button_1, div_2);
-				appendNode(span_6, button_1);
-				iconssvg_3._mount(span_6, null);
+				appendNode(text_9, span_5);
 			},
 
 			p: function update(changed, ctx) {
-				if ((changed.details) && text_1_value !== (text_1_value = ctx.details.stars)) {
+				if ((changed.details) && text_1_value !== (text_1_value = ctx.details.stars > 0 ? ctx.details.stars : '')) {
 					text_1.data = text_1_value;
 				}
 
-				if ((changed.starsActive) && button_class_value !== (button_class_value = "" + (ctx.starsActive ? 'active' : '') + " svelte-aamq6k")) {
+				if ((changed.starsActive) && button_class_value !== (button_class_value = "link " + (ctx.starsActive ? 'active' : '') + " svelte-1dw7j8z")) {
 					button.className = button_class_value;
 				}
 
@@ -3607,13 +3619,21 @@ var app = (function () {
 					a.href = a_href_value;
 				}
 
-				if ((changed.details) && span_5_class_value !== (span_5_class_value = "" + (ctx.details.answers.total > 0 ? ctx.details.answers.total : '') + " svelte-aamq6k")) {
-					span_5.className = span_5_class_value;
+				if ((changed.details) && text_9_value !== (text_9_value = ctx.details.answers.total > 0 ? ctx.details.answers.total : '')) {
+					text_9.data = text_9_value;
+				}
+
+				if ((changed.details) && a_1_href_value !== (a_1_href_value = ctx.details.answers.link)) {
+					a_1.href = a_1_href_value;
 				}
 			},
 
 			u: function unmount() {
-				detachNode(div);
+				detachNode(button);
+				detachNode(text_3);
+				detachNode(a);
+				detachNode(text_7);
+				detachNode(a_1);
 			},
 
 			d: function destroy$$1() {
@@ -3621,7 +3641,116 @@ var app = (function () {
 				removeListener(button, "click", click_handler);
 				iconssvg_1.destroy(false);
 				iconssvg_2.destroy(false);
-				iconssvg_3.destroy(false);
+			}
+		};
+	}
+
+	// (16:4) {:else}
+	function create_if_block_1$3(component, ctx) {
+		var button, span, text, span_1, button_class_value, text_2, a, span_2, text_3, span_3, text_5, a_1, span_4, text_6, span_5;
+
+		var iconssvg_initial_data = { name: "Star" };
+		var iconssvg = new IconsSvg({
+			root: component.root,
+			data: iconssvg_initial_data
+		});
+
+		function click_handler(event) {
+			component.addStar();
+		}
+
+		var iconssvg_1_initial_data = { name: "MessageFull" };
+		var iconssvg_1 = new IconsSvg({
+			root: component.root,
+			data: iconssvg_1_initial_data
+		});
+
+		var iconssvg_2_initial_data = { name: "Reply" };
+		var iconssvg_2 = new IconsSvg({
+			root: component.root,
+			data: iconssvg_2_initial_data
+		});
+
+		return {
+			c: function create() {
+				button = createElement("button");
+				span = createElement("span");
+				iconssvg._fragment.c();
+				text = createText("\n        ");
+				span_1 = createElement("span");
+				text_2 = createText("\n      ");
+				a = createElement("a");
+				span_2 = createElement("span");
+				iconssvg_1._fragment.c();
+				text_3 = createText("\n        ");
+				span_3 = createElement("span");
+				text_5 = createText("\n      ");
+				a_1 = createElement("a");
+				span_4 = createElement("span");
+				iconssvg_2._fragment.c();
+				text_6 = createText("\n        ");
+				span_5 = createElement("span");
+				span.className = "icon icon-star svelte-1dw7j8z";
+				span_1.className = "text svelte-1dw7j8z";
+				addListener(button, "click", click_handler);
+				button.className = button_class_value = "link " + (ctx.starsActive ? 'active' : '') + " svelte-1dw7j8z";
+				span_2.className = "icon icon-message svelte-1dw7j8z";
+				span_3.className = "text svelte-1dw7j8z";
+				a.className = "link svelte-1dw7j8z";
+				a.href = ctx.commentsLink;
+				span_4.className = "icon svelte-1dw7j8z";
+				span_5.className = "text svelte-1dw7j8z";
+				a_1.className = "link svelte-1dw7j8z";
+				a_1.href = ctx.answersLink;
+			},
+
+			m: function mount(target, anchor) {
+				insertNode(button, target, anchor);
+				appendNode(span, button);
+				iconssvg._mount(span, null);
+				appendNode(text, button);
+				appendNode(span_1, button);
+				insertNode(text_2, target, anchor);
+				insertNode(a, target, anchor);
+				appendNode(span_2, a);
+				iconssvg_1._mount(span_2, null);
+				appendNode(text_3, a);
+				appendNode(span_3, a);
+				insertNode(text_5, target, anchor);
+				insertNode(a_1, target, anchor);
+				appendNode(span_4, a_1);
+				iconssvg_2._mount(span_4, null);
+				appendNode(text_6, a_1);
+				appendNode(span_5, a_1);
+			},
+
+			p: function update(changed, ctx) {
+				if ((changed.starsActive) && button_class_value !== (button_class_value = "link " + (ctx.starsActive ? 'active' : '') + " svelte-1dw7j8z")) {
+					button.className = button_class_value;
+				}
+
+				if (changed.commentsLink) {
+					a.href = ctx.commentsLink;
+				}
+
+				if (changed.answersLink) {
+					a_1.href = ctx.answersLink;
+				}
+			},
+
+			u: function unmount() {
+				detachNode(button);
+				detachNode(text_2);
+				detachNode(a);
+				detachNode(text_5);
+				detachNode(a_1);
+			},
+
+			d: function destroy$$1() {
+				iconssvg.destroy(false);
+				removeListener(button, "click", click_handler);
+				iconssvg_1.destroy(false);
+				iconssvg_2.destroy(false);
 			}
 		};
 	}
@@ -3630,9 +3759,11 @@ var app = (function () {
 		this._debugName = '<PostDetails>';
 		if (!options || (!options.target && !options.root)) throw new Error("'target' is a required option");
 		init(this, options);
-		this._state = assign(data$2(), options.data);
-		if (!('starsActive' in this._state)) console.warn("<PostDetails> was created without expected data property 'starsActive'");
+		this._state = assign(data$5(), options.data);
 		if (!('details' in this._state)) console.warn("<PostDetails> was created without expected data property 'details'");
+		if (!('starsActive' in this._state)) console.warn("<PostDetails> was created without expected data property 'starsActive'");
+		if (!('commentsLink' in this._state)) console.warn("<PostDetails> was created without expected data property 'commentsLink'");
+		if (!('answersLink' in this._state)) console.warn("<PostDetails> was created without expected data property 'answersLink'");
 
 		if (!options.root) {
 			this._oncreate = [];
@@ -3656,15 +3787,22 @@ var app = (function () {
 	}
 
 	assign(PostDetails.prototype, protoDev);
-	assign(PostDetails.prototype, methods$1);
+	assign(PostDetails.prototype, methods$4);
 
 	PostDetails.prototype._checkReadOnly = function _checkReadOnly(newState) {
 	};
 
 	/* src/ProfileFeed.html generated by Svelte v2.4.4 */
 
+	var methods$5 = {
+	  loadPosts() {
+	    // TODO: load only x posts on create, and load rest on demand
+	  }
+	};
 
-
+	function oncreate$5() {
+	  this.loadPosts();
+	}
 	function create_main_fragment$31(component, ctx) {
 		var each_anchor;
 
@@ -3736,8 +3874,8 @@ var app = (function () {
 		var article, text, div, text_1, text_2;
 
 		function select_block_type(ctx) {
-			if (ctx.post.isReview) return create_if_block$4;
-			return create_if_block_1$2;
+			if (ctx.post.isReview) return create_if_block$6;
+			return create_if_block_1$4;
 		}
 
 		var current_block_type = select_block_type(ctx);
@@ -3745,16 +3883,16 @@ var app = (function () {
 
 		function select_block_type_1(ctx) {
 			if (ctx.post.isReview) return create_if_block_2$2;
-			return create_if_block_3$1;
+			return create_if_block_3;
 		}
 
 		var current_block_type_1 = select_block_type_1(ctx);
 		var if_block_1 = current_block_type_1(component, ctx);
 
 		function select_block_type_2(ctx) {
-			if (ctx.post.isSponsored) return create_if_block_4$1;
-			if (ctx.post.isReview) return create_if_block_5$1;
-			return create_if_block_6$1;
+			if (ctx.post.isSponsored) return create_if_block_4;
+			if (ctx.post.isReview) return create_if_block_5;
+			return create_if_block_6;
 		}
 
 		var current_block_type_2 = select_block_type_2(ctx);
@@ -3846,9 +3984,9 @@ var app = (function () {
 	}
 
 	// (3:4) {#if post.isReview}
-	function create_if_block$4(component, ctx) {
+	function create_if_block$6(component, ctx) {
 
-		var avatar_initial_data = { user: ctx.post.review.user };
+		var avatar_initial_data = { user: ctx.post.review.user, isReview: "true" };
 		var avatar = new Avatar({
 			root: component.root,
 			data: avatar_initial_data
@@ -3880,7 +4018,7 @@ var app = (function () {
 	}
 
 	// (5:4) {:else}
-	function create_if_block_1$2(component, ctx) {
+	function create_if_block_1$4(component, ctx) {
 
 		var avatar_initial_data = { user: ctx.profile.user };
 		var avatar = new Avatar({
@@ -3916,7 +4054,11 @@ var app = (function () {
 	// (10:6) {#if post.isReview}
 	function create_if_block_2$2(component, ctx) {
 
-		var posttitle_initial_data = { name: ctx.post.review.user.name, date: ctx.post.review.date };
+		var posttitle_initial_data = {
+		 	isReview: "true",
+		 	user: ctx.post.review.user,
+		 	date: ctx.post.review.date
+		 };
 		var posttitle = new PostTitle({
 			root: component.root,
 			data: posttitle_initial_data
@@ -3933,7 +4075,7 @@ var app = (function () {
 
 			p: function update(changed, ctx) {
 				var posttitle_changes = {};
-				if (changed.profile) posttitle_changes.name = ctx.post.review.user.name;
+				if (changed.profile) posttitle_changes.user = ctx.post.review.user;
 				if (changed.profile) posttitle_changes.date = ctx.post.review.date;
 				posttitle._set(posttitle_changes);
 			},
@@ -3949,7 +4091,7 @@ var app = (function () {
 	}
 
 	// (12:6) {:else}
-	function create_if_block_3$1(component, ctx) {
+	function create_if_block_3(component, ctx) {
 
 		var posttitle_initial_data = {
 		 	isSponsored: ctx.post.isSponsored,
@@ -3989,7 +4131,7 @@ var app = (function () {
 	}
 
 	// (16:6) {#if post.isSponsored}
-	function create_if_block_4$1(component, ctx) {
+	function create_if_block_4(component, ctx) {
 
 		var sponsoredpost_initial_data = { post: ctx.post };
 		var sponsoredpost = new SponsoredPost({
@@ -4023,9 +4165,13 @@ var app = (function () {
 	}
 
 	// (18:29) 
-	function create_if_block_5$1(component, ctx) {
+	function create_if_block_5(component, ctx) {
 
-		var reviewpost_initial_data = { post: ctx.post, user: ctx.profile.user };
+		var reviewpost_initial_data = {
+		 	post: ctx.post,
+		 	user: ctx.profile.user,
+		 	rating: ctx.profile.details.rating
+		 };
 		var reviewpost = new ReviewPost({
 			root: component.root,
 			data: reviewpost_initial_data
@@ -4044,6 +4190,7 @@ var app = (function () {
 				var reviewpost_changes = {};
 				if (changed.profile) reviewpost_changes.post = ctx.post;
 				if (changed.profile) reviewpost_changes.user = ctx.profile.user;
+				if (changed.profile) reviewpost_changes.rating = ctx.profile.details.rating;
 				reviewpost._set(reviewpost_changes);
 			},
 
@@ -4058,7 +4205,7 @@ var app = (function () {
 	}
 
 	// (20:6) {:else}
-	function create_if_block_6$1(component, ctx) {
+	function create_if_block_6(component, ctx) {
 
 		var post_initial_data = { post: ctx.post };
 		var post = new Post({
@@ -4114,6 +4261,11 @@ var app = (function () {
 
 		this._fragment = create_main_fragment$31(this, this._state);
 
+		this.root._oncreate.push(() => {
+			oncreate$5.call(this);
+			this.fire("update", { changed: assignTrue({}, this._state), current: this._state });
+		});
+
 		if (options.target) {
 			if (options.hydrate) throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
 			this._fragment.c();
@@ -4128,6 +4280,7 @@ var app = (function () {
 	}
 
 	assign(ProfileFeed.prototype, protoDev);
+	assign(ProfileFeed.prototype, methods$5);
 
 	ProfileFeed.prototype._checkReadOnly = function _checkReadOnly(newState) {
 	};
@@ -4229,12 +4382,12 @@ var app = (function () {
 	  ProfileResume
 	};
 
-	function data$3() {
+	function data$6() {
 	  return {
 	    selected: ProfileFeed
 	  }
 	}
-	var methods$2 = {
+	var methods$6 = {
 	  toggleContent(i) {
 	    var menu = this.get().menu;
 	    var clicked = menu[i];
@@ -4245,6 +4398,9 @@ var app = (function () {
 	    this.set({menu});
 	    var selected = components[clicked.link];
 	    if (selected) this.set({selected});
+	    else {
+	      console.log('error: missing ContentProfile component');
+	    }
 	  }
 	};
 
@@ -4370,8 +4526,8 @@ var app = (function () {
 		var li, button, text, span, text_1_value = ctx.item.icon.text, text_1, button_class_value;
 
 		function select_block_type(ctx) {
-			if (ctx.item.icon.svg) return create_if_block$5;
-			if (ctx.item.icon.img) return create_if_block_1$3;
+			if (ctx.item.icon.svg) return create_if_block$7;
+			if (ctx.item.icon.img) return create_if_block_1$5;
 			return create_if_block_2$3;
 		}
 
@@ -4391,7 +4547,7 @@ var app = (function () {
 				button._svelte = { component, ctx };
 
 				addListener(button, "click", click_handler);
-				button.className = button_class_value = "menu-item " + (ctx.item.active ? 'active' : '') + " svelte-w7r80x";
+				button.className = button_class_value = "btn menu-item " + (ctx.item.active ? 'active' : '') + " svelte-w7r80x";
 				li.className = "svelte-w7r80x";
 			},
 
@@ -4420,7 +4576,7 @@ var app = (function () {
 				}
 
 				button._svelte.ctx = ctx;
-				if ((changed.menu) && button_class_value !== (button_class_value = "menu-item " + (ctx.item.active ? 'active' : '') + " svelte-w7r80x")) {
+				if ((changed.menu) && button_class_value !== (button_class_value = "btn menu-item " + (ctx.item.active ? 'active' : '') + " svelte-w7r80x")) {
 					button.className = button_class_value;
 				}
 			},
@@ -4438,7 +4594,7 @@ var app = (function () {
 	}
 
 	// (6:8) {#if item.icon.svg}
-	function create_if_block$5(component, ctx) {
+	function create_if_block$7(component, ctx) {
 		var span;
 
 		var iconssvg_initial_data = { name: ctx.item.icon.svg };
@@ -4476,7 +4632,7 @@ var app = (function () {
 	}
 
 	// (10:31) 
-	function create_if_block_1$3(component, ctx) {
+	function create_if_block_1$5(component, ctx) {
 		var span, img, img_src_value, img_alt_value;
 
 		return {
@@ -4556,7 +4712,7 @@ var app = (function () {
 		this._debugName = '<ContentProfile>';
 		if (!options || (!options.target && !options.root)) throw new Error("'target' is a required option");
 		init(this, options);
-		this._state = assign(data$3(), options.data);
+		this._state = assign(data$6(), options.data);
 		if (!('menu' in this._state)) console.warn("<ContentProfile> was created without expected data property 'menu'");
 		if (!('selected' in this._state)) console.warn("<ContentProfile> was created without expected data property 'selected'");
 		if (!('profile' in this._state)) console.warn("<ContentProfile> was created without expected data property 'profile'");
@@ -4583,7 +4739,7 @@ var app = (function () {
 	}
 
 	assign(ContentProfile.prototype, protoDev);
-	assign(ContentProfile.prototype, methods$2);
+	assign(ContentProfile.prototype, methods$6);
 
 	ContentProfile.prototype._checkReadOnly = function _checkReadOnly(newState) {
 	};
@@ -4665,20 +4821,31 @@ var app = (function () {
 
 	const USERS = [
 	  {
+	    id: '01',
+	    img: 'https://pbs.twimg.com/profile_images/974736784906248192/gPZwCbdS.jpg'
+	  },
+	  {
+	    id: '02',
+				img: 'https://d3iw72m71ie81c.cloudfront.net/male-3.jpg',
+				name: 'Mario Mendez',
+				title: 'Senior Architect',
+				link: ''
+	  },
+	  {
 	    id: '03',
-	    img: '',
+	    img: 'https://images.pexels.com/photos/274595/pexels-photo-274595.jpeg?h=350&auto=compress&cs=tinysrgb',
 	    name: 'Jessica Simmons',
 	    link: '',
 	  },
 	  {
 	    id: '04',
-	    img: '',
+	    img: 'https://tinyfac.es/data/avatars/087B1143-3859-4476-A85C-C120BBA0778F-500w.jpeg',
 	    name: '',
 	    link: '',
 	  },
 	  {
 	    id: '05',
-	    img: '',
+	    img: 'https://d3iw72m71ie81c.cloudfront.net/female-57.jpg',
 	    name: '',
 	    link: '',
 	  },
@@ -4733,12 +4900,12 @@ var app = (function () {
 	  },
 	];
 
-	function data$4() {
+	function data$7() {
 	  return {
 	    users: USERS
 	  }
 	}
-	function oncreate$1() {
+	function oncreate$6() {
 	  this.root.set({users: this.get().users});
 	}
 	function create_main_fragment$36(component, ctx) {
@@ -4760,7 +4927,7 @@ var app = (function () {
 		this._debugName = '<Users>';
 		if (!options || (!options.target && !options.root)) throw new Error("'target' is a required option");
 		init(this, options);
-		this._state = assign(data$4(), options.data);
+		this._state = assign(data$7(), options.data);
 
 		if (!options.root) {
 			this._oncreate = [];
@@ -4769,7 +4936,7 @@ var app = (function () {
 		this._fragment = create_main_fragment$36(this, this._state);
 
 		this.root._oncreate.push(() => {
-			oncreate$1.call(this);
+			oncreate$6.call(this);
 			this.fire("update", { changed: assignTrue({}, this._state), current: this._state });
 		});
 
@@ -4789,13 +4956,23 @@ var app = (function () {
 
 	/* src/App.html generated by Svelte v2.4.4 */
 
-	const USER = {
-		id: '01',
-		img: ''
-	};
+	class User {
+	    constructor() {
+	      this.id = 'id';
+	      this.img = '';
+	      this.name = 'name';
+	      this.title = '';
+	      this.link = '';
+	      this.tags = [];
+	      this.location = '';
+	    }
+	  }
+
+	const USER = {};
 
 	const POSTS = [
-		{ date: '2018-05-09T12:00:00Z',
+		{ post_id: '',
+			date: '2018-05-09T12:00:00Z',
 			content: {
 				text: '<p>New portfolio update with my last projects <strong>#architecture</strong> <strong>#portfolio</strong> <a class="link" href="https://www.architizes.com/MarioMendez" target="_blank">https://www.architizes.com/MarioMendez</a></p>'
 			},
@@ -4811,10 +4988,11 @@ var app = (function () {
 				}
 			}
 		},
-		{ isSponsored: true,
+		{ post_id: '',
+			isSponsored: true,
 			date: '2018-05-06T13:00:00Z',
 			content: {
-				text: '<p class="title">Architecture Services</p><p>Design and planning consultance, see more at ...<p>',
+				text: '<p><strong>Architecture Services</strong></p><p>Design and planning consultance, see more at ...<p>',
 				img: 'https://i.imgur.com/vZ8suUE.jpg'
 			},
 			details: {
@@ -4829,28 +5007,22 @@ var app = (function () {
 				}
 			},
 			recommendations: {
-				users: [
-					{id: '03', img: '', link: '', name: ''},
-					{id: '04', img: '', link: '', name: ''},
-					{id: '05', img: '', link: '', name: ''}
-				],
+				// would be an array of 42 elements/users id
+				users: ['03', '04', '05', '10', '11'],
 				rating: 4.6,
+				// total = users.length
 				total: 42
 			}
 		},
-		{	isReview: true,
+		{	post_id: '001',
+			isReview: true,
 			review: {
-				user: {
-					id: '03',
-					name: 'Jessica Simmons',
-					img: '',
-					link: '',
-				},
+				user: '03',
 				date: '2018-05-03T13:00:00Z',
 				content: {
-					text: '<p>It was a pleasure to work with Mario. Very professional and talented architect. I really suggest him!'
+					text: 'It was a pleasure to work with Mario. Very professional and talented architect. I really suggest him!'
 				},
-				rating: 4.8,
+				rating: 5,
 			},
 			details: {
 				stars: 6,
@@ -4863,19 +5035,48 @@ var app = (function () {
 					link: ''
 				}
 			}
+		},
+		{	post_id: '002',
+			isReview: true,
+			review: {
+				user: '04',
+				date: '2018-05-02T14:00:00Z',
+				content: {
+					text: 'I worked with him for a project ...'
+				},
+				rating: 5,
+			}
+		},
+		{	post_id: '003',
+			isReview: true,
+			review: {
+				user: '05',
+				date: '2018-05-01T14:00:00Z',
+				content: {
+					text: 'I contacted him for a project ...'
+				},
+				rating: 4,
+			}
 		}
 	];
 
 	const REVIEWS = [];
 
+	const PROJECTS = [
+		{img: 'https://i.imgur.com/vZ8suUE.jpg', title: 'title', link: ''},
+		{img: 'https://i.imgur.com/kKvl97S.jpg', title: 'title', link: ''},
+		{img: 'https://i.imgur.com/6fQwQdQ.png', title: 'title', link: ''},
+		{img: 'https://i.imgur.com/6eA8rHj.jpg', title: 'title', link: ''},
+		{img: 'https://i.imgur.com/HZVeVDs.jpg', title: 'title', link: ''},
+		{img: 'https://i.imgur.com/3JueZBg.jpg', title: 'title', link: ''},
+		{img: 'https://i.imgur.com/mucT2Sl.jpg', title: 'title', link: ''},
+		{img: 'https://i.imgur.com/tA6OlVu.jpg', title: 'title', link: ''},
+		{img: 'https://i.imgur.com/w1bEuVW.jpg', title: 'title', link: ''},
+		{img: 'https://i.imgur.com/V2Mt6RJ.jpg', title: 'title', link: ''}
+	];
+
 	const PROFILE = {
-		user: {
-			id: '02',
-			img: 'https://d3iw72m71ie81c.cloudfront.net/male-3.jpg',
-			name: 'Mario Mendez',
-			title: 'Senior Architect',
-			link: ''
-		},
+		user: {},
 		details: {
 			rating: 4.8,
 			followers: 320,
@@ -4883,44 +5084,28 @@ var app = (function () {
 			perf: 56,
 			reviews: 42,
 		},
-		rating: 4.8,
-		followers: 320,
-		following: 147,
-		perf: 56,
-		reviews: 42,
 		banner: {
 			img: 'https://i.imgur.com/MbMnM74.jpg',
 			width: 130,
 			top: -60,
 			left: 0
 		},
-		projects: [
-			{img: 'https://i.imgur.com/vZ8suUE.jpg', title: 'title', link: ''},
-			{img: 'https://i.imgur.com/kKvl97S.jpg', title: 'title', link: ''},
-			{img: 'https://i.imgur.com/6fQwQdQ.png', title: 'title', link: ''},
-			{img: 'https://i.imgur.com/6eA8rHj.jpg', title: 'title', link: ''},
-			{img: 'https://i.imgur.com/HZVeVDs.jpg', title: 'title', link: ''},
-			{img: 'https://i.imgur.com/3JueZBg.jpg', title: 'title', link: ''},
-			{img: 'https://i.imgur.com/mucT2Sl.jpg', title: 'title', link: ''},
-			{img: 'https://i.imgur.com/tA6OlVu.jpg', title: 'title', link: ''},
-			{img: 'https://i.imgur.com/w1bEuVW.jpg', title: 'title', link: ''},
-			{img: 'https://i.imgur.com/V2Mt6RJ.jpg', title: 'title', link: ''}
-		],
+		projects: PROJECTS,
 		posts: POSTS,
 		reviews: REVIEWS
 	};
 
 	const ICONS = [
-					{name: 'search', color: '#42A5D2', svg: 'Search'},
-					{name: 'edit', color: '#FDAA29', svg: 'Edit'},
-					{name: 'messages', color: '#F26C4F', svg: 'Message'},
-					{name: 'agenda', color: '#058E85', svg: 'Agenda', 'text': 'Agenda'},
-					{name: 'info', svg: 'Clipboard', text: 'Info'},
-					{name: 'feed', svg: 'Book', text: 'Feed'},
-					{name: 'resume', svg: 'Clip', text: 'Résumé'},
-				];
+		{name: 'search', color: '#42A5D2', svg: 'Search'},
+		{name: 'edit', color: '#FDAA29', svg: 'Edit'},
+		{name: 'messages', color: '#F26C4F', svg: 'Message'},
+		{name: 'agenda', color: '#058E85', svg: 'Agenda', 'text': 'Agenda'},
+		{name: 'info', svg: 'Clipboard', text: 'Info'},
+		{name: 'feed', svg: 'Book', text: 'Feed'},
+		{name: 'resume', svg: 'Clip', text: 'Résumé'},
+	];
 
-	function data$5() {
+	function data$8() {
 		return {
 			brand: {img: '', link: ''},
 			icons: ICONS,
@@ -4938,27 +5123,74 @@ var app = (function () {
 				{link: 'ProfileAgenda', icon: 'agenda'},
 				{link: 'ProfileResume', icon: 'resume'}
 			],
+			userId: '01',
+			profileId: '02'
 		}
 	}
-	var methods$3 = {
+	var methods$7 = {
 		getIcons(menu) {
 			var icons = this.get().icons;
-			if (menu.length === 0) { return; }
+			if (menu.length === 0) return;
 			menu.forEach(item => {
 				var found = icons.find(x => x.name === item.icon);
 				if (found) item.icon = found;
 				else item.icon = {name: item.icon};
 			});
 			return menu;
+		},
+		setUser(id) {
+			if (!id) {
+				console.log('missing user id');
+				return;
+			}
+			var user = this.findUser(id);
+			if (user) this.set({user});
+			else console.log('no user with id ', id);
+		},
+		setProfileUser(id) {
+			if (!id) {
+				console.log('missing profile user id');
+				return;
+			}
+			var profile = this.get().profile,
+					user = this.findUser(id);
+			if (user) {
+				profile.user = user;
+				this.set({profile});
+			}
+			else console.log('no user with id ', id);
+		},
+		findUser(id) {
+			var found = this.get().users.find(x => x.id === id);
+			return found;
+		},
+		setReviewUser(id, el) {
+	        if (!id) console.log('missing review user id', this);
+	        var reviewUser = this.root.findUser(id);
+			if (!reviewUser) {
+				console.log('no review user with id ', id, el);
+				reviewUser = new User();
+			}
+			el.set({reviewUser});
+	      },
+		newUser() {
+			return new User();
 		}
 	};
 
-	function oncreate$2() {
+	function oncreate$7() {
+		this.setUser(this.get().userId);
+		this.setProfileUser(this.get().profileId);
+
 		this.set({mainNav: this.getIcons(this.get().mainNav)});
 		this.set({profileMenu: this.getIcons(this.get().profileMenu)});
 	}
 	function create_main_fragment$37(component, ctx) {
-		var link, text, div, text_1, div_1, text_2, div_2, text_3, text_4, text_5, main, header, text_7, div_3, div_4, text_9, text_10, text_11, text_17;
+		var link, text, text_1, div, text_2, div_1, text_3, div_2, text_4, text_5, text_6, main, header, text_8, div_3, div_4, text_10, text_11, text_12;
+
+		var users = new Users({
+			root: component.root
+		});
 
 		var sidenav_initial_data = {
 		 	menu: ctx.mainNav,
@@ -5008,80 +5240,76 @@ var app = (function () {
 			slots: { default: createFragment() }
 		});
 
-		var users = new Users({
-			root: component.root
-		});
-
 		return {
 			c: function create() {
 				link = createElement("link");
 				text = createText("\n\n");
+				users._fragment.c();
+				text_1 = createText("\n\n");
 				div = createElement("div");
 				sidenav._fragment.c();
-				text_1 = createText("\n\t");
+				text_2 = createText("\n\t");
 				div_1 = createElement("div");
 				banner._fragment.c();
-				text_2 = createText("\n\t\t");
+				text_3 = createText("\n\t\t");
 				div_2 = createElement("div");
-				text_3 = createText("\n\t\t\t\t");
+				text_4 = createText("\n\t\t\t\t");
 				sidebarprofile._fragment.c();
-				text_4 = createText("\n\t\t\t");
-				sidebar._fragment.c();
 				text_5 = createText("\n\t\t\t");
+				sidebar._fragment.c();
+				text_6 = createText("\n\t\t\t");
 				main = createElement("main");
 				header = createElement("header");
 				headerprofile._fragment.c();
-				text_7 = createText("\n\t\t\t\t");
+				text_8 = createText("\n\t\t\t\t");
 				div_3 = createElement("div");
 				div_4 = createElement("div");
 				contentprofile._fragment.c();
-				text_9 = createText("\n\t\t\t\t\t");
-				text_10 = createText("\n\t\t\t\t\t\t");
+				text_10 = createText("\n\t\t\t\t\t");
+				text_11 = createText("\n\t\t\t\t\t\t");
 				sidebarcontent._fragment.c();
-				text_11 = createText("\n\t\t\t\t\t");
+				text_12 = createText("\n\t\t\t\t\t");
 				sidebar_1._fragment.c();
-				text_17 = createText("\n");
-				users._fragment.c();
 				link.href = "https://fonts.googleapis.com/css?family=Palanquin:300";
 				link.rel = "stylesheet";
-				header.className = "row vCentered svelte-181aq41";
-				div_4.className = "content svelte-181aq41";
+				header.className = "row vCentered svelte-1rt8hcy";
+				div_4.className = "content svelte-1rt8hcy";
 				div_3.className = "row";
-				main.className = "svelte-181aq41";
+				main.className = "svelte-1rt8hcy";
 				div_2.className = "row";
 				div_1.className = "scroll";
-				div.className = "page sidenav svelte-181aq41";
+				div.className = "page sidenav svelte-1rt8hcy";
 			},
 
 			m: function mount(target, anchor) {
 				appendNode(link, document.head);
 				insertNode(text, target, anchor);
+				users._mount(target, anchor);
+				insertNode(text_1, target, anchor);
 				insertNode(div, target, anchor);
 				sidenav._mount(div, null);
-				appendNode(text_1, div);
+				appendNode(text_2, div);
 				appendNode(div_1, div);
 				banner._mount(div_1, null);
-				appendNode(text_2, div_1);
+				appendNode(text_3, div_1);
 				appendNode(div_2, div_1);
-				appendNode(text_3, sidebar._slotted.default);
-				sidebarprofile._mount(sidebar._slotted.default, null);
 				appendNode(text_4, sidebar._slotted.default);
+				sidebarprofile._mount(sidebar._slotted.default, null);
+				appendNode(text_5, sidebar._slotted.default);
 				sidebar._mount(div_2, null);
-				appendNode(text_5, div_2);
+				appendNode(text_6, div_2);
 				appendNode(main, div_2);
 				appendNode(header, main);
 				headerprofile._mount(header, null);
-				appendNode(text_7, main);
+				appendNode(text_8, main);
 				appendNode(div_3, main);
 				appendNode(div_4, div_3);
 				contentprofile._mount(div_4, null);
-				appendNode(text_9, div_3);
-				appendNode(text_10, sidebar_1._slotted.default);
-				sidebarcontent._mount(sidebar_1._slotted.default, null);
+				appendNode(text_10, div_3);
 				appendNode(text_11, sidebar_1._slotted.default);
+				sidebarcontent._mount(sidebar_1._slotted.default, null);
+				appendNode(text_12, sidebar_1._slotted.default);
 				sidebar_1._mount(div_3, null);
-				insertNode(text_17, target, anchor);
-				users._mount(target, anchor);
 			},
 
 			p: function update(changed, ctx) {
@@ -5112,12 +5340,13 @@ var app = (function () {
 			u: function unmount() {
 				detachNode(link);
 				detachNode(text);
-				detachNode(div);
-				detachNode(text_17);
 				users._unmount();
+				detachNode(text_1);
+				detachNode(div);
 			},
 
 			d: function destroy$$1() {
+				users.destroy(false);
 				sidenav.destroy(false);
 				banner.destroy(false);
 				sidebarprofile.destroy(false);
@@ -5126,7 +5355,6 @@ var app = (function () {
 				contentprofile.destroy(false);
 				sidebarcontent.destroy(false);
 				sidebar_1.destroy(false);
-				users.destroy(false);
 			}
 		};
 	}
@@ -5135,7 +5363,7 @@ var app = (function () {
 		this._debugName = '<App>';
 		if (!options || (!options.target && !options.root)) throw new Error("'target' is a required option");
 		init(this, options);
-		this._state = assign(data$5(), options.data);
+		this._state = assign(data$8(), options.data);
 		if (!('mainNav' in this._state)) console.warn("<App> was created without expected data property 'mainNav'");
 		if (!('brand' in this._state)) console.warn("<App> was created without expected data property 'brand'");
 		if (!('user' in this._state)) console.warn("<App> was created without expected data property 'user'");
@@ -5151,7 +5379,7 @@ var app = (function () {
 		this._fragment = create_main_fragment$37(this, this._state);
 
 		this.root._oncreate.push(() => {
-			oncreate$2.call(this);
+			oncreate$7.call(this);
 			this.fire("update", { changed: assignTrue({}, this._state), current: this._state });
 		});
 
@@ -5169,7 +5397,7 @@ var app = (function () {
 	}
 
 	assign(App.prototype, protoDev);
-	assign(App.prototype, methods$3);
+	assign(App.prototype, methods$7);
 
 	App.prototype._checkReadOnly = function _checkReadOnly(newState) {
 	};

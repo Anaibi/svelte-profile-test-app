@@ -3,8 +3,8 @@
 	<p>{profile.user.title} <Stars rating={profile.details.rating}/></p>
 </div>
 <div class="row">
-	<button class="btn-icon"><span class="icon"><IconsSvg name="Message"/></span></button>
-	<button class="btn-primary">Request</button>
+	<button class="btn btn-icon"><span class="icon"><IconsSvg name="Message"/></span></button>
+	<button class="btn btn-primary">Request</button>
 </div>
 
 
@@ -21,6 +21,11 @@
 		line-height: 20px;
 		color: #C9C9C9;
 	}
+	.icon-stars {
+    margin-left: 6px;
+    position: relative;
+    top: 1px;
+  }
 	.icon {
 		width: 25px;
 		height: 25px;
@@ -28,33 +33,6 @@
 	/* hide message bubble (has message) */
 	.icon :global(.active) {
 		display: none;
-	}
-	button {
-		height: 45px;
-	}
-	.btn-icon {
-		width: 45px;
-		margin-right: 15px;
-	}
-	.btn-icon:hover {
-		color: #3299CC;
-		background: white;
-	}
-	.btn-icon .icon {
-		width: 18px;
-		height: 18px;
-		line-height: 18px;
-	}
-	.btn-primary {
-		width: 160px;
-		background: #41B1E3;
-		border-color: #41B1E3;
-		color: white;
-		font-size: 18px;
-		line-height: 18px;
-	}
-	.btn-primary:hover {
-		background: #3299CC;
 	}
 </style>
 

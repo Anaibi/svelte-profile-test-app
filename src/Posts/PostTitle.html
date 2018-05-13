@@ -1,12 +1,12 @@
 <div class="post-title row">
   <p>
-    <strong>{name} </strong>
+    <span class="user-name">{name} </span>
     <span class="note"><span class="icon note"><IconsSvg name='Clock'/></span> {postPeriod}</span>
   </p>
   {#if isSponsored}
     <p class="row row-bottom italic note">
       <span>Sponsored</span>
-      <button on:click="addBookmark()" class="{bookmarked ? 'active' : ''}"><span class="icon"><IconsSvg name="Bookmark"/></span></button>
+      <button on:click="addBookmark()" class="link {bookmarked ? 'active' : ''}"><span class="icon"><IconsSvg name="Bookmark"/></span></button>
     </p>
   {/if}
 </div>
@@ -52,14 +52,16 @@
     data() {
       return {
         isSponsored: false,
-        bookmarked: false
+        bookmarked: false,
+        isReview: false,
+        name: ''
       }
     },
     components: {
       IconsSvg
     },
     computed: {
-      postPeriod({date}) {
+      postPeriod: ({date}) => {
 				var today = new Date(),
             postDate = new Date(date),
             period = 0;
@@ -89,7 +91,24 @@
       addBookmark() {
         this.set({bookmarked: !this.get().bookmarked});
         // do bookmarking
+      },
+      setReviewName() {
+        if (!this.get().isReview) return;
+        var id = this.get().user;
+        if (!id) {
+          console.log('review has no user id associated', this);
+          return;
+        }
+        var reviewUser = this.root.findUser(id);
+        if (!reviewUser) {
+          console.log('users has no user of id ', id, this);
+          return;
+        }
+        this.set({name: reviewUser.name});
       }
+    },
+    oncreate() {
+      this.setReviewName();
     }
   }
 </script>

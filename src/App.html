@@ -2,6 +2,8 @@
 	 <link href="https://fonts.googleapis.com/css?family=Palanquin:300" rel="stylesheet">
 </svelte:head>
 
+<Users />
+
 <div class="page sidenav">
 	<SideNav menu={mainNav} brand={brand} user={user}/>
 	<div class="scroll">
@@ -26,7 +28,6 @@
 		</div>
 	</div>
 </div>
-<Users />
 
 <style>
 	:global(body) {
@@ -58,6 +59,12 @@
 	:global(button) {
 		margin: 0;
 		padding: 0;
+	}
+	:global(button):hover {
+		cursor: pointer;
+	}
+	:global(.btn) {
+		height: 45px;
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -66,14 +73,45 @@
 		border: 1px solid #EBEBEB;
 		box-shadow: 1px 1px 1px 1px EBEBEB;
 		border-radius: 3px;
+		font-size: 21px;
+		line-height: 21px;
 		font-weight: bold;
 		text-transform: uppercase;
 	}
-	:global(button):hover {
-		cursor: pointer;
+	:global(.btn:hover) {
+		color: #3299CC;
+		background: white;
+	}
+	:global(.btn-icon) {
+		width: 45px;
+		margin-right: 15px;
+	}
+	:global(.btn-icon:hover) {
+		color: #3299CC;
+		background: white;
+	}
+	:global(.btn-icon .icon) {
+		width: 18px;
+		height: 18px;
+		line-height: 18px;
+	}
+	:global(.btn-primary) {
+		width: 160px;
+		background: #41B1E3;
+		border-color: #41B1E3;
+		color: white;
+		font-size: 18px;
+		line-height: 18px;
+	}
+	:global(.btn-primary:hover) {
+		background: #3299CC;
 	}
 	:global(.link),
 	:global(a.link) {
+		display: inline-flex;
+    align-items: center;
+    background: transparent;
+    border: none;
 		color: #41B1E3;
 		text-transform: none;
 	}
@@ -81,6 +119,21 @@
 	:global(a.link:hover) {
 		color: #3299CC;
 		text-decoration: none;
+	}
+	:global(.ellipsis) {
+		display: flex;
+	}
+	:global(.ellipsis:after) {
+		content: '...';
+		margin-left: 2px;
+		align-self: flex-end;
+		letter-spacing: 2px;
+		color: inherit;
+	}
+	:global(.ellipsis-content) {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 	:global(.row) {
 		display: flex;
@@ -91,6 +144,12 @@
 	}
 	:global(.row-bottom) {
 		align-items: flex-end;
+	}
+	:global(.col) {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
 	}
 	:global(.scroll) {
 		overflow: scroll;
@@ -107,14 +166,23 @@
 	:global(.box) {
 		margin-top: 20px;
 		border-radius: 10px;
-		box-shadow: 0px 6px 12px 2px #F1F1F1;
+		box-shadow: 0px 5px 5px 2px #F1F1F1;
 		overflow: hidden;
 	}
+	/* same as box but with shadow all around */
 	:global(.box-2) {
 		margin-top: 20px;
 		border-radius: 10px;
-		box-shadow: 0px 0px 15px 3px #F1F1F1;
+		box-shadow: 0px 0px 10px 3px #F1F1F1;
 		overflow: hidden;
+	}
+	:global(.user-name) {
+		color: #323232;
+		font-weight: bold;
+	}
+	:global(.note){
+		color: #CCCCCC;
+		font-family: sans-serif;
 	}
 	.page {
 		max-width: 1360px;
@@ -153,13 +221,23 @@
 	import SidebarContent from './SidebarContent.html';
 	import Users from './Users.html';
 
-	const USER = {
-		id: '01',
-		img: ''
-	};
+	class User {
+    constructor() {
+      this.id = 'id';
+      this.img = '';
+      this.name = 'name';
+      this.title = '';
+      this.link = '';
+      this.tags = [];
+      this.location = '';
+    }
+  }
+
+	const USER = {};
 
 	const POSTS = [
-		{ date: '2018-05-09T12:00:00Z',
+		{ post_id: '',
+			date: '2018-05-09T12:00:00Z',
 			content: {
 				text: '<p>New portfolio update with my last projects <strong>#architecture</strong> <strong>#portfolio</strong> <a class="link" href="https://www.architizes.com/MarioMendez" target="_blank">https://www.architizes.com/MarioMendez</a></p>'
 			},
@@ -175,10 +253,11 @@
 				}
 			}
 		},
-		{ isSponsored: true,
+		{ post_id: '',
+			isSponsored: true,
 			date: '2018-05-06T13:00:00Z',
 			content: {
-				text: '<p class="title">Architecture Services</p><p>Design and planning consultance, see more at ...<p>',
+				text: '<p><strong>Architecture Services</strong></p><p>Design and planning consultance, see more at ...<p>',
 				img: 'https://i.imgur.com/vZ8suUE.jpg'
 			},
 			details: {
@@ -193,28 +272,22 @@
 				}
 			},
 			recommendations: {
-				users: [
-					{id: '03', img: '', link: '', name: ''},
-					{id: '04', img: '', link: '', name: ''},
-					{id: '05', img: '', link: '', name: ''}
-				],
+				// would be an array of 42 elements/users id
+				users: ['03', '04', '05', '10', '11'],
 				rating: 4.6,
+				// total = users.length
 				total: 42
 			}
 		},
-		{	isReview: true,
+		{	post_id: '001',
+			isReview: true,
 			review: {
-				user: {
-					id: '03',
-					name: 'Jessica Simmons',
-					img: '',
-					link: '',
-				},
+				user: '03',
 				date: '2018-05-03T13:00:00Z',
 				content: {
-					text: '<p>It was a pleasure to work with Mario. Very professional and talented architect. I really suggest him!'
+					text: 'It was a pleasure to work with Mario. Very professional and talented architect. I really suggest him!'
 				},
-				rating: 4.8,
+				rating: 5,
 			},
 			details: {
 				stars: 6,
@@ -227,19 +300,48 @@
 					link: ''
 				}
 			}
+		},
+		{	post_id: '002',
+			isReview: true,
+			review: {
+				user: '04',
+				date: '2018-05-02T14:00:00Z',
+				content: {
+					text: 'I worked with him for a project ...'
+				},
+				rating: 5,
+			}
+		},
+		{	post_id: '003',
+			isReview: true,
+			review: {
+				user: '05',
+				date: '2018-05-01T14:00:00Z',
+				content: {
+					text: 'I contacted him for a project ...'
+				},
+				rating: 4,
+			}
 		}
 	];
 
 	const REVIEWS = [];
 
+	const PROJECTS = [
+		{img: 'https://i.imgur.com/vZ8suUE.jpg', title: 'title', link: ''},
+		{img: 'https://i.imgur.com/kKvl97S.jpg', title: 'title', link: ''},
+		{img: 'https://i.imgur.com/6fQwQdQ.png', title: 'title', link: ''},
+		{img: 'https://i.imgur.com/6eA8rHj.jpg', title: 'title', link: ''},
+		{img: 'https://i.imgur.com/HZVeVDs.jpg', title: 'title', link: ''},
+		{img: 'https://i.imgur.com/3JueZBg.jpg', title: 'title', link: ''},
+		{img: 'https://i.imgur.com/mucT2Sl.jpg', title: 'title', link: ''},
+		{img: 'https://i.imgur.com/tA6OlVu.jpg', title: 'title', link: ''},
+		{img: 'https://i.imgur.com/w1bEuVW.jpg', title: 'title', link: ''},
+		{img: 'https://i.imgur.com/V2Mt6RJ.jpg', title: 'title', link: ''}
+	];
+
 	const PROFILE = {
-		user: {
-			id: '02',
-			img: 'https://d3iw72m71ie81c.cloudfront.net/male-3.jpg',
-			name: 'Mario Mendez',
-			title: 'Senior Architect',
-			link: ''
-		},
+		user: {},
 		details: {
 			rating: 4.8,
 			followers: 320,
@@ -247,42 +349,26 @@
 			perf: 56,
 			reviews: 42,
 		},
-		rating: 4.8,
-		followers: 320,
-		following: 147,
-		perf: 56,
-		reviews: 42,
 		banner: {
 			img: 'https://i.imgur.com/MbMnM74.jpg',
 			width: 130,
 			top: -60,
 			left: 0
 		},
-		projects: [
-			{img: 'https://i.imgur.com/vZ8suUE.jpg', title: 'title', link: ''},
-			{img: 'https://i.imgur.com/kKvl97S.jpg', title: 'title', link: ''},
-			{img: 'https://i.imgur.com/6fQwQdQ.png', title: 'title', link: ''},
-			{img: 'https://i.imgur.com/6eA8rHj.jpg', title: 'title', link: ''},
-			{img: 'https://i.imgur.com/HZVeVDs.jpg', title: 'title', link: ''},
-			{img: 'https://i.imgur.com/3JueZBg.jpg', title: 'title', link: ''},
-			{img: 'https://i.imgur.com/mucT2Sl.jpg', title: 'title', link: ''},
-			{img: 'https://i.imgur.com/tA6OlVu.jpg', title: 'title', link: ''},
-			{img: 'https://i.imgur.com/w1bEuVW.jpg', title: 'title', link: ''},
-			{img: 'https://i.imgur.com/V2Mt6RJ.jpg', title: 'title', link: ''}
-		],
+		projects: PROJECTS,
 		posts: POSTS,
 		reviews: REVIEWS
 	};
 
 	const ICONS = [
-					{name: 'search', color: '#42A5D2', svg: 'Search'},
-					{name: 'edit', color: '#FDAA29', svg: 'Edit'},
-					{name: 'messages', color: '#F26C4F', svg: 'Message'},
-					{name: 'agenda', color: '#058E85', svg: 'Agenda', 'text': 'Agenda'},
-					{name: 'info', svg: 'Clipboard', text: 'Info'},
-					{name: 'feed', svg: 'Book', text: 'Feed'},
-					{name: 'resume', svg: 'Clip', text: 'Résumé'},
-				];
+		{name: 'search', color: '#42A5D2', svg: 'Search'},
+		{name: 'edit', color: '#FDAA29', svg: 'Edit'},
+		{name: 'messages', color: '#F26C4F', svg: 'Message'},
+		{name: 'agenda', color: '#058E85', svg: 'Agenda', 'text': 'Agenda'},
+		{name: 'info', svg: 'Clipboard', text: 'Info'},
+		{name: 'feed', svg: 'Book', text: 'Feed'},
+		{name: 'resume', svg: 'Clip', text: 'Résumé'},
+	];
 
 	export default {
 		components: {
@@ -313,21 +399,64 @@
 					{link: 'ProfileAgenda', icon: 'agenda'},
 					{link: 'ProfileResume', icon: 'resume'}
 				],
+				userId: '01',
+				profileId: '02'
 			}
 		},
 		methods: {
 			getIcons(menu) {
 				var icons = this.get().icons;
-				if (menu.length === 0) { return; }
+				if (menu.length === 0) return;
 				menu.forEach(item => {
 					var found = icons.find(x => x.name === item.icon);
 					if (found) item.icon = found;
 					else item.icon = {name: item.icon}
 				});
 				return menu;
+			},
+			setUser(id) {
+				if (!id) {
+					console.log('missing user id');
+					return;
+				}
+				var user = this.findUser(id)
+				if (user) this.set({user});
+				else console.log('no user with id ', id);
+			},
+			setProfileUser(id) {
+				if (!id) {
+					console.log('missing profile user id');
+					return;
+				}
+				var profile = this.get().profile,
+						user = this.findUser(id);
+				if (user) {
+					profile.user = user;
+					this.set({profile});
+				}
+				else console.log('no user with id ', id);
+			},
+			findUser(id) {
+				var found = this.get().users.find(x => x.id === id)
+				return found;
+			},
+			setReviewUser(id, el) {
+        if (!id) console.log('missing review user id', this);
+        var reviewUser = this.root.findUser(id);
+				if (!reviewUser) {
+					console.log('no review user with id ', id, el);
+					reviewUser = new User();
+				}
+				el.set({reviewUser});
+      },
+			newUser() {
+				return new User();
 			}
 		},
 		oncreate() {
+			this.setUser(this.get().userId);
+			this.setProfileUser(this.get().profileId);
+
 			this.set({mainNav: this.getIcons(this.get().mainNav)});
 			this.set({profileMenu: this.getIcons(this.get().profileMenu)});
 		}
