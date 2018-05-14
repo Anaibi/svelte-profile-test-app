@@ -2679,6 +2679,15 @@ var app = (function () {
 	    return new Promise((resolve) => {
 	      resolve(USERS.find(x => x.id === id));
 	    });
+	  },
+	  findUsers(ids) {
+	    var users = [];
+	    ids.forEach(id => {
+	      users.push(USERS.find(x => x.id === id));
+	    });
+	    return new Promise((resolve) => {
+	      resolve(users);
+	    })
 	  }
 	};
 
@@ -2940,20 +2949,14 @@ var app = (function () {
 	}
 	var methods$2 = {
 	  setRecommendationUsers() {
-	    var ids = this.get().post.recommendations.users,
-	        recommendationUsers = [],
-	        user;
+	    var ids = this.get().post.recommendations.users;
 	    ids = ids.splice(0,3);
 	    for (let i = 0; i < 3; i++) {
-	      // user = this.root.findUser(ids[i]);
-	      user = api.findUser(ids[i]);
-	      if (!user) {
-	        console.log('id not found in users. id: ', ids[i], this);
-	        user = this.root.newUser();
-	      }
-	      recommendationUsers[i] = user;
+	      api.findUsers(ids)
+	        .then((recommendationUsers) => {
+	          this.set({recommendationUsers});
+	        });
 	    }
-	    this.set({recommendationUsers});
 	  }
 	};
 
@@ -3036,7 +3039,32 @@ var app = (function () {
 		};
 	}
 
-	// (5:8) {#each recommendationUsers as user}
+	// (5:36)            <p>loading</p>         {:then recommendationUsers}
+	function create_pending_block(component, ctx) {
+		var p;
+
+		return {
+			c: function create() {
+				p = createElement("p");
+				p.textContent = "loading";
+				p.className = "svelte-1v6ra7w";
+			},
+
+			m: function mount(target, anchor) {
+				insertNode(p, target, anchor);
+			},
+
+			p: noop,
+
+			u: function unmount() {
+				detachNode(p);
+			},
+
+			d: noop
+		};
+	}
+
+	// (8:10) {#each recommendationUsers as user}
 	function create_each_block$2(component, ctx) {
 
 		var avatar_initial_data = { user: ctx.user };
@@ -3070,7 +3098,90 @@ var app = (function () {
 		};
 	}
 
-	// (9:10) {#if post.recommendations.rating}
+	// (7:8) {:then recommendationUsers}
+	function create_then_block(component, ctx) {
+		var each_anchor;
+
+		var each_value = ctx.recommendationUsers;
+
+		var each_blocks = [];
+
+		for (var i = 0; i < each_value.length; i += 1) {
+			each_blocks[i] = create_each_block$2(component, get_each_context$2(ctx, each_value, i));
+		}
+
+		return {
+			c: function create() {
+				for (var i = 0; i < each_blocks.length; i += 1) {
+					each_blocks[i].c();
+				}
+
+				each_anchor = createComment();
+			},
+
+			m: function mount(target, anchor) {
+				for (var i = 0; i < each_blocks.length; i += 1) {
+					each_blocks[i].m(target, anchor);
+				}
+
+				insertNode(each_anchor, target, anchor);
+			},
+
+			p: function update(changed, ctx) {
+				if (changed.recommendationUsers) {
+					each_value = ctx.recommendationUsers;
+
+					for (var i = 0; i < each_value.length; i += 1) {
+						const child_ctx = get_each_context$2(ctx, each_value, i);
+
+						if (each_blocks[i]) {
+							each_blocks[i].p(changed, child_ctx);
+						} else {
+							each_blocks[i] = create_each_block$2(component, child_ctx);
+							each_blocks[i].c();
+							each_blocks[i].m(each_anchor.parentNode, each_anchor);
+						}
+					}
+
+					for (; i < each_blocks.length; i += 1) {
+						each_blocks[i].u();
+						each_blocks[i].d();
+					}
+					each_blocks.length = each_value.length;
+				}
+			},
+
+			u: function unmount() {
+				for (var i = 0; i < each_blocks.length; i += 1) {
+					each_blocks[i].u();
+				}
+
+				detachNode(each_anchor);
+			},
+
+			d: function destroy$$1() {
+				destroyEach(each_blocks);
+			}
+		};
+	}
+
+	// (11:8) {:catch error}
+	function create_catch_block(component, ctx) {
+
+		return {
+			c: noop,
+
+			m: noop,
+
+			p: noop,
+
+			u: noop,
+
+			d: noop
+		};
+	}
+
+	// (14:10) {#if post.recommendations.rating}
 	function create_if_block_1$2(component, ctx) {
 
 		var stars_initial_data = { rating: ctx.post.recommendations.rating };
@@ -3104,7 +3215,7 @@ var app = (function () {
 		};
 	}
 
-	// (12:10) {#if post.recommendations.total > 0}
+	// (17:10) {#if post.recommendations.total > 0}
 	function create_if_block_2$1(component, ctx) {
 		var p, text, text_1_value = ctx.post.recommendations.total, text_1, text_2;
 
@@ -3140,15 +3251,51 @@ var app = (function () {
 
 	// (3:4) {#if post.recommendations}
 	function create_if_block$4(component, ctx) {
-		var div, text, div_1, text_1;
+		var div, await_block_1, await_block_type, await_token, promise, resolved, text, div_1, text_1;
 
-		var each_value = ctx.recommendationUsers;
+		function replace_await_block(token, type, ctx) {
+			if (token !== await_token) return;
 
-		var each_blocks = [];
+			var old_block = await_block_1;
+			await_block_1 = type && (await_block_type = type)(component, ctx);
 
-		for (var i = 0; i < each_value.length; i += 1) {
-			each_blocks[i] = create_each_block$2(component, get_each_context$2(ctx, each_value, i));
+			if (old_block) {
+				old_block.u();
+				old_block.d();
+				await_block_1.c();
+				await_block_1.m(div, text);
+
+				component.root.set({});
+			}
 		}
+
+		function handle_promise(promise) {
+			var token = await_token = {};
+
+			if (isPromise(promise)) {
+				promise.then(function(value) {
+					resolved = { recommendationUsers: value };
+					replace_await_block(token, create_then_block, assign(assign({}, ctx), resolved));
+				}, function (error) {
+					resolved = { error: error };
+					replace_await_block(token, create_catch_block, assign(assign({}, ctx), resolved));
+				});
+
+				// if we previously had a then/catch block, destroy it
+				if (await_block_type !== create_pending_block) {
+					replace_await_block(token, create_pending_block, ctx);
+					return true;
+				}
+			} else {
+				resolved = { recommendationUsers: promise };
+				if (await_block_type !== create_then_block) {
+					replace_await_block(token, create_then_block, assign(assign({}, ctx), resolved));
+					return true;
+				}
+			}
+		}
+
+		handle_promise(promise = ctx.recommendationUsers);
 
 		var if_block = (ctx.post.recommendations.rating) && create_if_block_1$2(component, ctx);
 
@@ -3158,9 +3305,7 @@ var app = (function () {
 			c: function create() {
 				div = createElement("div");
 
-				for (var i = 0; i < each_blocks.length; i += 1) {
-					each_blocks[i].c();
-				}
+				await_block_1.c();
 
 				text = createText("\n        ");
 				div_1 = createElement("div");
@@ -3174,9 +3319,7 @@ var app = (function () {
 			m: function mount(target, anchor) {
 				insertNode(div, target, anchor);
 
-				for (var i = 0; i < each_blocks.length; i += 1) {
-					each_blocks[i].m(div, null);
-				}
+				await_block_1.m(div, null);
 
 				appendNode(text, div);
 				appendNode(div_1, div);
@@ -3185,27 +3328,10 @@ var app = (function () {
 				if (if_block_1) if_block_1.m(div_1, null);
 			},
 
-			p: function update(changed, ctx) {
-				if (changed.recommendationUsers) {
-					each_value = ctx.recommendationUsers;
-
-					for (var i = 0; i < each_value.length; i += 1) {
-						const child_ctx = get_each_context$2(ctx, each_value, i);
-
-						if (each_blocks[i]) {
-							each_blocks[i].p(changed, child_ctx);
-						} else {
-							each_blocks[i] = create_each_block$2(component, child_ctx);
-							each_blocks[i].c();
-							each_blocks[i].m(div, text);
-						}
-					}
-
-					for (; i < each_blocks.length; i += 1) {
-						each_blocks[i].u();
-						each_blocks[i].d();
-					}
-					each_blocks.length = each_value.length;
+			p: function update(changed, _ctx) {
+				ctx = _ctx;
+				if (('recommendationUsers' in changed) && promise !== (promise = ctx.recommendationUsers) && handle_promise(promise, ctx)) ; else {
+					await_block_1.p(changed, assign(assign({}, ctx), resolved));
 				}
 
 				if (ctx.post.recommendations.rating) {
@@ -3240,16 +3366,15 @@ var app = (function () {
 			u: function unmount() {
 				detachNode(div);
 
-				for (var i = 0; i < each_blocks.length; i += 1) {
-					each_blocks[i].u();
-				}
+				await_block_1.u();
 
 				if (if_block) if_block.u();
 				if (if_block_1) if_block_1.u();
 			},
 
 			d: function destroy$$1() {
-				destroyEach(each_blocks);
+				await_token = null;
+				await_block_1.d();
 
 				if (if_block) if_block.d();
 				if (if_block_1) if_block_1.d();
@@ -5185,21 +5310,21 @@ var app = (function () {
 			if (isPromise(promise)) {
 				promise.then(function(value) {
 					resolved = { user: value };
-					replace_await_block(token, create_then_block, assign(assign({}, ctx), resolved));
+					replace_await_block(token, create_then_block$1, assign(assign({}, ctx), resolved));
 				}, function (error) {
 					resolved = { error: error };
-					replace_await_block(token, create_catch_block, assign(assign({}, ctx), resolved));
+					replace_await_block(token, create_catch_block$1, assign(assign({}, ctx), resolved));
 				});
 
 				// if we previously had a then/catch block, destroy it
-				if (await_block_type !== create_pending_block) {
-					replace_await_block(token, create_pending_block, ctx);
+				if (await_block_type !== create_pending_block$1) {
+					replace_await_block(token, create_pending_block$1, ctx);
 					return true;
 				}
 			} else {
 				resolved = { user: promise };
-				if (await_block_type !== create_then_block) {
-					replace_await_block(token, create_then_block, assign(assign({}, ctx), resolved));
+				if (await_block_type !== create_then_block$1) {
+					replace_await_block(token, create_then_block$1, assign(assign({}, ctx), resolved));
 					return true;
 				}
 			}
@@ -5330,7 +5455,7 @@ var app = (function () {
 	}
 
 	// (6:14)    <p>loading</p>  {:then user}
-	function create_pending_block(component, ctx) {
+	function create_pending_block$1(component, ctx) {
 		var p;
 
 		return {
@@ -5354,7 +5479,7 @@ var app = (function () {
 	}
 
 	// (8:1) {:then user}
-	function create_then_block(component, ctx) {
+	function create_then_block$1(component, ctx) {
 
 		var sidenav_initial_data = {
 		 	menu: ctx.mainNav,
@@ -5394,7 +5519,7 @@ var app = (function () {
 	}
 
 	// (10:1) {:catch error}
-	function create_catch_block(component, ctx) {
+	function create_catch_block$1(component, ctx) {
 		var p;
 
 		return {

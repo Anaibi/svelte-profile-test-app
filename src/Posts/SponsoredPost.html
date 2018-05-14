@@ -2,9 +2,14 @@
   <div class="featured" style="background-image: url('{post.content.img}')">
     {#if post.recommendations}
       <div class="row vCentered">
-        {#each recommendationUsers as user}
-          <Avatar user={user}/>
-        {/each}
+        {#await recommendationUsers}
+          <p>loading</p>
+        {:then recommendationUsers}
+          {#each recommendationUsers as user}
+            <Avatar user={user}/>
+          {/each}
+        {:catch error}
+        {/await}
         <div class="details">
           {#if post.recommendations.rating}
             <Stars rating={post.recommendations.rating}/>
@@ -86,20 +91,14 @@
     },
     methods: {
       setRecommendationUsers() {
-        var ids = this.get().post.recommendations.users,
-            recommendationUsers = [],
-            user;
+        var ids = this.get().post.recommendations.users;
         ids = ids.splice(0,3);
         for (let i = 0; i < 3; i++) {
-          // user = this.root.findUser(ids[i]);
-          user = api.findUser(ids[i]);
-          if (!user) {
-            console.log('id not found in users. id: ', ids[i], this);
-            user = this.root.newUser();
-          }
-          recommendationUsers[i] = user;
+          api.findUsers(ids)
+            .then((recommendationUsers) => {
+              this.set({recommendationUsers});
+            });
         }
-        this.set({recommendationUsers});
       }
     },
     oncreate() {

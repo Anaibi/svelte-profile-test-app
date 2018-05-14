@@ -94,5 +94,14 @@ export default {
     return new Promise((resolve) => {
       resolve(USERS.find(x => x.id === id));
     });
+  },
+  findUsers(ids) {
+    var users = [];
+    ids.forEach(id => {
+      users.push(USERS.find(x => x.id === id));
+    });
+    return new Promise((resolve) => {
+      resolve(users);
+    })
   }
 };
