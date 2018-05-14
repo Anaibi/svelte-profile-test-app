@@ -46,7 +46,8 @@
 </style>
 
 <script>
-  import IconsSvg from './../IconsSvg.html';
+  import IconsSvg from './../icons/IconsSvg.html';
+  import api from './../services/api';
 
   export default {
     data() {
@@ -99,7 +100,8 @@
           console.log('review has no user id associated', this);
           return;
         }
-        var reviewUser = this.root.findUser(id);
+        // var reviewUser = this.root.findUser(id);
+        var reviewUser = api.findUser(id);
         if (!reviewUser) {
           console.log('users has no user of id ', id, this);
           return;

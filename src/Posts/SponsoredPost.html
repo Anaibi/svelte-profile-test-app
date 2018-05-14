@@ -70,8 +70,9 @@
 </style>
 
 <script>
-  import Avatar from './../Avatar.html';
-  import Stars from './../Stars.html';
+  import Avatar from './../components/Avatar.html';
+  import Stars from './../components/Stars.html';
+  import api from './../services/api';
 
   export default {
     data() {
@@ -90,7 +91,8 @@
             user;
         ids = ids.splice(0,3);
         for (let i = 0; i < 3; i++) {
-          user = this.root.findUser(ids[i]);
+          // user = this.root.findUser(ids[i]);
+          user = api.findUser(ids[i]);
           if (!user) {
             console.log('id not found in users. id: ', ids[i], this);
             user = this.root.newUser();

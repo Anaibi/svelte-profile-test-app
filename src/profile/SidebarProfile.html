@@ -1,6 +1,6 @@
 <slot>
 	<header>
-		<img class="profile-img img" src="{profile.user.img}" alt="{profile.user.name}"/>
+		<img class="profile-img img" src="{user.img}" alt="{user.name}"/>
 		<button class="btn">
 			<span class="icon"><IconsSvg name="UserAdd"/></span>
 			Follow
@@ -93,8 +93,8 @@
 </style>
 
 <script>
-	import IconsSvg from './IconsSvg.html';
-	import Tiles from './Tiles.html';
+	import IconsSvg from './../icons/IconsSvg.html';
+	import Tiles from './../components/Tiles.html';
 
 	export default {
 		components: {

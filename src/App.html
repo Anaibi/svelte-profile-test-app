@@ -2,30 +2,40 @@
 	 <link href="https://fonts.googleapis.com/css?family=Palanquin:300" rel="stylesheet">
 </svelte:head>
 
-<Users />
-
 <div class="page sidenav">
-	<SideNav menu={mainNav} brand={brand} user={user}/>
+	{#await user}
+		<p>loading</p>
+	{:then user}
+		<SideNav menu={mainNav} brand={brand} user={user}/>
+	{:catch error}
+		<p>error</p>
+	{/await}
 	<div class="scroll">
 		<Banner banner={profile.banner}/>
-		<div class="row">
-			<Sidebar>
-				<SidebarProfile profile={profile}/>
-			</Sidebar>
-			<main>
-				<header class="row vCentered">
-					<HeaderProfile profile={profile}/>
-				</header>
-				<div class="row">
-					<div class="content">
-						<ContentProfile menu={profileMenu} profile={profile}/>
+		{#await profileUser}
+			<p>loading</p>
+		{:then profileUser}
+			<div class="row">
+				<Sidebar>
+					<SidebarProfile profile={profile} user={profileUser}/>
+				</Sidebar>
+				<main>
+					<header class="row vCentered">
+						<HeaderProfile profile={profile} user={profileUser}/>
+					</header>
+					<div class="row">
+						<div class="content">
+							<ContentProfile menu={profileMenu} profile={profile} user={profileUser}/>
+						</div>
+						<Sidebar>
+							<SidebarContent/>
+						</Sidebar>
 					</div>
-					<Sidebar>
-						<SidebarContent/>
-					</Sidebar>
-				</div>
-			</main>
-		</div>
+				</main>
+			</div>
+			{:catch error}
+				<p>error</p>
+			{/await}
 	</div>
 </div>
 
@@ -212,14 +222,16 @@
 	}
 </style>
 <script>
-	import SideNav from './SideNav.html';
-	import Banner from './Banner.html';
-	import Sidebar from './Sidebar.html';
-	import SidebarProfile from './SidebarProfile.html';
-	import HeaderProfile from './HeaderProfile.html';
-	import ContentProfile from './ContentProfile.html';
+	import SideNav from './components/SideNav.html';
+	import Banner from './components/Banner.html';
+	import Sidebar from './components/Sidebar.html';
+	import SidebarProfile from './profile/SidebarProfile.html';
+	import HeaderProfile from './profile/HeaderProfile.html';
+	import ContentProfile from './profile/ContentProfile.html';
 	import SidebarContent from './SidebarContent.html';
-	import Users from './Users.html';
+
+	import api from './services/api';
+
 
 	class User {
     constructor() {
@@ -232,8 +244,6 @@
       this.location = '';
     }
   }
-
-	const USER = {};
 
 	const POSTS = [
 		{ post_id: '',
@@ -341,7 +351,6 @@
 	];
 
 	const PROFILE = {
-		user: {},
 		details: {
 			rating: 4.8,
 			followers: 320,
@@ -379,7 +388,6 @@
 			HeaderProfile,
 			ContentProfile,
 			SidebarContent,
-			Users
 		},
 		data() {
 			return {
@@ -391,8 +399,9 @@
 					{link: '', icon: 'messages'},
 					{link: '', icon: 'agenda'}
 				],
-				user: USER,
+				user: '',
 				profile: PROFILE,
+				profileUser: '',
 				profileMenu: [
 					{link: 'ProfileInfo', icon: 'info'},
 					{link: 'ProfileFeed', icon: 'feed', active: true},
@@ -400,7 +409,8 @@
 					{link: 'ProfileResume', icon: 'resume'}
 				],
 				userId: '01',
-				profileId: '02'
+				profileId: '02',
+				users: []
 			}
 		},
 		methods: {
@@ -419,35 +429,38 @@
 					console.log('missing user id');
 					return;
 				}
-				var user = this.findUser(id)
-				if (user) this.set({user});
-				else console.log('no user with id ', id);
+				api.findUser(id)
+					.then((user) => {
+						if (user) {
+							this.set({user});
+						}
+						else console.log('no user with id ', id);
+					});
 			},
 			setProfileUser(id) {
 				if (!id) {
 					console.log('missing profile user id');
 					return;
 				}
-				var profile = this.get().profile,
-						user = this.findUser(id);
-				if (user) {
-					profile.user = user;
-					this.set({profile});
-				}
-				else console.log('no user with id ', id);
-			},
-			findUser(id) {
-				var found = this.get().users.find(x => x.id === id)
-				return found;
+				var profile = this.get().profile;
+				api.findUser(id)
+					.then((profileUser) => {
+						if (profileUser) {
+							this.set({profileUser});
+						}
+						else console.log('no user with id ', id);
+					});
 			},
 			setReviewUser(id, el) {
         if (!id) console.log('missing review user id', this);
-        var reviewUser = this.root.findUser(id);
-				if (!reviewUser) {
-					console.log('no review user with id ', id, el);
-					reviewUser = new User();
-				}
-				el.set({reviewUser});
+				api.findUser(id)
+					.then((reviewUser) => {
+						if (!reviewUser) {
+							console.log('no review user with id ', id, el);
+							reviewUser = new User();
+						}
+						el.set({reviewUser});
+					});
       },
 			newUser() {
 				return new User();
