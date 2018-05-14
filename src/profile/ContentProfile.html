@@ -24,7 +24,7 @@
 </nav>
 
 <div class="tab-content">
-  <svelte:component this="{selected}" profile={profile}/>
+  <svelte:component this="{selected}" profile={profile} user={user}/>
 </div>
 
 
@@ -75,11 +75,11 @@
 </style>
 
 <script>
-  import ProfileInfo from './ProfileInfo.html';
-  import ProfileFeed from './ProfileFeed.html';
-  import ProfileAgenda from './ProfileAgenda.html';
-  import ProfileResume from './ProfileResume.html';
-  import IconsSvg from './IconsSvg.html';
+  import ProfileInfo from './content/ProfileInfo.html';
+  import ProfileFeed from './content/ProfileFeed.html';
+  import ProfileAgenda from './content/ProfileAgenda.html';
+  import ProfileResume from './content/ProfileResume.html';
+  import IconsSvg from './../icons/IconsSvg.html';
 
   var components = {
     ProfileInfo,

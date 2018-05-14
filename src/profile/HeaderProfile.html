@@ -1,6 +1,6 @@
 <div>
-	<h1>{profile.user.name}</h1>
-	<p>{profile.user.title} <Stars rating={profile.details.rating}/></p>
+	<h1>{user.name}</h1>
+	<p>{user.title} <Stars rating={profile.details.rating}/></p>
 </div>
 <div class="row">
 	<button class="btn btn-icon"><span class="icon"><IconsSvg name="Message"/></span></button>
@@ -37,8 +37,8 @@
 </style>
 
 <script>
-	import IconsSvg from './IconsSvg.html';
-	import Stars from './Stars.html';
+	import IconsSvg from './../icons/IconsSvg.html';
+	import Stars from './../components/Stars.html';
 
 	export default {
 		components: {

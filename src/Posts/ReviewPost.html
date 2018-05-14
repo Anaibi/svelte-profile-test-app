@@ -72,8 +72,8 @@
 </style>
 
 <script>
-  import Avatar from './../Avatar.html';
-  import Stars from './../Stars.html';
+  import Avatar from './../components/Avatar.html';
+  import Stars from './../components/Stars.html';
 
   export default {
     data() {
@@ -92,7 +92,7 @@
       }
     },
     oncreate() {
-      if (this.get().isReview) this.setReviewUser();
+      this.setReviewUser();
     }
   }
 </script>
