@@ -3,20 +3,20 @@
     {#if post.isReview}
       <Avatar user={post.review.user} isReview="true"/>
     {:else}
-      <Avatar user={profile.user}/>
+      <Avatar user={user}/>
     {/if}
 
     <div class="content">
       {#if post.isReview}
         <PostTitle isReview="true" user={post.review.user} date={post.review.date}/>
       {:else}
-        <PostTitle isSponsored={post.isSponsored} name={profile.user.name} date={post.date}/>
+        <PostTitle isSponsored={post.isSponsored} name={user.name} date={post.date}/>
       {/if}
 
       {#if post.isSponsored}
         <SponsoredPost post={post}/>
       {:elseif post.isReview}
-        <ReviewPost post={post} user={profile.user} rating={profile.details.rating}/>
+        <ReviewPost post={post} user={user} rating={profile.details.rating}/>
       {:else}
         <Post post={post}/>
       {/if}
@@ -39,12 +39,12 @@
 </style>
 
 <script>
-  import Avatar from './Avatar.html';
-  import PostTitle from './Posts/PostTitle.html';
-  import SponsoredPost from './Posts/SponsoredPost.html';
-  import ReviewPost from './Posts/ReviewPost.html';
-  import Post from './Posts/Post.html';
-  import PostDetails from './Posts/PostDetails.html';
+  import Avatar from './../../components/Avatar.html';
+  import PostTitle from './../../posts/PostTitle.html';
+  import SponsoredPost from './../../posts/SponsoredPost.html';
+  import ReviewPost from './../../posts/ReviewPost.html';
+  import Post from './../../posts/Post.html';
+  import PostDetails from './../../posts/PostDetails.html';
 
   export default {
     components: {

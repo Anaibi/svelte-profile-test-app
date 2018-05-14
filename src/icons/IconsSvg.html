@@ -1,0 +1,51 @@
+<svelte:component this="{svg}"/>
+
+<script>
+	import Search from './SVG_Search.html';
+	import Edit from './SVG_Edit.html';
+	import Message from './SVG_Message.html';
+	import Agenda from './SVG_Agenda.html';
+	import Clipboard from './SVG_Clipboard.html';
+	import Clip from './SVG_Clip.html';
+	import UserAdd from './SVG_UserAdd.html';
+	import Camera from './SVG_Camera.html';
+	import Star from './SVG_Star.html';
+	import Book from './SVG_Book.html';
+	import Clock from './SVG_Clock.html';
+	import MessageFull from './SVG_MessageFull.html';
+	import Reply from './SVG_Reply.html';
+	import More from './SVG_More.html';
+	import Bookmark from './SVG_Bookmark.html';
+
+	var icons = {
+		Search,
+		Edit,
+		Message,
+		Agenda,
+		Clipboard,
+		Clip,
+		UserAdd,
+		Camera,
+		Star,
+		Book,
+		Clock,
+		MessageFull,
+		Reply,
+		More,
+		Bookmark
+	};
+
+	export default {
+		data() {
+			return {
+				svg: ''
+			}
+		},
+		components: {
+			Search
+		},
+		oncreate() {
+			this.set({svg: icons[this.get().name]});
+		}
+	}
+</script>
