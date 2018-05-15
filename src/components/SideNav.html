@@ -10,9 +10,13 @@
 		{/each}
 	</ul>
 	<div class="user-menu bottom">
+		{#await user}
+		{:then user}
 		<a href="{user.link}">
 			<img class="img" src="{user.img}" alt="User Settings"/>
 		</a>
+		{:catch error}
+		{/await}
 	</div>
 </nav>
 

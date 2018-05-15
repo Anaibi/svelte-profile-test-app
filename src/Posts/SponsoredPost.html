@@ -77,6 +77,7 @@
 <script>
   import Avatar from './../components/Avatar.html';
   import Stars from './../components/Stars.html';
+
   import api from './../services/api';
 
   export default {
@@ -93,12 +94,14 @@
       setRecommendationUsers() {
         var ids = this.get().post.recommendations.users;
         ids = ids.splice(0,3);
-        for (let i = 0; i < 3; i++) {
-          api.findUsers(ids)
-            .then((recommendationUsers) => {
-              this.set({recommendationUsers});
-            });
-        }
+        // for (let i = 0; i < 3; i++) {
+          // api.findUsers(ids)
+          //   .then((recommendationUsers) => {
+          //     this.set({recommendationUsers});
+          //   });
+          var recommendationUsers = api.findUsers(ids);
+          this.set({recommendationUsers});
+        // }
       }
     },
     oncreate() {

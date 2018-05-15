@@ -92,7 +92,10 @@ export default {
   },
   findUser(id){
     return new Promise((resolve) => {
-      resolve(USERS.find(x => x.id === id));
+      setTimeout(() => {
+        resolve(USERS.find(x => x.id === id));
+      }, 1500);
+      // resolve(USERS.find(x => x.id === id));
     });
   },
   findUsers(ids) {
@@ -101,7 +104,10 @@ export default {
       users.push(USERS.find(x => x.id === id));
     });
     return new Promise((resolve) => {
-      resolve(users);
-    })
+      // resolve(users);
+      setTimeout(() => {
+        resolve(users);
+      }, 1500);
+    });
   }
 };
