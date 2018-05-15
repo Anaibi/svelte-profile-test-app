@@ -4,15 +4,17 @@
 
 <div class="page sidenav">
 	<SideNav menu={mainNav} brand={brand} user={user}/>
-	<div class="scroll">
-		<Banner banner={profile.banner}/>
-		<div class="row">
+
+	<div class="scroll" on:scroll="scrollAnimation(event)">
+		<Banner banner={profile.banner} blur={blur}/>
+		<div class="scroll-space"></div>
+		<div class="row scroll-content">
 			<Sidebar>
-				<SidebarProfile profile={profile} user={profileUser}/>
+				<SidebarProfile profile={profile} user={profileUser} fixed={fixedHeader}/>
 			</Sidebar>
 			<main>
 				<header class="row vCentered">
-					<HeaderProfile profile={profile} user={profileUser}/>
+					<HeaderProfile profile={profile} user={profileUser} fixed={fixedHeader}/>
 				</header>
 				<div class="row">
 					<div class="content">
@@ -194,6 +196,17 @@
 		height: 100vh;
 		overflow: hidden;
 	}
+	.page .scroll {
+		flex: 1;
+	}
+	.scroll-content {
+		background :white;
+		position: relative;
+		z-index: 2;
+	}
+	.scroll-space {
+		height: 360px;
+	}
 	main {
 		width: 100%;
 	}
@@ -220,6 +233,10 @@
 
 	import api from './services/api';
 
+	// style values
+	const SCROLL_SPACE = 360; // banner height
+
+	// data values
 	const POSTS = [
 		{ post_id: '',
 			date: '2018-05-09T12:00:00Z',
@@ -374,18 +391,20 @@
 					{link: '', icon: 'messages'},
 					{link: '', icon: 'agenda'}
 				],
-				user: '',
-				profile: PROFILE,
-				profileUser: '',
 				profileMenu: [
 					{link: 'ProfileInfo', icon: 'info'},
 					{link: 'ProfileFeed', icon: 'feed', active: true},
 					{link: 'ProfileAgenda', icon: 'agenda'},
 					{link: 'ProfileResume', icon: 'resume'}
 				],
+				user: '',
 				userId: '01',
+				profileUser: '',
 				profileId: '02',
-				users: []
+				profile: PROFILE,
+				// style data
+				fixedHeader: false,
+				blur: 0
 			}
 		},
 		methods: {
@@ -417,8 +436,19 @@
 				if (!profileUser) console.log('no profile user with id ', id, this);
 				else this.set({profileUser});
 			},
-			newUser() {
-				return new User();
+			scrollAnimation(event) {
+				var scrollTop = event.target.scrollTop;
+				if (scrollTop > SCROLL_SPACE && this.get().fixedHeader) { return; }
+
+				// image animation
+				this.set({blur: scrollTop*6/SCROLL_SPACE});
+
+				// content animation
+				if (scrollTop > SCROLL_SPACE) {
+					this.set({fixedHeader: true});
+				} else if (scrollTop < SCROLL_SPACE && this.get().fixedHeader) {
+					this.set({fixedHeader: false});
+				}
 			}
 		},
 		oncreate() {
