@@ -1,6 +1,11 @@
 <slot>
 	<header>
-		<img class="profile-img img" src="{user.img}" alt="{user.name}"/>
+		{#await user}
+			<div class="profile-img img"></div>
+		{:then user}
+			<img class="profile-img img" src="{user.img}" alt="{user.name}"/>
+		{:catch error}
+		{/await}
 		<button class="btn">
 			<span class="icon"><IconsSvg name="UserAdd"/></span>
 			Follow

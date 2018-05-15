@@ -3,39 +3,27 @@
 </svelte:head>
 
 <div class="page sidenav">
-	{#await user}
-		<p>loading</p>
-	{:then user}
-		<SideNav menu={mainNav} brand={brand} user={user}/>
-	{:catch error}
-		<p>error</p>
-	{/await}
+	<SideNav menu={mainNav} brand={brand} user={user}/>
 	<div class="scroll">
 		<Banner banner={profile.banner}/>
-		{#await profileUser}
-			<p>loading</p>
-		{:then profileUser}
-			<div class="row">
-				<Sidebar>
-					<SidebarProfile profile={profile} user={profileUser}/>
-				</Sidebar>
-				<main>
-					<header class="row vCentered">
-						<HeaderProfile profile={profile} user={profileUser}/>
-					</header>
-					<div class="row">
-						<div class="content">
-							<ContentProfile menu={profileMenu} profile={profile} user={profileUser}/>
-						</div>
-						<Sidebar>
-							<SidebarContent/>
-						</Sidebar>
+		<div class="row">
+			<Sidebar>
+				<SidebarProfile profile={profile} user={profileUser}/>
+			</Sidebar>
+			<main>
+				<header class="row vCentered">
+					<HeaderProfile profile={profile} user={profileUser}/>
+				</header>
+				<div class="row">
+					<div class="content">
+						<ContentProfile menu={profileMenu} profile={profile} user={profileUser}/>
 					</div>
-				</main>
-			</div>
-			{:catch error}
-				<p>error</p>
-			{/await}
+					<Sidebar>
+						<SidebarContent/>
+					</Sidebar>
+				</div>
+			</main>
+		</div>
 	</div>
 </div>
 
@@ -291,9 +279,9 @@
 		},
 		{	post_id: '001',
 			isReview: true,
+			date: '2018-05-03T13:00:00Z',
 			review: {
 				user: '03',
-				date: '2018-05-03T13:00:00Z',
 				content: {
 					text: 'It was a pleasure to work with Mario. Very professional and talented architect. I really suggest him!'
 				},
@@ -313,9 +301,9 @@
 		},
 		{	post_id: '002',
 			isReview: true,
+			date: '2018-05-02T14:00:00Z',
 			review: {
 				user: '04',
-				date: '2018-05-02T14:00:00Z',
 				content: {
 					text: 'I worked with him for a project ...'
 				},
@@ -324,9 +312,9 @@
 		},
 		{	post_id: '003',
 			isReview: true,
+			date: '2018-05-01T14:00:00Z',
 			review: {
 				user: '05',
-				date: '2018-05-01T14:00:00Z',
 				content: {
 					text: 'I contacted him for a project ...'
 				},
@@ -426,41 +414,45 @@
 			},
 			setUser(id) {
 				if (!id) {
-					console.log('missing user id');
+					console.log('missing user id', this);
 					return;
 				}
-				api.findUser(id)
-					.then((user) => {
-						if (user) {
-							this.set({user});
-						}
-						else console.log('no user with id ', id);
-					});
+				var user = api.findUser(id);
+				if (!user) console.log('no user with id ', id, this);
+				else this.set({user});
+				// api.findUser(id)
+				// 	.then((user) => {
+				// 		if (!user) console.log('no user with id ', id, this);
+				// 		else this.set({user});
+				// 	});
 			},
 			setProfileUser(id) {
 				if (!id) {
-					console.log('missing profile user id');
+					console.log('missing profile user id', this);
 					return;
 				}
-				var profile = this.get().profile;
-				api.findUser(id)
-					.then((profileUser) => {
-						if (profileUser) {
-							this.set({profileUser});
-						}
-						else console.log('no user with id ', id);
-					});
+				var profileUser = api.findUser(id);
+				if (!profileUser) console.log('no profile user with id ', id, this);
+				else this.set({profileUser});
+				// api.findUser(id)
+				// 	.then((profileUser) => {
+				// 		if (!profileUser) console.log('no profile user with id ', id, this);
+				// 		else this.set({profileUser});
+				// 	});
 			},
 			setReviewUser(id, el) {
         if (!id) console.log('missing review user id', this);
 				api.findUser(id)
-					.then((reviewUser) => {
-						if (!reviewUser) {
-							console.log('no review user with id ', id, el);
-							reviewUser = new User();
-						}
-						el.set({reviewUser});
-					});
+					// .then((reviewUser) => {
+					// 	if (!reviewUser) {
+					// 		console.log('no review user with id ', id, el);
+					// 		reviewUser = new User();
+					// 	}
+					// 	el.set({reviewUser});
+					// });
+				var reviewUser = api.findUser(id);
+				if (!reviewUser) console.log('no review user with id ', id, el);
+				else el.set({reviewUser});
       },
 			newUser() {
 				return new User();

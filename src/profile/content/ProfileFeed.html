@@ -1,22 +1,22 @@
 {#each profile.posts as post}
   <article class="post">
     {#if post.isReview}
-      <Avatar user={post.review.user} isReview="true"/>
+      <Avatar isReview="true" user={post.review.user}/>
     {:else}
       <Avatar user={user}/>
     {/if}
 
     <div class="content">
       {#if post.isReview}
-        <PostTitle isReview="true" user={post.review.user} date={post.review.date}/>
+        <PostTitle isReview="true" user={post.review.user} date={post.date}/>
       {:else}
-        <PostTitle isSponsored={post.isSponsored} name={user.name} date={post.date}/>
+        <PostTitle isSponsored={post.isSponsored} user={user} date={post.date}/>
       {/if}
 
-      {#if post.isSponsored}
-        <SponsoredPost post={post}/>
-      {:elseif post.isReview}
+      {#if post.isReview}
         <ReviewPost post={post} user={user} rating={profile.details.rating}/>
+      {:elseif post.isSponsored}
+        <SponsoredPost post={post}/>
       {:else}
         <Post post={post}/>
       {/if}
@@ -46,7 +46,15 @@
   import Post from './../../posts/Post.html';
   import PostDetails from './../../posts/PostDetails.html';
 
+  import api from './../../services/api';
+
   export default {
+    data() {
+      return {
+        isReview: false,
+        reviewUser: ''
+      }
+    },
     components: {
       Avatar,
       PostTitle,
@@ -54,14 +62,6 @@
       ReviewPost,
       Post,
       PostDetails
-    },
-    methods: {
-      loadPosts() {
-        // TODO: load only x posts on create, and load rest on demand
-      }
-    },
-    oncreate() {
-      this.loadPosts();
     }
   }
 </script>

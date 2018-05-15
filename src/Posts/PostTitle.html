@@ -1,6 +1,10 @@
 <div class="post-title row">
   <p>
-    <span class="user-name">{name} </span>
+    {#await user}
+    {:then user}
+      <span class="user-name">{user.name} </span>
+    {:catch error}
+    {/await}
     <span class="note"><span class="icon note"><IconsSvg name='Clock'/></span> {postPeriod}</span>
   </p>
   {#if isSponsored}
@@ -47,15 +51,14 @@
 
 <script>
   import IconsSvg from './../icons/IconsSvg.html';
+
   import api from './../services/api';
 
   export default {
     data() {
       return {
         isSponsored: false,
-        bookmarked: false,
-        isReview: false,
-        name: ''
+        bookmarked: false
       }
     },
     components: {
@@ -92,25 +95,12 @@
       addBookmark() {
         this.set({bookmarked: !this.get().bookmarked});
         // do bookmarking
-      },
-      setReviewName() {
-        if (!this.get().isReview) return;
-        var id = this.get().user;
-        if (!id) {
-          console.log('review has no user id associated', this);
-          return;
-        }
-        // var reviewUser = this.root.findUser(id);
-        var reviewUser = api.findUser(id);
-        if (!reviewUser) {
-          console.log('users has no user of id ', id, this);
-          return;
-        }
-        this.set({name: reviewUser.name});
       }
     },
     oncreate() {
-      this.setReviewName();
+      if (this.get().isReview) {
+        this.set({user: api.findUser(this.get().user)});
+      }
     }
   }
 </script>

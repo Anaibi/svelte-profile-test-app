@@ -1398,7 +1398,7 @@ var app = (function () {
 
 
 	function create_main_fragment$17(component, ctx) {
-		var nav, a, img, img_src_value, a_href_value, text_1, ul, text_2, div, a_1, img_1, img_1_src_value, a_1_href_value;
+		var nav, a, img, img_src_value, a_href_value, text_1, ul, text_2, div, await_block_1, await_block_type, await_token, promise, resolved;
 
 		var each_value = ctx.menu;
 
@@ -1407,6 +1407,50 @@ var app = (function () {
 		for (var i = 0; i < each_value.length; i += 1) {
 			each_blocks[i] = create_each_block(component, get_each_context(ctx, each_value, i));
 		}
+
+		function replace_await_block(token, type, ctx) {
+			if (token !== await_token) return;
+
+			var old_block = await_block_1;
+			await_block_1 = type && (await_block_type = type)(component, ctx);
+
+			if (old_block) {
+				old_block.u();
+				old_block.d();
+				await_block_1.c();
+				await_block_1.m(div, null);
+
+				component.root.set({});
+			}
+		}
+
+		function handle_promise(promise) {
+			var token = await_token = {};
+
+			if (isPromise(promise)) {
+				promise.then(function(value) {
+					resolved = { user: value };
+					replace_await_block(token, create_then_block, assign(assign({}, ctx), resolved));
+				}, function (error) {
+					resolved = { error: error };
+					replace_await_block(token, create_catch_block, assign(assign({}, ctx), resolved));
+				});
+
+				// if we previously had a then/catch block, destroy it
+				if (await_block_type !== create_pending_block) {
+					replace_await_block(token, create_pending_block, ctx);
+					return true;
+				}
+			} else {
+				resolved = { user: promise };
+				if (await_block_type !== create_then_block) {
+					replace_await_block(token, create_then_block, assign(assign({}, ctx), resolved));
+					return true;
+				}
+			}
+		}
+
+		handle_promise(promise = ctx.user);
 
 		return {
 			c: function create() {
@@ -1422,18 +1466,14 @@ var app = (function () {
 
 				text_2 = createText("\n\t");
 				div = createElement("div");
-				a_1 = createElement("a");
-				img_1 = createElement("img");
+
+				await_block_1.c();
 				img.className = "img svelte-bcg552";
 				img.src = img_src_value = ctx.brand.img;
 				img.alt = "Brand";
 				a.className = "brand svelte-bcg552";
 				a.href = a_href_value = ctx.brand.link;
 				ul.className = "menu svelte-bcg552";
-				img_1.className = "img svelte-bcg552";
-				img_1.src = img_1_src_value = ctx.user.img;
-				img_1.alt = "User Settings";
-				a_1.href = a_1_href_value = ctx.user.link;
 				div.className = "user-menu bottom svelte-bcg552";
 				nav.className = "sidenav svelte-bcg552";
 			},
@@ -1451,11 +1491,12 @@ var app = (function () {
 
 				appendNode(text_2, nav);
 				appendNode(div, nav);
-				appendNode(a_1, div);
-				appendNode(img_1, a_1);
+
+				await_block_1.m(div, null);
 			},
 
-			p: function update(changed, ctx) {
+			p: function update(changed, _ctx) {
+				ctx = _ctx;
 				if ((changed.brand) && img_src_value !== (img_src_value = ctx.brand.img)) {
 					img.src = img_src_value;
 				}
@@ -1486,12 +1527,8 @@ var app = (function () {
 					each_blocks.length = each_value.length;
 				}
 
-				if ((changed.user) && img_1_src_value !== (img_1_src_value = ctx.user.img)) {
-					img_1.src = img_1_src_value;
-				}
-
-				if ((changed.user) && a_1_href_value !== (a_1_href_value = ctx.user.link)) {
-					a_1.href = a_1_href_value;
+				if (('user' in changed) && promise !== (promise = ctx.user) && handle_promise(promise, ctx)) ; else {
+					await_block_1.p(changed, assign(assign({}, ctx), resolved));
 				}
 			},
 
@@ -1501,10 +1538,15 @@ var app = (function () {
 				for (var i = 0; i < each_blocks.length; i += 1) {
 					each_blocks[i].u();
 				}
+
+				await_block_1.u();
 			},
 
 			d: function destroy$$1() {
 				destroyEach(each_blocks);
+
+				await_token = null;
+				await_block_1.d();
 			}
 		};
 	}
@@ -1548,6 +1590,75 @@ var app = (function () {
 			d: function destroy$$1() {
 				menuitemicon.destroy(false);
 			}
+		};
+	}
+
+	// (13:15)    {:then user}
+	function create_pending_block(component, ctx) {
+
+		return {
+			c: noop,
+
+			m: noop,
+
+			p: noop,
+
+			u: noop,
+
+			d: noop
+		};
+	}
+
+	// (14:2) {:then user}
+	function create_then_block(component, ctx) {
+		var a, img, img_src_value, a_href_value;
+
+		return {
+			c: function create() {
+				a = createElement("a");
+				img = createElement("img");
+				img.className = "img svelte-bcg552";
+				img.src = img_src_value = ctx.user.img;
+				img.alt = "User Settings";
+				a.href = a_href_value = ctx.user.link;
+			},
+
+			m: function mount(target, anchor) {
+				insertNode(a, target, anchor);
+				appendNode(img, a);
+			},
+
+			p: function update(changed, ctx) {
+				if ((changed.user) && img_src_value !== (img_src_value = ctx.user.img)) {
+					img.src = img_src_value;
+				}
+
+				if ((changed.user) && a_href_value !== (a_href_value = ctx.user.link)) {
+					a.href = a_href_value;
+				}
+			},
+
+			u: function unmount() {
+				detachNode(a);
+			},
+
+			d: noop
+		};
+	}
+
+	// (18:2) {:catch error}
+	function create_catch_block(component, ctx) {
+
+		return {
+			c: noop,
+
+			m: noop,
+
+			p: noop,
+
+			u: noop,
+
+			d: noop
 		};
 	}
 
@@ -1901,7 +2012,51 @@ var app = (function () {
 
 
 	function create_main_fragment$21(component, ctx) {
-		var slot_content_default = component._slotted.default, slot_content_default_before, slot_content_default_after, header, img, img_src_value, img_alt_value, text, button, span, text_1, text_2, div, div_1, h2, text_4, p, text_5_value = ctx.profile.details.followers, text_5, text_7, div_2, h2_1, text_9, p_1, text_10_value = ctx.profile.details.following, text_10, text_13, div_3, h2_2, text_15, p_2, text_16_value = ctx.profile.details.perf, text_16, text_17, span_1, text_18, text_19_value = ctx.profile.details.reviews, text_19, text_20, text_23, main, h2_3, span_2, text_24, text_25, text_26, h2_4, span_3, text_27, a, text_30, div_4;
+		var slot_content_default = component._slotted.default, slot_content_default_before, slot_content_default_after, header, await_block_1, await_block_type, await_token, promise, resolved, text, button, span, text_1, text_2, div, div_1, h2, text_4, p, text_5_value = ctx.profile.details.followers, text_5, text_7, div_2, h2_1, text_9, p_1, text_10_value = ctx.profile.details.following, text_10, text_13, div_3, h2_2, text_15, p_2, text_16_value = ctx.profile.details.perf, text_16, text_17, span_1, text_18, text_19_value = ctx.profile.details.reviews, text_19, text_20, text_23, main, h2_3, span_2, text_24, text_25, text_26, h2_4, span_3, text_27, a, text_30, div_4;
+
+		function replace_await_block(token, type, ctx) {
+			if (token !== await_token) return;
+
+			var old_block = await_block_1;
+			await_block_1 = type && (await_block_type = type)(component, ctx);
+
+			if (old_block) {
+				old_block.u();
+				old_block.d();
+				await_block_1.c();
+				await_block_1.m(header, text);
+
+				component.root.set({});
+			}
+		}
+
+		function handle_promise(promise) {
+			var token = await_token = {};
+
+			if (isPromise(promise)) {
+				promise.then(function(value) {
+					resolved = { user: value };
+					replace_await_block(token, create_then_block$1, assign(assign({}, ctx), resolved));
+				}, function (error) {
+					resolved = { error: error };
+					replace_await_block(token, create_catch_block$1, assign(assign({}, ctx), resolved));
+				});
+
+				// if we previously had a then/catch block, destroy it
+				if (await_block_type !== create_pending_block$1) {
+					replace_await_block(token, create_pending_block$1, ctx);
+					return true;
+				}
+			} else {
+				resolved = { user: promise };
+				if (await_block_type !== create_then_block$1) {
+					replace_await_block(token, create_then_block$1, assign(assign({}, ctx), resolved));
+					return true;
+				}
+			}
+		}
+
+		handle_promise(promise = ctx.user);
 
 		var iconssvg_initial_data = { name: "UserAdd" };
 		var iconssvg = new IconsSvg({
@@ -1931,7 +2086,9 @@ var app = (function () {
 			c: function create() {
 				if (!slot_content_default) {
 					header = createElement("header");
-					img = createElement("img");
+
+						await_block_1.c();
+
 					text = createText("\n\t\t");
 					button = createElement("button");
 					span = createElement("span");
@@ -1983,9 +2140,6 @@ var app = (function () {
 					div_4 = createElement("div");
 				}
 				if (!slot_content_default) {
-					img.className = "profile-img img svelte-176wm8a";
-					img.src = img_src_value = ctx.user.img;
-					img.alt = img_alt_value = ctx.user.name;
 					span.className = "icon svelte-176wm8a";
 					button.className = "btn svelte-176wm8a";
 					h2.className = "title";
@@ -2014,7 +2168,9 @@ var app = (function () {
 			m: function mount(target, anchor) {
 				if (!slot_content_default) {
 					insertNode(header, target, anchor);
-					appendNode(img, header);
+
+						await_block_1.m(header, null);
+
 					appendNode(text, header);
 					appendNode(button, header);
 					appendNode(span, button);
@@ -2069,14 +2225,12 @@ var app = (function () {
 				}
 			},
 
-			p: function update(changed, ctx) {
+			p: function update(changed, _ctx) {
+				ctx = _ctx;
 				if (!slot_content_default) {
-					if ((changed.user) && img_src_value !== (img_src_value = ctx.user.img)) {
-						img.src = img_src_value;
-					}
 
-					if ((changed.user) && img_alt_value !== (img_alt_value = ctx.user.name)) {
-						img.alt = img_alt_value;
+						if (('user' in changed) && promise !== (promise = ctx.user) && handle_promise(promise, ctx)) ; else {
+						await_block_1.p(changed, assign(assign({}, ctx), resolved));
 					}
 
 					if ((changed.profile) && text_5_value !== (text_5_value = ctx.profile.details.followers)) {
@@ -2105,6 +2259,9 @@ var app = (function () {
 			u: function unmount() {
 				if (!slot_content_default) {
 					detachNode(header);
+
+						await_block_1.u();
+
 					detachNode(text_23);
 					detachNode(main);
 				}
@@ -2118,12 +2275,90 @@ var app = (function () {
 
 			d: function destroy$$1() {
 				if (!slot_content_default) {
+
+						await_token = null;
+					await_block_1.d();
+
 					iconssvg.destroy(false);
 					iconssvg_1.destroy(false);
 					tiles.destroy(false);
 					iconssvg_2.destroy(false);
 				}
 			}
+		};
+	}
+
+	// (3:15)     <div class="profile-img img"></div>   {:then user}
+	function create_pending_block$1(component, ctx) {
+		var div;
+
+		return {
+			c: function create() {
+				div = createElement("div");
+				div.className = "profile-img img svelte-176wm8a";
+			},
+
+			m: function mount(target, anchor) {
+				insertNode(div, target, anchor);
+			},
+
+			p: noop,
+
+			u: function unmount() {
+				detachNode(div);
+			},
+
+			d: noop
+		};
+	}
+
+	// (5:2) {:then user}
+	function create_then_block$1(component, ctx) {
+		var img, img_src_value, img_alt_value;
+
+		return {
+			c: function create() {
+				img = createElement("img");
+				img.className = "profile-img img svelte-176wm8a";
+				img.src = img_src_value = ctx.user.img;
+				img.alt = img_alt_value = ctx.user.name;
+			},
+
+			m: function mount(target, anchor) {
+				insertNode(img, target, anchor);
+			},
+
+			p: function update(changed, ctx) {
+				if ((changed.user) && img_src_value !== (img_src_value = ctx.user.img)) {
+					img.src = img_src_value;
+				}
+
+				if ((changed.user) && img_alt_value !== (img_alt_value = ctx.user.name)) {
+					img.alt = img_alt_value;
+				}
+			},
+
+			u: function unmount() {
+				detachNode(img);
+			},
+
+			d: noop
+		};
+	}
+
+	// (7:2) {:catch error}
+	function create_catch_block$1(component, ctx) {
+
+		return {
+			c: noop,
+
+			m: noop,
+
+			p: noop,
+
+			u: noop,
+
+			d: noop
 		};
 	}
 
@@ -2238,13 +2473,51 @@ var app = (function () {
 
 
 	function create_main_fragment$23(component, ctx) {
-		var div, h1, text_value = ctx.user.name, text, text_1, p, text_2_value = ctx.user.title, text_2, text_3, text_5, div_1, button, span, text_6, button_1;
+		var div, await_block_1, await_block_type, await_token, promise, resolved, text_1, div_1, button, span, text_2, button_1;
 
-		var stars_initial_data = { rating: ctx.profile.details.rating };
-		var stars = new Stars({
-			root: component.root,
-			data: stars_initial_data
-		});
+		function replace_await_block(token, type, ctx) {
+			if (token !== await_token) return;
+
+			var old_block = await_block_1;
+			await_block_1 = type && (await_block_type = type)(component, ctx);
+
+			if (old_block) {
+				old_block.u();
+				old_block.d();
+				await_block_1.c();
+				await_block_1.m(div, null);
+
+				component.root.set({});
+			}
+		}
+
+		function handle_promise(promise) {
+			var token = await_token = {};
+
+			if (isPromise(promise)) {
+				promise.then(function(value) {
+					resolved = { user: value };
+					replace_await_block(token, create_then_block$2, assign(assign({}, ctx), resolved));
+				}, function (error) {
+					resolved = { error: error };
+					replace_await_block(token, create_catch_block$2, assign(assign({}, ctx), resolved));
+				});
+
+				// if we previously had a then/catch block, destroy it
+				if (await_block_type !== create_pending_block$2) {
+					replace_await_block(token, create_pending_block$2, ctx);
+					return true;
+				}
+			} else {
+				resolved = { user: promise };
+				if (await_block_type !== create_then_block$2) {
+					replace_await_block(token, create_then_block$2, assign(assign({}, ctx), resolved));
+					return true;
+				}
+			}
+		}
+
+		handle_promise(promise = ctx.user);
 
 		var iconssvg_initial_data = { name: "Message" };
 		var iconssvg = new IconsSvg({
@@ -2255,23 +2528,17 @@ var app = (function () {
 		return {
 			c: function create() {
 				div = createElement("div");
-				h1 = createElement("h1");
-				text = createText(text_value);
-				text_1 = createText("\n\t");
-				p = createElement("p");
-				text_2 = createText(text_2_value);
-				text_3 = createText(" ");
-				stars._fragment.c();
-				text_5 = createText("\n");
+
+				await_block_1.c();
+
+				text_1 = createText("\n");
 				div_1 = createElement("div");
 				button = createElement("button");
 				span = createElement("span");
 				iconssvg._fragment.c();
-				text_6 = createText("\n\t");
+				text_2 = createText("\n\t");
 				button_1 = createElement("button");
 				button_1.textContent = "Request";
-				h1.className = "svelte-1j8i0yl";
-				p.className = "svelte-1j8i0yl";
 				span.className = "icon svelte-1j8i0yl";
 				button.className = "btn btn-icon svelte-1j8i0yl";
 				button_1.className = "btn btn-primary";
@@ -2280,20 +2547,90 @@ var app = (function () {
 
 			m: function mount(target, anchor) {
 				insertNode(div, target, anchor);
-				appendNode(h1, div);
-				appendNode(text, h1);
-				appendNode(text_1, div);
-				appendNode(p, div);
-				appendNode(text_2, p);
-				appendNode(text_3, p);
-				stars._mount(p, null);
-				insertNode(text_5, target, anchor);
+
+				await_block_1.m(div, null);
+
+				insertNode(text_1, target, anchor);
 				insertNode(div_1, target, anchor);
 				appendNode(button, div_1);
 				appendNode(span, button);
 				iconssvg._mount(span, null);
-				appendNode(text_6, div_1);
+				appendNode(text_2, div_1);
 				appendNode(button_1, div_1);
+			},
+
+			p: function update(changed, _ctx) {
+				ctx = _ctx;
+				if (('user' in changed) && promise !== (promise = ctx.user) && handle_promise(promise, ctx)) ; else {
+					await_block_1.p(changed, assign(assign({}, ctx), resolved));
+				}
+			},
+
+			u: function unmount() {
+				detachNode(div);
+
+				await_block_1.u();
+
+				detachNode(text_1);
+				detachNode(div_1);
+			},
+
+			d: function destroy$$1() {
+				await_token = null;
+				await_block_1.d();
+
+				iconssvg.destroy(false);
+			}
+		};
+	}
+
+	// (2:14)   {:then user}
+	function create_pending_block$2(component, ctx) {
+
+		return {
+			c: noop,
+
+			m: noop,
+
+			p: noop,
+
+			u: noop,
+
+			d: noop
+		};
+	}
+
+	// (3:1) {:then user}
+	function create_then_block$2(component, ctx) {
+		var h1, text_value = ctx.user.name, text, text_1, p, text_2_value = ctx.user.title, text_2, text_3;
+
+		var stars_initial_data = { rating: ctx.profile.details.rating };
+		var stars = new Stars({
+			root: component.root,
+			data: stars_initial_data
+		});
+
+		return {
+			c: function create() {
+				h1 = createElement("h1");
+				text = createText(text_value);
+				text_1 = createText("\n\t\t");
+				p = createElement("p");
+				text_2 = createText(text_2_value);
+				text_3 = createText(" ");
+				stars._fragment.c();
+				h1.className = "svelte-1j8i0yl";
+				p.className = "svelte-1j8i0yl";
+			},
+
+			m: function mount(target, anchor) {
+				insertNode(h1, target, anchor);
+				appendNode(text, h1);
+				insertNode(text_1, target, anchor);
+				insertNode(p, target, anchor);
+				appendNode(text_2, p);
+				appendNode(text_3, p);
+				stars._mount(p, null);
 			},
 
 			p: function update(changed, ctx) {
@@ -2311,15 +2648,30 @@ var app = (function () {
 			},
 
 			u: function unmount() {
-				detachNode(div);
-				detachNode(text_5);
-				detachNode(div_1);
+				detachNode(h1);
+				detachNode(text_1);
+				detachNode(p);
 			},
 
 			d: function destroy$$1() {
 				stars.destroy(false);
-				iconssvg.destroy(false);
 			}
+		};
+	}
+
+	// (6:1) {:catch error}
+	function create_catch_block$2(component, ctx) {
+
+		return {
+			c: noop,
+
+			m: noop,
+
+			p: noop,
+
+			u: noop,
+
+			d: noop
 		};
 	}
 
@@ -2399,188 +2751,6 @@ var app = (function () {
 	assign(ProfileInfo.prototype, protoDev);
 
 	ProfileInfo.prototype._checkReadOnly = function _checkReadOnly(newState) {
-	};
-
-	/* src/components/Avatar.html generated by Svelte v2.4.4 */
-
-	function data$1() {
-	  return {
-	    isReview: false,
-	    reviewUser: ''
-	  }
-	}
-	var methods = {
-	  setReviewUser() {
-	    var id = this.get().user;
-	    this.root.setReviewUser(id, this);
-	  }
-	};
-
-	function oncreate$1() {
-	  if (this.get().isReview) this.setReviewUser();
-	}
-	function create_main_fragment$25(component, ctx) {
-		var if_block_anchor;
-
-		function select_block_type(ctx) {
-			if (ctx.isReview) return create_if_block$2;
-			return create_if_block_1$1;
-		}
-
-		var current_block_type = select_block_type(ctx);
-		var if_block = current_block_type(component, ctx);
-
-		return {
-			c: function create() {
-				if_block.c();
-				if_block_anchor = createComment();
-			},
-
-			m: function mount(target, anchor) {
-				if_block.m(target, anchor);
-				insertNode(if_block_anchor, target, anchor);
-			},
-
-			p: function update(changed, ctx) {
-				if (current_block_type === (current_block_type = select_block_type(ctx)) && if_block) {
-					if_block.p(changed, ctx);
-				} else {
-					if_block.u();
-					if_block.d();
-					if_block = current_block_type(component, ctx);
-					if_block.c();
-					if_block.m(if_block_anchor.parentNode, if_block_anchor);
-				}
-			},
-
-			u: function unmount() {
-				if_block.u();
-				detachNode(if_block_anchor);
-			},
-
-			d: function destroy$$1() {
-				if_block.d();
-			}
-		};
-	}
-
-	// (1:0) {#if isReview}
-	function create_if_block$2(component, ctx) {
-		var a, img, img_src_value, img_alt_value, a_href_value;
-
-		return {
-			c: function create() {
-				a = createElement("a");
-				img = createElement("img");
-				img.src = img_src_value = ctx.reviewUser.img;
-				img.alt = img_alt_value = ctx.reviewUser.name;
-				img.className = "svelte-7kaina";
-				a.className = "avatar svelte-7kaina";
-				a.href = a_href_value = ctx.reviewUser.link;
-			},
-
-			m: function mount(target, anchor) {
-				insertNode(a, target, anchor);
-				appendNode(img, a);
-			},
-
-			p: function update(changed, ctx) {
-				if ((changed.reviewUser) && img_src_value !== (img_src_value = ctx.reviewUser.img)) {
-					img.src = img_src_value;
-				}
-
-				if ((changed.reviewUser) && img_alt_value !== (img_alt_value = ctx.reviewUser.name)) {
-					img.alt = img_alt_value;
-				}
-
-				if ((changed.reviewUser) && a_href_value !== (a_href_value = ctx.reviewUser.link)) {
-					a.href = a_href_value;
-				}
-			},
-
-			u: function unmount() {
-				detachNode(a);
-			},
-
-			d: noop
-		};
-	}
-
-	// (5:0) {:else}
-	function create_if_block_1$1(component, ctx) {
-		var a, img, img_src_value, img_alt_value, a_href_value;
-
-		return {
-			c: function create() {
-				a = createElement("a");
-				img = createElement("img");
-				img.src = img_src_value = ctx.user.img;
-				img.alt = img_alt_value = ctx.user.name;
-				img.className = "svelte-7kaina";
-				a.className = "avatar svelte-7kaina";
-				a.href = a_href_value = ctx.user.link;
-			},
-
-			m: function mount(target, anchor) {
-				insertNode(a, target, anchor);
-				appendNode(img, a);
-			},
-
-			p: function update(changed, ctx) {
-				if ((changed.user) && img_src_value !== (img_src_value = ctx.user.img)) {
-					img.src = img_src_value;
-				}
-
-				if ((changed.user) && img_alt_value !== (img_alt_value = ctx.user.name)) {
-					img.alt = img_alt_value;
-				}
-
-				if ((changed.user) && a_href_value !== (a_href_value = ctx.user.link)) {
-					a.href = a_href_value;
-				}
-			},
-
-			u: function unmount() {
-				detachNode(a);
-			},
-
-			d: noop
-		};
-	}
-
-	function Avatar(options) {
-		this._debugName = '<Avatar>';
-		if (!options || (!options.target && !options.root)) throw new Error("'target' is a required option");
-		init(this, options);
-		this._state = assign(data$1(), options.data);
-		if (!('isReview' in this._state)) console.warn("<Avatar> was created without expected data property 'isReview'");
-		if (!('reviewUser' in this._state)) console.warn("<Avatar> was created without expected data property 'reviewUser'");
-		if (!('user' in this._state)) console.warn("<Avatar> was created without expected data property 'user'");
-
-		if (!options.root) {
-			this._oncreate = [];
-		}
-
-		this._fragment = create_main_fragment$25(this, this._state);
-
-		this.root._oncreate.push(() => {
-			oncreate$1.call(this);
-			this.fire("update", { changed: assignTrue({}, this._state), current: this._state });
-		});
-
-		if (options.target) {
-			if (options.hydrate) throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
-			this._fragment.c();
-			this._mount(options.target, options.anchor);
-
-			callAll(this._oncreate);
-		}
-	}
-
-	assign(Avatar.prototype, protoDev);
-	assign(Avatar.prototype, methods);
-
-	Avatar.prototype._checkReadOnly = function _checkReadOnly(newState) {
 	};
 
 	const USERS = [
@@ -2677,7 +2847,10 @@ var app = (function () {
 	  },
 	  findUser(id){
 	    return new Promise((resolve) => {
-	      resolve(USERS.find(x => x.id === id));
+	      setTimeout(() => {
+	        resolve(USERS.find(x => x.id === id));
+	      }, 1500);
+	      // resolve(USERS.find(x => x.id === id));
 	    });
 	  },
 	  findUsers(ids) {
@@ -2686,9 +2859,213 @@ var app = (function () {
 	      users.push(USERS.find(x => x.id === id));
 	    });
 	    return new Promise((resolve) => {
-	      resolve(users);
-	    })
+	      // resolve(users);
+	      setTimeout(() => {
+	        resolve(users);
+	      }, 1500);
+	    });
 	  }
+	};
+
+	/* src/components/Avatar.html generated by Svelte v2.4.4 */
+
+	function oncreate$1() {
+	  if (this.get().isReview) {
+	    this.set({user: api.findUser(this.get().user)});
+	  }
+	}
+	function create_main_fragment$25(component, ctx) {
+		var await_block_anchor, await_block_1, await_block_type, await_token, promise, resolved;
+
+		function replace_await_block(token, type, ctx) {
+			if (token !== await_token) return;
+
+			var old_block = await_block_1;
+			await_block_1 = type && (await_block_type = type)(component, ctx);
+
+			if (old_block) {
+				old_block.u();
+				old_block.d();
+				await_block_1.c();
+				await_block_1.m(await_block_anchor.parentNode, await_block_anchor);
+
+				component.root.set({});
+			}
+		}
+
+		function handle_promise(promise) {
+			var token = await_token = {};
+
+			if (isPromise(promise)) {
+				promise.then(function(value) {
+					resolved = { user: value };
+					replace_await_block(token, create_then_block$3, assign(assign({}, ctx), resolved));
+				}, function (error) {
+					resolved = { error: error };
+					replace_await_block(token, create_catch_block$3, assign(assign({}, ctx), resolved));
+				});
+
+				// if we previously had a then/catch block, destroy it
+				if (await_block_type !== create_pending_block$3) {
+					replace_await_block(token, create_pending_block$3, ctx);
+					return true;
+				}
+			} else {
+				resolved = { user: promise };
+				if (await_block_type !== create_then_block$3) {
+					replace_await_block(token, create_then_block$3, assign(assign({}, ctx), resolved));
+					return true;
+				}
+			}
+		}
+
+		handle_promise(promise = ctx.user);
+
+		return {
+			c: function create() {
+				await_block_anchor = createComment();
+
+				await_block_1.c();
+			},
+
+			m: function mount(target, anchor) {
+				insertNode(await_block_anchor, target, anchor);
+
+				await_block_1.m(target, anchor);
+			},
+
+			p: function update(changed, _ctx) {
+				ctx = _ctx;
+				if (('user' in changed) && promise !== (promise = ctx.user) && handle_promise(promise, ctx)) ; else {
+					await_block_1.p(changed, assign(assign({}, ctx), resolved));
+				}
+			},
+
+			u: function unmount() {
+				detachNode(await_block_anchor);
+
+				await_block_1.u();
+			},
+
+			d: function destroy$$1() {
+				await_token = null;
+				await_block_1.d();
+			}
+		};
+	}
+
+	// (1:13)    <div class="avatar"></div> {:then user}
+	function create_pending_block$3(component, ctx) {
+		var div;
+
+		return {
+			c: function create() {
+				div = createElement("div");
+				div.className = "avatar svelte-7kaina";
+			},
+
+			m: function mount(target, anchor) {
+				insertNode(div, target, anchor);
+			},
+
+			p: noop,
+
+			u: function unmount() {
+				detachNode(div);
+			},
+
+			d: noop
+		};
+	}
+
+	// (3:0) {:then user}
+	function create_then_block$3(component, ctx) {
+		var a, img, img_src_value, img_alt_value, a_href_value;
+
+		return {
+			c: function create() {
+				a = createElement("a");
+				img = createElement("img");
+				img.src = img_src_value = ctx.user.img;
+				img.alt = img_alt_value = ctx.user.name;
+				img.className = "svelte-7kaina";
+				a.className = "avatar svelte-7kaina";
+				a.href = a_href_value = ctx.user.link;
+			},
+
+			m: function mount(target, anchor) {
+				insertNode(a, target, anchor);
+				appendNode(img, a);
+			},
+
+			p: function update(changed, ctx) {
+				if ((changed.user) && img_src_value !== (img_src_value = ctx.user.img)) {
+					img.src = img_src_value;
+				}
+
+				if ((changed.user) && img_alt_value !== (img_alt_value = ctx.user.name)) {
+					img.alt = img_alt_value;
+				}
+
+				if ((changed.user) && a_href_value !== (a_href_value = ctx.user.link)) {
+					a.href = a_href_value;
+				}
+			},
+
+			u: function unmount() {
+				detachNode(a);
+			},
+
+			d: noop
+		};
+	}
+
+	// (7:0) {:catch error}
+	function create_catch_block$3(component, ctx) {
+
+		return {
+			c: noop,
+
+			m: noop,
+
+			p: noop,
+
+			u: noop,
+
+			d: noop
+		};
+	}
+
+	function Avatar(options) {
+		this._debugName = '<Avatar>';
+		if (!options || (!options.target && !options.root)) throw new Error("'target' is a required option");
+		init(this, options);
+		this._state = assign({}, options.data);
+		if (!('user' in this._state)) console.warn("<Avatar> was created without expected data property 'user'");
+
+		if (!options.root) {
+			this._oncreate = [];
+		}
+
+		this._fragment = create_main_fragment$25(this, this._state);
+
+		this.root._oncreate.push(() => {
+			oncreate$1.call(this);
+			this.fire("update", { changed: assignTrue({}, this._state), current: this._state });
+		});
+
+		if (options.target) {
+			if (options.hydrate) throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+			this._fragment.c();
+			this._mount(options.target, options.anchor);
+
+			callAll(this._oncreate);
+		}
+	}
+
+	assign(Avatar.prototype, protoDev);
+
+	Avatar.prototype._checkReadOnly = function _checkReadOnly(newState) {
 	};
 
 	/* src/posts/PostTitle.html generated by Svelte v2.4.4 */
@@ -2719,41 +3096,70 @@ var app = (function () {
 	  return period;
 				}
 
-	function data$2() {
+	function data$1() {
 	  return {
 	    isSponsored: false,
-	    bookmarked: false,
-	    isReview: false,
-	    name: ''
+	    bookmarked: false
 	  }
 	}
-	var methods$1 = {
+	var methods = {
 	  addBookmark() {
 	    this.set({bookmarked: !this.get().bookmarked});
 	    // do bookmarking
-	  },
-	  setReviewName() {
-	    if (!this.get().isReview) return;
-	    var id = this.get().user;
-	    if (!id) {
-	      console.log('review has no user id associated', this);
-	      return;
-	    }
-	    // var reviewUser = this.root.findUser(id);
-	    var reviewUser = api.findUser(id);
-	    if (!reviewUser) {
-	      console.log('users has no user of id ', id, this);
-	      return;
-	    }
-	    this.set({name: reviewUser.name});
 	  }
 	};
 
 	function oncreate$2() {
-	  this.setReviewName();
+	  if (this.get().isReview) {
+	    this.set({user: api.findUser(this.get().user)});
+	  }
 	}
 	function create_main_fragment$26(component, ctx) {
-		var div, p, span, text, text_2, span_1, span_2, text_3, text_4, text_6;
+		var div, p, await_block_1, await_block_type, await_token, promise, resolved, text, span, span_1, text_1, text_2, text_4;
+
+		function replace_await_block(token, type, ctx) {
+			if (token !== await_token) return;
+
+			var old_block = await_block_1;
+			await_block_1 = type && (await_block_type = type)(component, ctx);
+
+			if (old_block) {
+				old_block.u();
+				old_block.d();
+				await_block_1.c();
+				await_block_1.m(p, text);
+
+				component.root.set({});
+			}
+		}
+
+		function handle_promise(promise) {
+			var token = await_token = {};
+
+			if (isPromise(promise)) {
+				promise.then(function(value) {
+					resolved = { user: value };
+					replace_await_block(token, create_then_block$4, assign(assign({}, ctx), resolved));
+				}, function (error) {
+					resolved = { error: error };
+					replace_await_block(token, create_catch_block$4, assign(assign({}, ctx), resolved));
+				});
+
+				// if we previously had a then/catch block, destroy it
+				if (await_block_type !== create_pending_block$4) {
+					replace_await_block(token, create_pending_block$4, ctx);
+					return true;
+				}
+			} else {
+				resolved = { user: promise };
+				if (await_block_type !== create_then_block$4) {
+					replace_await_block(token, create_then_block$4, assign(assign({}, ctx), resolved));
+					return true;
+				}
+			}
+		}
+
+		handle_promise(promise = ctx.user);
 
 		var iconssvg_initial_data = { name: "Clock" };
 		var iconssvg = new IconsSvg({
@@ -2761,57 +3167,59 @@ var app = (function () {
 			data: iconssvg_initial_data
 		});
 
-		var if_block = (ctx.isSponsored) && create_if_block$3(component, ctx);
+		var if_block = (ctx.isSponsored) && create_if_block$2(component, ctx);
 
 		return {
 			c: function create() {
 				div = createElement("div");
 				p = createElement("p");
+
+				await_block_1.c();
+
+				text = createText("\n    ");
 				span = createElement("span");
-				text = createText(ctx.name);
-				text_2 = createText("\n    ");
 				span_1 = createElement("span");
-				span_2 = createElement("span");
 				iconssvg._fragment.c();
-				text_3 = createText(" ");
-				text_4 = createText(ctx.postPeriod);
-				text_6 = createText("\n  ");
+				text_1 = createText(" ");
+				text_2 = createText(ctx.postPeriod);
+				text_4 = createText("\n  ");
 				if (if_block) if_block.c();
-				span.className = "user-name";
-				span_2.className = "icon note svelte-1bde89r";
-				span_1.className = "note svelte-1bde89r";
+				span_1.className = "icon note svelte-1bde89r";
+				span.className = "note svelte-1bde89r";
 				div.className = "post-title row svelte-1bde89r";
 			},
 
 			m: function mount(target, anchor) {
 				insertNode(div, target, anchor);
 				appendNode(p, div);
+
+				await_block_1.m(p, null);
+
+				appendNode(text, p);
 				appendNode(span, p);
-				appendNode(text, span);
-				appendNode(text_2, p);
-				appendNode(span_1, p);
-				appendNode(span_2, span_1);
-				iconssvg._mount(span_2, null);
-				appendNode(text_3, span_1);
-				appendNode(text_4, span_1);
-				appendNode(text_6, div);
+				appendNode(span_1, span);
+				iconssvg._mount(span_1, null);
+				appendNode(text_1, span);
+				appendNode(text_2, span);
+				appendNode(text_4, div);
 				if (if_block) if_block.m(div, null);
 			},
 
-			p: function update(changed, ctx) {
-				if (changed.name) {
-					text.data = ctx.name;
+			p: function update(changed, _ctx) {
+				ctx = _ctx;
+				if (('user' in changed) && promise !== (promise = ctx.user) && handle_promise(promise, ctx)) ; else {
+					await_block_1.p(changed, assign(assign({}, ctx), resolved));
 				}
 
 				if (changed.postPeriod) {
-					text_4.data = ctx.postPeriod;
+					text_2.data = ctx.postPeriod;
 				}
 
 				if (ctx.isSponsored) {
 					if (if_block) {
 						if_block.p(changed, ctx);
 					} else {
-						if_block = create_if_block$3(component, ctx);
+						if_block = create_if_block$2(component, ctx);
 						if_block.c();
 						if_block.m(div, null);
 					}
@@ -2824,18 +3232,86 @@ var app = (function () {
 
 			u: function unmount() {
 				detachNode(div);
+
+				await_block_1.u();
+
 				if (if_block) if_block.u();
 			},
 
 			d: function destroy$$1() {
+				await_token = null;
+				await_block_1.d();
+
 				iconssvg.destroy(false);
 				if (if_block) if_block.d();
 			}
 		};
 	}
 
-	// (6:2) {#if isSponsored}
-	function create_if_block$3(component, ctx) {
+	// (3:17)      {:then user}
+	function create_pending_block$4(component, ctx) {
+
+		return {
+			c: noop,
+
+			m: noop,
+
+			p: noop,
+
+			u: noop,
+
+			d: noop
+		};
+	}
+
+	// (4:4) {:then user}
+	function create_then_block$4(component, ctx) {
+		var span, text_value = ctx.user.name, text;
+
+		return {
+			c: function create() {
+				span = createElement("span");
+				text = createText(text_value);
+				span.className = "user-name";
+			},
+
+			m: function mount(target, anchor) {
+				insertNode(span, target, anchor);
+				appendNode(text, span);
+			},
+
+			p: function update(changed, ctx) {
+				if ((changed.user) && text_value !== (text_value = ctx.user.name)) {
+					text.data = text_value;
+				}
+			},
+
+			u: function unmount() {
+				detachNode(span);
+			},
+
+			d: noop
+		};
+	}
+
+	// (6:4) {:catch error}
+	function create_catch_block$4(component, ctx) {
+
+		return {
+			c: noop,
+
+			m: noop,
+
+			p: noop,
+
+			u: noop,
+
+			d: noop
+		};
+	}
+
+	// (10:2) {#if isSponsored}
+	function create_if_block$2(component, ctx) {
 		var p, span, text_1, button, span_1, button_class_value;
 
 		var iconssvg_initial_data = { name: "Bookmark" };
@@ -2893,10 +3369,10 @@ var app = (function () {
 		this._debugName = '<PostTitle>';
 		if (!options || (!options.target && !options.root)) throw new Error("'target' is a required option");
 		init(this, options);
-		this._state = assign(data$2(), options.data);
+		this._state = assign(data$1(), options.data);
 		this._recompute({ date: 1 }, this._state);
 		if (!('date' in this._state)) console.warn("<PostTitle> was created without expected data property 'date'");
-		if (!('name' in this._state)) console.warn("<PostTitle> was created without expected data property 'name'");
+		if (!('user' in this._state)) console.warn("<PostTitle> was created without expected data property 'user'");
 
 		if (!('isSponsored' in this._state)) console.warn("<PostTitle> was created without expected data property 'isSponsored'");
 		if (!('bookmarked' in this._state)) console.warn("<PostTitle> was created without expected data property 'bookmarked'");
@@ -2928,7 +3404,7 @@ var app = (function () {
 	}
 
 	assign(PostTitle.prototype, protoDev);
-	assign(PostTitle.prototype, methods$1);
+	assign(PostTitle.prototype, methods);
 
 	PostTitle.prototype._checkReadOnly = function _checkReadOnly(newState) {
 		if ('postPeriod' in newState && !this._updatingReadonlyProperty) throw new Error("<PostTitle>: Cannot set read-only property 'postPeriod'");
@@ -2942,21 +3418,23 @@ var app = (function () {
 
 	/* src/posts/SponsoredPost.html generated by Svelte v2.4.4 */
 
-	function data$3() {
+	function data$2() {
 	  return {
 	    recommendationUsers: []
 	  }
 	}
-	var methods$2 = {
+	var methods$1 = {
 	  setRecommendationUsers() {
 	    var ids = this.get().post.recommendations.users;
 	    ids = ids.splice(0,3);
-	    for (let i = 0; i < 3; i++) {
-	      api.findUsers(ids)
-	        .then((recommendationUsers) => {
-	          this.set({recommendationUsers});
-	        });
-	    }
+	    // for (let i = 0; i < 3; i++) {
+	      // api.findUsers(ids)
+	      //   .then((recommendationUsers) => {
+	      //     this.set({recommendationUsers});
+	      //   });
+	      var recommendationUsers = api.findUsers(ids);
+	      this.set({recommendationUsers});
+	    // }
 	  }
 	};
 
@@ -2966,7 +3444,7 @@ var app = (function () {
 	function create_main_fragment$27(component, ctx) {
 		var div, div_1, text_1, div_2, div_3, div_4, raw_value = ctx.post.content.text, text_4, button;
 
-		var if_block = (ctx.post.recommendations) && create_if_block$4(component, ctx);
+		var if_block = (ctx.post.recommendations) && create_if_block$3(component, ctx);
 
 		return {
 			c: function create() {
@@ -3007,7 +3485,7 @@ var app = (function () {
 					if (if_block) {
 						if_block.p(changed, ctx);
 					} else {
-						if_block = create_if_block$4(component, ctx);
+						if_block = create_if_block$3(component, ctx);
 						if_block.c();
 						if_block.m(div_1, null);
 					}
@@ -3040,7 +3518,7 @@ var app = (function () {
 	}
 
 	// (5:36)            <p>loading</p>         {:then recommendationUsers}
-	function create_pending_block(component, ctx) {
+	function create_pending_block$5(component, ctx) {
 		var p;
 
 		return {
@@ -3099,7 +3577,7 @@ var app = (function () {
 	}
 
 	// (7:8) {:then recommendationUsers}
-	function create_then_block(component, ctx) {
+	function create_then_block$5(component, ctx) {
 		var each_anchor;
 
 		var each_value = ctx.recommendationUsers;
@@ -3166,7 +3644,7 @@ var app = (function () {
 	}
 
 	// (11:8) {:catch error}
-	function create_catch_block(component, ctx) {
+	function create_catch_block$5(component, ctx) {
 
 		return {
 			c: noop,
@@ -3182,7 +3660,7 @@ var app = (function () {
 	}
 
 	// (14:10) {#if post.recommendations.rating}
-	function create_if_block_1$2(component, ctx) {
+	function create_if_block_1$1(component, ctx) {
 
 		var stars_initial_data = { rating: ctx.post.recommendations.rating };
 		var stars = new Stars({
@@ -3250,7 +3728,7 @@ var app = (function () {
 	}
 
 	// (3:4) {#if post.recommendations}
-	function create_if_block$4(component, ctx) {
+	function create_if_block$3(component, ctx) {
 		var div, await_block_1, await_block_type, await_token, promise, resolved, text, div_1, text_1;
 
 		function replace_await_block(token, type, ctx) {
@@ -3275,21 +3753,21 @@ var app = (function () {
 			if (isPromise(promise)) {
 				promise.then(function(value) {
 					resolved = { recommendationUsers: value };
-					replace_await_block(token, create_then_block, assign(assign({}, ctx), resolved));
+					replace_await_block(token, create_then_block$5, assign(assign({}, ctx), resolved));
 				}, function (error) {
 					resolved = { error: error };
-					replace_await_block(token, create_catch_block, assign(assign({}, ctx), resolved));
+					replace_await_block(token, create_catch_block$5, assign(assign({}, ctx), resolved));
 				});
 
 				// if we previously had a then/catch block, destroy it
-				if (await_block_type !== create_pending_block) {
-					replace_await_block(token, create_pending_block, ctx);
+				if (await_block_type !== create_pending_block$5) {
+					replace_await_block(token, create_pending_block$5, ctx);
 					return true;
 				}
 			} else {
 				resolved = { recommendationUsers: promise };
-				if (await_block_type !== create_then_block) {
-					replace_await_block(token, create_then_block, assign(assign({}, ctx), resolved));
+				if (await_block_type !== create_then_block$5) {
+					replace_await_block(token, create_then_block$5, assign(assign({}, ctx), resolved));
 					return true;
 				}
 			}
@@ -3297,7 +3775,7 @@ var app = (function () {
 
 		handle_promise(promise = ctx.recommendationUsers);
 
-		var if_block = (ctx.post.recommendations.rating) && create_if_block_1$2(component, ctx);
+		var if_block = (ctx.post.recommendations.rating) && create_if_block_1$1(component, ctx);
 
 		var if_block_1 = (ctx.post.recommendations.total > 0) && create_if_block_2$1(component, ctx);
 
@@ -3338,7 +3816,7 @@ var app = (function () {
 					if (if_block) {
 						if_block.p(changed, ctx);
 					} else {
-						if_block = create_if_block_1$2(component, ctx);
+						if_block = create_if_block_1$1(component, ctx);
 						if_block.c();
 						if_block.m(div_1, text_1);
 					}
@@ -3394,7 +3872,7 @@ var app = (function () {
 		this._debugName = '<SponsoredPost>';
 		if (!options || (!options.target && !options.root)) throw new Error("'target' is a required option");
 		init(this, options);
-		this._state = assign(data$3(), options.data);
+		this._state = assign(data$2(), options.data);
 		if (!('post' in this._state)) console.warn("<SponsoredPost> was created without expected data property 'post'");
 		if (!('recommendationUsers' in this._state)) console.warn("<SponsoredPost> was created without expected data property 'recommendationUsers'");
 
@@ -3425,30 +3903,23 @@ var app = (function () {
 	}
 
 	assign(SponsoredPost.prototype, protoDev);
-	assign(SponsoredPost.prototype, methods$2);
+	assign(SponsoredPost.prototype, methods$1);
 
 	SponsoredPost.prototype._checkReadOnly = function _checkReadOnly(newState) {
 	};
 
 	/* src/posts/ReviewPost.html generated by Svelte v2.4.4 */
 
-	function data$4() {
+	function data$3() {
 	  return {
 	    reviewUser: ''
 	  }
 	}
-	var methods$3 = {
-	  setReviewUser() {
-	    var id = this.get().post.review.user;
-	    this.root.setReviewUser(id, this);
-	  }
-	};
-
 	function oncreate$4() {
-	  this.setReviewUser();
+	  this.set({reviewUser: api.findUser(this.get().post.review.user)});
 	}
 	function create_main_fragment$28(component, ctx) {
-		var div, div_1, div_2, text, div_3, p, text_1_value = ctx.user.name, text_1, text_2, text_5, div_4, span, text_6, text_7, span_1, text_11, div_5, p_1, raw_value = ctx.post.review.content.text, text_12, p_2, strong, text_13_value = ctx.reviewUser.name, text_13;
+		var div, div_1, div_2, text, div_3, await_block_2, await_block_type, await_token, promise, resolved, text_1, text_4, div_4, span, text_5, text_6, span_1, text_10, div_5, p, raw_value = ctx.post.review.content.text, text_11, await_block_3, await_block_type_1, await_token_1, promise_1, resolved_1;
 
 		var avatar_initial_data = { user: ctx.user };
 		var avatar = new Avatar({
@@ -3456,11 +3927,99 @@ var app = (function () {
 			data: avatar_initial_data
 		});
 
+		function replace_await_block(token, type, ctx) {
+			if (token !== await_token) return;
+
+			var old_block = await_block_2;
+			await_block_2 = type && (await_block_type = type)(component, ctx);
+
+			if (old_block) {
+				old_block.u();
+				old_block.d();
+				await_block_2.c();
+				await_block_2.m(div_3, text_1);
+
+				component.root.set({});
+			}
+		}
+
+		function handle_promise(promise) {
+			var token = await_token = {};
+
+			if (isPromise(promise)) {
+				promise.then(function(value) {
+					resolved = { user: value };
+					replace_await_block(token, create_then_block$6, assign(assign({}, ctx), resolved));
+				}, function (error) {
+					resolved = { error: error };
+					replace_await_block(token, create_catch_block$6, assign(assign({}, ctx), resolved));
+				});
+
+				// if we previously had a then/catch block, destroy it
+				if (await_block_type !== create_pending_block$6) {
+					replace_await_block(token, create_pending_block$6, ctx);
+					return true;
+				}
+			} else {
+				resolved = { user: promise };
+				if (await_block_type !== create_then_block$6) {
+					replace_await_block(token, create_then_block$6, assign(assign({}, ctx), resolved));
+					return true;
+				}
+			}
+		}
+
+		handle_promise(promise = ctx.user);
+
 		var stars_initial_data = { rating: ctx.post.review.rating };
 		var stars = new Stars({
 			root: component.root,
 			data: stars_initial_data
 		});
+
+		function replace_await_block_1(token_1, type, ctx) {
+			if (token_1 !== await_token_1) return;
+
+			var old_block_1 = await_block_3;
+			await_block_3 = type && (await_block_type_1 = type)(component, ctx);
+
+			if (old_block_1) {
+				old_block_1.u();
+				old_block_1.d();
+				await_block_3.c();
+				await_block_3.m(div_5, null);
+
+				component.root.set({});
+			}
+		}
+
+		function handle_promise_1(promise_1) {
+			var token_1 = await_token_1 = {};
+
+			if (isPromise(promise_1)) {
+				promise_1.then(function(value_1) {
+					resolved_1 = { reviewUser: value_1 };
+					replace_await_block_1(token_1, create_then_block_1, assign(assign({}, ctx), resolved_1));
+				}, function (error_1) {
+					resolved_1 = { error: error_1 };
+					replace_await_block_1(token_1, create_catch_block_1, assign(assign({}, ctx), resolved_1));
+				});
+
+				// if we previously had a then/catch block, destroy it
+				if (await_block_type_1 !== create_pending_block_1) {
+					replace_await_block_1(token_1, create_pending_block_1, ctx);
+					return true;
+				}
+			} else {
+				resolved_1 = { reviewUser: promise_1 };
+				if (await_block_type_1 !== create_then_block_1) {
+					replace_await_block_1(token_1, create_then_block_1, assign(assign({}, ctx), resolved_1));
+					return true;
+				}
+			}
+		}
+
+		handle_promise_1(promise_1 = ctx.reviewUser);
 
 		return {
 			c: function create() {
@@ -3470,31 +4029,29 @@ var app = (function () {
 				avatar._fragment.c();
 				text = createText("\n        ");
 				div_3 = createElement("div");
-				p = createElement("p");
-				text_1 = createText(text_1_value);
-				text_2 = createText("\n          ");
+
+				await_block_2.c();
+
+				text_1 = createText("\n          ");
 				stars._fragment.c();
-				text_5 = createText("\n      ");
+				text_4 = createText("\n      ");
 				div_4 = createElement("div");
 				span = createElement("span");
-				text_6 = createText(ctx.rating);
-				text_7 = createText("\n        ");
+				text_5 = createText(ctx.rating);
+				text_6 = createText("\n        ");
 				span_1 = createElement("span");
 				span_1.textContent = "RATED";
-				text_11 = createText("\n    ");
+				text_10 = createText("\n    ");
 				div_5 = createElement("div");
-				p_1 = createElement("p");
-				text_12 = createText("\n      ");
-				p_2 = createElement("p");
-				strong = createElement("strong");
-				text_13 = createText(text_13_value);
-				p.className = "user-name svelte-k5nvbj";
+				p = createElement("p");
+				text_11 = createText("\n      ");
+
+				await_block_3.c();
 				div_2.className = "user-info row vCentered svelte-k5nvbj";
 				span.className = "note svelte-k5nvbj";
 				div_4.className = "user-rating col svelte-k5nvbj";
 				div_1.className = "row box-header svelte-k5nvbj";
-				p_1.className = "quote svelte-k5nvbj";
-				p_2.className = "signature italic svelte-k5nvbj";
+				p.className = "quote svelte-k5nvbj";
 				div_5.className = "box-content svelte-k5nvbj";
 				div.className = "box-2";
 			},
@@ -3506,33 +4063,34 @@ var app = (function () {
 				avatar._mount(div_2, null);
 				appendNode(text, div_2);
 				appendNode(div_3, div_2);
-				appendNode(p, div_3);
-				appendNode(text_1, p);
-				appendNode(text_2, div_3);
+
+				await_block_2.m(div_3, null);
+
+				appendNode(text_1, div_3);
 				stars._mount(div_3, null);
-				appendNode(text_5, div_1);
+				appendNode(text_4, div_1);
 				appendNode(div_4, div_1);
 				appendNode(span, div_4);
-				appendNode(text_6, span);
-				appendNode(text_7, div_4);
+				appendNode(text_5, span);
+				appendNode(text_6, div_4);
 				appendNode(span_1, div_4);
-				appendNode(text_11, div);
+				appendNode(text_10, div);
 				appendNode(div_5, div);
-				appendNode(p_1, div_5);
-				p_1.innerHTML = raw_value;
-				appendNode(text_12, div_5);
-				appendNode(p_2, div_5);
-				appendNode(strong, p_2);
-				appendNode(text_13, strong);
+				appendNode(p, div_5);
+				p.innerHTML = raw_value;
+				appendNode(text_11, div_5);
+
+				await_block_3.m(div_5, null);
 			},
 
-			p: function update(changed, ctx) {
+			p: function update(changed, _ctx) {
+				ctx = _ctx;
 				var avatar_changes = {};
 				if (changed.user) avatar_changes.user = ctx.user;
 				avatar._set(avatar_changes);
 
-				if ((changed.user) && text_1_value !== (text_1_value = ctx.user.name)) {
-					text_1.data = text_1_value;
+				if (('user' in changed) && promise !== (promise = ctx.user) && handle_promise(promise, ctx)) ; else {
+					await_block_2.p(changed, assign(assign({}, ctx), resolved));
 				}
 
 				var stars_changes = {};
@@ -3540,28 +4098,174 @@ var app = (function () {
 				stars._set(stars_changes);
 
 				if (changed.rating) {
-					text_6.data = ctx.rating;
+					text_5.data = ctx.rating;
 				}
 
 				if ((changed.post) && raw_value !== (raw_value = ctx.post.review.content.text)) {
-					p_1.innerHTML = raw_value;
+					p.innerHTML = raw_value;
 				}
 
-				if ((changed.reviewUser) && text_13_value !== (text_13_value = ctx.reviewUser.name)) {
-					text_13.data = text_13_value;
+				if (('reviewUser' in changed) && promise_1 !== (promise_1 = ctx.reviewUser) && handle_promise_1(promise_1, ctx)) ; else {
+					await_block_3.p(changed, assign(assign({}, ctx), resolved_1));
 				}
 			},
 
 			u: function unmount() {
-				p_1.innerHTML = '';
+				p.innerHTML = '';
 
 				detachNode(div);
+
+				await_block_2.u();
+
+				await_block_3.u();
 			},
 
 			d: function destroy$$1() {
 				avatar.destroy(false);
+
+				await_token = null;
+				await_block_2.d();
+
 				stars.destroy(false);
+
+				await_token_1 = null;
+				await_block_3.d();
 			}
+		};
+	}
+
+	// (6:23)            {:then user}
+	function create_pending_block$6(component, ctx) {
+
+		return {
+			c: noop,
+
+			m: noop,
+
+			p: noop,
+
+			u: noop,
+
+			d: noop
+		};
+	}
+
+	// (7:10) {:then user}
+	function create_then_block$6(component, ctx) {
+		var p, text_value = ctx.user.name, text;
+
+		return {
+			c: function create() {
+				p = createElement("p");
+				text = createText(text_value);
+				p.className = "user-name svelte-k5nvbj";
+			},
+
+			m: function mount(target, anchor) {
+				insertNode(p, target, anchor);
+				appendNode(text, p);
+			},
+
+			p: function update(changed, ctx) {
+				if ((changed.user) && text_value !== (text_value = ctx.user.name)) {
+					text.data = text_value;
+				}
+			},
+
+			u: function unmount() {
+				detachNode(p);
+			},
+
+			d: noop
+		};
+	}
+
+	// (9:10) {:catch error}
+	function create_catch_block$6(component, ctx) {
+
+		return {
+			c: noop,
+
+			m: noop,
+
+			p: noop,
+
+			u: noop,
+
+			d: noop
+		};
+	}
+
+	// (21:25)          <p class="signature italic"><strong></strong></p>       {:then reviewUser}
+	function create_pending_block_1(component, ctx) {
+		var p;
+
+		return {
+			c: function create() {
+				p = createElement("p");
+				p.innerHTML = "<strong></strong>";
+				p.className = "signature italic svelte-k5nvbj";
+			},
+
+			m: function mount(target, anchor) {
+				insertNode(p, target, anchor);
+			},
+
+			p: noop,
+
+			u: function unmount() {
+				detachNode(p);
+			},
+
+			d: noop
+		};
+	}
+
+	// (23:6) {:then reviewUser}
+	function create_then_block_1(component, ctx) {
+		var p, strong, text_value = ctx.reviewUser.name, text;
+
+		return {
+			c: function create() {
+				p = createElement("p");
+				strong = createElement("strong");
+				text = createText(text_value);
+				p.className = "signature italic svelte-k5nvbj";
+			},
+
+			m: function mount(target, anchor) {
+				insertNode(p, target, anchor);
+				appendNode(strong, p);
+				appendNode(text, strong);
+			},
+
+			p: function update(changed, ctx) {
+				if ((changed.reviewUser) && text_value !== (text_value = ctx.reviewUser.name)) {
+					text.data = text_value;
+				}
+			},
+
+			u: function unmount() {
+				detachNode(p);
+			},
+
+			d: noop
+		};
+	}
+
+	// (25:6) {:catch error}
+	function create_catch_block_1(component, ctx) {
+
+		return {
+			c: noop,
+
+			m: noop,
+
+			p: noop,
+
+			u: noop,
+
+			d: noop
 		};
 	}
 
@@ -3569,7 +4273,7 @@ var app = (function () {
 		this._debugName = '<ReviewPost>';
 		if (!options || (!options.target && !options.root)) throw new Error("'target' is a required option");
 		init(this, options);
-		this._state = assign(data$4(), options.data);
+		this._state = assign(data$3(), options.data);
 		if (!('user' in this._state)) console.warn("<ReviewPost> was created without expected data property 'user'");
 		if (!('post' in this._state)) console.warn("<ReviewPost> was created without expected data property 'post'");
 		if (!('rating' in this._state)) console.warn("<ReviewPost> was created without expected data property 'rating'");
@@ -3602,7 +4306,6 @@ var app = (function () {
 	}
 
 	assign(ReviewPost.prototype, protoDev);
-	assign(ReviewPost.prototype, methods$3);
 
 	ReviewPost.prototype._checkReadOnly = function _checkReadOnly(newState) {
 	};
@@ -3662,14 +4365,14 @@ var app = (function () {
 
 	/* src/posts/PostDetails.html generated by Svelte v2.4.4 */
 
-	function data$5() {
+	function data$4() {
 	  return {
 	    starsActive: false,
 	    commentsLink: '',
 	    answersLink: ''
 	  }
 	}
-	var methods$4 = {
+	var methods$2 = {
 	  addStar() {
 	    var details = this.get().details,
 	        active = this.get().starsActive;
@@ -3685,8 +4388,8 @@ var app = (function () {
 		var div, div_1, text_1, div_2, button, span;
 
 		function select_block_type(ctx) {
-			if (ctx.details) return create_if_block$5;
-			return create_if_block_1$3;
+			if (ctx.details) return create_if_block$4;
+			return create_if_block_1$2;
 		}
 
 		var current_block_type = select_block_type(ctx);
@@ -3750,7 +4453,7 @@ var app = (function () {
 	}
 
 	// (3:4) {#if details}
-	function create_if_block$5(component, ctx) {
+	function create_if_block$4(component, ctx) {
 		var button, span, text, span_1, text_1_value = ctx.details.stars > 0 ? ctx.details.stars : '', text_1, button_class_value, text_3, a, span_2, text_4, span_3, text_5_value = ctx.details.comments.total > 0 ? ctx.details.comments.total : '', text_5, a_href_value, text_7, a_1, span_4, text_8, span_5, text_9_value = ctx.details.answers.total > 0 ? ctx.details.answers.total : '', text_9, a_1_href_value;
 
 		var iconssvg_initial_data = { name: "Star" };
@@ -3878,7 +4581,7 @@ var app = (function () {
 	}
 
 	// (16:4) {:else}
-	function create_if_block_1$3(component, ctx) {
+	function create_if_block_1$2(component, ctx) {
 		var button, span, text, span_1, button_class_value, text_2, a, span_2, text_3, span_3, text_5, a_1, span_4, text_6, span_5;
 
 		var iconssvg_initial_data = { name: "Star" };
@@ -3991,7 +4694,7 @@ var app = (function () {
 		this._debugName = '<PostDetails>';
 		if (!options || (!options.target && !options.root)) throw new Error("'target' is a required option");
 		init(this, options);
-		this._state = assign(data$5(), options.data);
+		this._state = assign(data$4(), options.data);
 		if (!('details' in this._state)) console.warn("<PostDetails> was created without expected data property 'details'");
 		if (!('starsActive' in this._state)) console.warn("<PostDetails> was created without expected data property 'starsActive'");
 		if (!('commentsLink' in this._state)) console.warn("<PostDetails> was created without expected data property 'commentsLink'");
@@ -4019,21 +4722,18 @@ var app = (function () {
 	}
 
 	assign(PostDetails.prototype, protoDev);
-	assign(PostDetails.prototype, methods$4);
+	assign(PostDetails.prototype, methods$2);
 
 	PostDetails.prototype._checkReadOnly = function _checkReadOnly(newState) {
 	};
 
 	/* src/profile/content/ProfileFeed.html generated by Svelte v2.4.4 */
 
-	var methods$5 = {
-	  loadPosts() {
-	    // TODO: load only x posts on create, and load rest on demand
+	function data$5() {
+	  return {
+	    isReview: false,
+	    reviewUser: ''
 	  }
-	};
-
-	function oncreate$5() {
-	  this.loadPosts();
 	}
 	function create_main_fragment$31(component, ctx) {
 		var each_anchor;
@@ -4106,8 +4806,8 @@ var app = (function () {
 		var article, text, div, text_1, text_2;
 
 		function select_block_type(ctx) {
-			if (ctx.post.isReview) return create_if_block$6;
-			return create_if_block_1$4;
+			if (ctx.post.isReview) return create_if_block$5;
+			return create_if_block_1$3;
 		}
 
 		var current_block_type = select_block_type(ctx);
@@ -4122,8 +4822,8 @@ var app = (function () {
 		var if_block_1 = current_block_type_1(component, ctx);
 
 		function select_block_type_2(ctx) {
-			if (ctx.post.isSponsored) return create_if_block_4;
-			if (ctx.post.isReview) return create_if_block_5;
+			if (ctx.post.isReview) return create_if_block_4;
+			if (ctx.post.isSponsored) return create_if_block_5;
 			return create_if_block_6;
 		}
 
@@ -4216,9 +4916,9 @@ var app = (function () {
 	}
 
 	// (3:4) {#if post.isReview}
-	function create_if_block$6(component, ctx) {
+	function create_if_block$5(component, ctx) {
 
-		var avatar_initial_data = { user: ctx.post.review.user, isReview: "true" };
+		var avatar_initial_data = { isReview: "true", user: ctx.post.review.user };
 		var avatar = new Avatar({
 			root: component.root,
 			data: avatar_initial_data
@@ -4250,7 +4950,7 @@ var app = (function () {
 	}
 
 	// (5:4) {:else}
-	function create_if_block_1$4(component, ctx) {
+	function create_if_block_1$3(component, ctx) {
 
 		var avatar_initial_data = { user: ctx.user };
 		var avatar = new Avatar({
@@ -4289,7 +4989,7 @@ var app = (function () {
 		var posttitle_initial_data = {
 		 	isReview: "true",
 		 	user: ctx.post.review.user,
-		 	date: ctx.post.review.date
+		 	date: ctx.post.date
 		 };
 		var posttitle = new PostTitle({
 			root: component.root,
@@ -4308,7 +5008,7 @@ var app = (function () {
 			p: function update(changed, ctx) {
 				var posttitle_changes = {};
 				if (changed.profile) posttitle_changes.user = ctx.post.review.user;
-				if (changed.profile) posttitle_changes.date = ctx.post.review.date;
+				if (changed.profile) posttitle_changes.date = ctx.post.date;
 				posttitle._set(posttitle_changes);
 			},
 
@@ -4327,7 +5027,7 @@ var app = (function () {
 
 		var posttitle_initial_data = {
 		 	isSponsored: ctx.post.isSponsored,
-		 	name: ctx.user.name,
+		 	user: ctx.user,
 		 	date: ctx.post.date
 		 };
 		var posttitle = new PostTitle({
@@ -4347,7 +5047,7 @@ var app = (function () {
 			p: function update(changed, ctx) {
 				var posttitle_changes = {};
 				if (changed.profile) posttitle_changes.isSponsored = ctx.post.isSponsored;
-				if (changed.user) posttitle_changes.name = ctx.user.name;
+				if (changed.user) posttitle_changes.user = ctx.user;
 				if (changed.profile) posttitle_changes.date = ctx.post.date;
 				posttitle._set(posttitle_changes);
 			},
@@ -4362,42 +5062,8 @@ var app = (function () {
 		};
 	}
 
-	// (16:6) {#if post.isSponsored}
+	// (16:6) {#if post.isReview}
 	function create_if_block_4(component, ctx) {
-
-		var sponsoredpost_initial_data = { post: ctx.post };
-		var sponsoredpost = new SponsoredPost({
-			root: component.root,
-			data: sponsoredpost_initial_data
-		});
-
-		return {
-			c: function create() {
-				sponsoredpost._fragment.c();
-			},
-
-			m: function mount(target, anchor) {
-				sponsoredpost._mount(target, anchor);
-			},
-
-			p: function update(changed, ctx) {
-				var sponsoredpost_changes = {};
-				if (changed.profile) sponsoredpost_changes.post = ctx.post;
-				sponsoredpost._set(sponsoredpost_changes);
-			},
-
-			u: function unmount() {
-				sponsoredpost._unmount();
-			},
-
-			d: function destroy$$1() {
-				sponsoredpost.destroy(false);
-			}
-		};
-	}
-
-	// (18:29) 
-	function create_if_block_5(component, ctx) {
 
 		var reviewpost_initial_data = {
 		 	post: ctx.post,
@@ -4432,6 +5098,40 @@ var app = (function () {
 
 			d: function destroy$$1() {
 				reviewpost.destroy(false);
+			}
+		};
+	}
+
+	// (18:32) 
+	function create_if_block_5(component, ctx) {
+
+		var sponsoredpost_initial_data = { post: ctx.post };
+		var sponsoredpost = new SponsoredPost({
+			root: component.root,
+			data: sponsoredpost_initial_data
+		});
+
+		return {
+			c: function create() {
+				sponsoredpost._fragment.c();
+			},
+
+			m: function mount(target, anchor) {
+				sponsoredpost._mount(target, anchor);
+			},
+
+			p: function update(changed, ctx) {
+				var sponsoredpost_changes = {};
+				if (changed.profile) sponsoredpost_changes.post = ctx.post;
+				sponsoredpost._set(sponsoredpost_changes);
+			},
+
+			u: function unmount() {
+				sponsoredpost._unmount();
+			},
+
+			d: function destroy$$1() {
+				sponsoredpost.destroy(false);
 			}
 		};
 	}
@@ -4482,7 +5182,7 @@ var app = (function () {
 		this._debugName = '<ProfileFeed>';
 		if (!options || (!options.target && !options.root)) throw new Error("'target' is a required option");
 		init(this, options);
-		this._state = assign({}, options.data);
+		this._state = assign(data$5(), options.data);
 		if (!('profile' in this._state)) console.warn("<ProfileFeed> was created without expected data property 'profile'");
 		if (!('user' in this._state)) console.warn("<ProfileFeed> was created without expected data property 'user'");
 
@@ -4493,11 +5193,6 @@ var app = (function () {
 		}
 
 		this._fragment = create_main_fragment$31(this, this._state);
-
-		this.root._oncreate.push(() => {
-			oncreate$5.call(this);
-			this.fire("update", { changed: assignTrue({}, this._state), current: this._state });
-		});
 
 		if (options.target) {
 			if (options.hydrate) throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -4513,7 +5208,6 @@ var app = (function () {
 	}
 
 	assign(ProfileFeed.prototype, protoDev);
-	assign(ProfileFeed.prototype, methods$5);
 
 	ProfileFeed.prototype._checkReadOnly = function _checkReadOnly(newState) {
 	};
@@ -4620,7 +5314,7 @@ var app = (function () {
 	    selected: ProfileFeed
 	  }
 	}
-	var methods$6 = {
+	var methods$3 = {
 	  toggleContent(i) {
 	    var menu = this.get().menu;
 	    var clicked = menu[i];
@@ -4760,8 +5454,8 @@ var app = (function () {
 		var li, button, text, span, text_1_value = ctx.item.icon.text, text_1, button_class_value;
 
 		function select_block_type(ctx) {
-			if (ctx.item.icon.svg) return create_if_block$7;
-			if (ctx.item.icon.img) return create_if_block_1$5;
+			if (ctx.item.icon.svg) return create_if_block$6;
+			if (ctx.item.icon.img) return create_if_block_1$4;
 			return create_if_block_2$3;
 		}
 
@@ -4828,7 +5522,7 @@ var app = (function () {
 	}
 
 	// (6:8) {#if item.icon.svg}
-	function create_if_block$7(component, ctx) {
+	function create_if_block$6(component, ctx) {
 		var span;
 
 		var iconssvg_initial_data = { name: ctx.item.icon.svg };
@@ -4866,7 +5560,7 @@ var app = (function () {
 	}
 
 	// (10:31) 
-	function create_if_block_1$5(component, ctx) {
+	function create_if_block_1$4(component, ctx) {
 		var span, img, img_src_value, img_alt_value;
 
 		return {
@@ -4974,7 +5668,7 @@ var app = (function () {
 	}
 
 	assign(ContentProfile.prototype, protoDev);
-	assign(ContentProfile.prototype, methods$6);
+	assign(ContentProfile.prototype, methods$3);
 
 	ContentProfile.prototype._checkReadOnly = function _checkReadOnly(newState) {
 	};
@@ -5112,9 +5806,9 @@ var app = (function () {
 		},
 		{	post_id: '001',
 			isReview: true,
+			date: '2018-05-03T13:00:00Z',
 			review: {
 				user: '03',
-				date: '2018-05-03T13:00:00Z',
 				content: {
 					text: 'It was a pleasure to work with Mario. Very professional and talented architect. I really suggest him!'
 				},
@@ -5134,9 +5828,9 @@ var app = (function () {
 		},
 		{	post_id: '002',
 			isReview: true,
+			date: '2018-05-02T14:00:00Z',
 			review: {
 				user: '04',
-				date: '2018-05-02T14:00:00Z',
 				content: {
 					text: 'I worked with him for a project ...'
 				},
@@ -5145,9 +5839,9 @@ var app = (function () {
 		},
 		{	post_id: '003',
 			isReview: true,
+			date: '2018-05-01T14:00:00Z',
 			review: {
 				user: '05',
-				date: '2018-05-01T14:00:00Z',
 				content: {
 					text: 'I contacted him for a project ...'
 				},
@@ -5224,7 +5918,7 @@ var app = (function () {
 			users: []
 		}
 	}
-	var methods$7 = {
+	var methods$4 = {
 		getIcons(menu) {
 			var icons = this.get().icons;
 			if (menu.length === 0) return;
@@ -5237,48 +5931,52 @@ var app = (function () {
 		},
 		setUser(id) {
 			if (!id) {
-				console.log('missing user id');
+				console.log('missing user id', this);
 				return;
 			}
-			api.findUser(id)
-				.then((user) => {
-					if (user) {
-						this.set({user});
-					}
-					else console.log('no user with id ', id);
-				});
+			var user = api.findUser(id);
+			if (!user) console.log('no user with id ', id, this);
+			else this.set({user});
+			// api.findUser(id)
+			// 	.then((user) => {
+			// 		if (!user) console.log('no user with id ', id, this);
+			// 		else this.set({user});
+			// 	});
 		},
 		setProfileUser(id) {
 			if (!id) {
-				console.log('missing profile user id');
+				console.log('missing profile user id', this);
 				return;
 			}
-			var profile = this.get().profile;
-			api.findUser(id)
-				.then((profileUser) => {
-					if (profileUser) {
-						this.set({profileUser});
-					}
-					else console.log('no user with id ', id);
-				});
+			var profileUser = api.findUser(id);
+			if (!profileUser) console.log('no profile user with id ', id, this);
+			else this.set({profileUser});
+			// api.findUser(id)
+			// 	.then((profileUser) => {
+			// 		if (!profileUser) console.log('no profile user with id ', id, this);
+			// 		else this.set({profileUser});
+			// 	});
 		},
 		setReviewUser(id, el) {
 	        if (!id) console.log('missing review user id', this);
-			api.findUser(id)
-				.then((reviewUser) => {
-					if (!reviewUser) {
-						console.log('no review user with id ', id, el);
-						reviewUser = new User();
-					}
-					el.set({reviewUser});
-				});
+			api.findUser(id);
+				// .then((reviewUser) => {
+				// 	if (!reviewUser) {
+				// 		console.log('no review user with id ', id, el);
+				// 		reviewUser = new User();
+				// 	}
+				// 	el.set({reviewUser});
+				// });
+			var reviewUser = api.findUser(id);
+			if (!reviewUser) console.log('no review user with id ', id, el);
+			else el.set({reviewUser});
 	      },
 		newUser() {
 			return new User();
 		}
 	};
 
-	function oncreate$6() {
+	function oncreate$5() {
 		this.setUser(this.get().userId);
 		this.setProfileUser(this.get().profileId);
 
@@ -5286,200 +5984,7 @@ var app = (function () {
 		this.set({profileMenu: this.getIcons(this.get().profileMenu)});
 	}
 	function create_main_fragment$36(component, ctx) {
-		var link, text, div, await_block_2, await_block_type, await_token, promise, resolved, text_1, div_1, text_2, await_block_3, await_block_type_1, await_token_1, promise_1, resolved_1;
-
-		function replace_await_block(token, type, ctx) {
-			if (token !== await_token) return;
-
-			var old_block = await_block_2;
-			await_block_2 = type && (await_block_type = type)(component, ctx);
-
-			if (old_block) {
-				old_block.u();
-				old_block.d();
-				await_block_2.c();
-				await_block_2.m(div, text_1);
-
-				component.root.set({});
-			}
-		}
-
-		function handle_promise(promise) {
-			var token = await_token = {};
-
-			if (isPromise(promise)) {
-				promise.then(function(value) {
-					resolved = { user: value };
-					replace_await_block(token, create_then_block$1, assign(assign({}, ctx), resolved));
-				}, function (error) {
-					resolved = { error: error };
-					replace_await_block(token, create_catch_block$1, assign(assign({}, ctx), resolved));
-				});
-
-				// if we previously had a then/catch block, destroy it
-				if (await_block_type !== create_pending_block$1) {
-					replace_await_block(token, create_pending_block$1, ctx);
-					return true;
-				}
-			} else {
-				resolved = { user: promise };
-				if (await_block_type !== create_then_block$1) {
-					replace_await_block(token, create_then_block$1, assign(assign({}, ctx), resolved));
-					return true;
-				}
-			}
-		}
-
-		handle_promise(promise = ctx.user);
-
-		var banner_initial_data = { banner: ctx.profile.banner };
-		var banner = new Banner({
-			root: component.root,
-			data: banner_initial_data
-		});
-
-		function replace_await_block_1(token_1, type, ctx) {
-			if (token_1 !== await_token_1) return;
-
-			var old_block_1 = await_block_3;
-			await_block_3 = type && (await_block_type_1 = type)(component, ctx);
-
-			if (old_block_1) {
-				old_block_1.u();
-				old_block_1.d();
-				await_block_3.c();
-				await_block_3.m(div_1, null);
-
-				component.root.set({});
-			}
-		}
-
-		function handle_promise_1(promise_1) {
-			var token_1 = await_token_1 = {};
-
-			if (isPromise(promise_1)) {
-				promise_1.then(function(value_1) {
-					resolved_1 = { profileUser: value_1 };
-					replace_await_block_1(token_1, create_then_block_1, assign(assign({}, ctx), resolved_1));
-				}, function (error_1) {
-					resolved_1 = { error: error_1 };
-					replace_await_block_1(token_1, create_catch_block_1, assign(assign({}, ctx), resolved_1));
-				});
-
-				// if we previously had a then/catch block, destroy it
-				if (await_block_type_1 !== create_pending_block_1) {
-					replace_await_block_1(token_1, create_pending_block_1, ctx);
-					return true;
-				}
-			} else {
-				resolved_1 = { profileUser: promise_1 };
-				if (await_block_type_1 !== create_then_block_1) {
-					replace_await_block_1(token_1, create_then_block_1, assign(assign({}, ctx), resolved_1));
-					return true;
-				}
-			}
-		}
-
-		handle_promise_1(promise_1 = ctx.profileUser);
-
-		return {
-			c: function create() {
-				link = createElement("link");
-				text = createText("\n\n");
-				div = createElement("div");
-
-				await_block_2.c();
-
-				text_1 = createText("\n\t");
-				div_1 = createElement("div");
-				banner._fragment.c();
-				text_2 = createText("\n\t\t");
-
-				await_block_3.c();
-				link.href = "https://fonts.googleapis.com/css?family=Palanquin:300";
-				link.rel = "stylesheet";
-				div_1.className = "scroll";
-				div.className = "page sidenav svelte-1rt8hcy";
-			},
-
-			m: function mount(target, anchor) {
-				appendNode(link, document.head);
-				insertNode(text, target, anchor);
-				insertNode(div, target, anchor);
-
-				await_block_2.m(div, null);
-
-				appendNode(text_1, div);
-				appendNode(div_1, div);
-				banner._mount(div_1, null);
-				appendNode(text_2, div_1);
-
-				await_block_3.m(div_1, null);
-			},
-
-			p: function update(changed, _ctx) {
-				ctx = _ctx;
-				if (('user' in changed) && promise !== (promise = ctx.user) && handle_promise(promise, ctx)) ; else {
-					await_block_2.p(changed, assign(assign({}, ctx), resolved));
-				}
-
-				var banner_changes = {};
-				if (changed.profile) banner_changes.banner = ctx.profile.banner;
-				banner._set(banner_changes);
-
-				if (('profileUser' in changed) && promise_1 !== (promise_1 = ctx.profileUser) && handle_promise_1(promise_1, ctx)) ; else {
-					await_block_3.p(changed, assign(assign({}, ctx), resolved_1));
-				}
-			},
-
-			u: function unmount() {
-				detachNode(link);
-				detachNode(text);
-				detachNode(div);
-
-				await_block_2.u();
-
-				await_block_3.u();
-			},
-
-			d: function destroy$$1() {
-				await_token = null;
-				await_block_2.d();
-
-				banner.destroy(false);
-
-				await_token_1 = null;
-				await_block_3.d();
-			}
-		};
-	}
-
-	// (6:14)    <p>loading</p>  {:then user}
-	function create_pending_block$1(component, ctx) {
-		var p;
-
-		return {
-			c: function create() {
-				p = createElement("p");
-				p.textContent = "loading";
-			},
-
-			m: function mount(target, anchor) {
-				insertNode(p, target, anchor);
-			},
-
-			p: noop,
-
-			u: function unmount() {
-				detachNode(p);
-			},
-
-			d: noop
-		};
-	}
-
-	// (8:1) {:then user}
-	function create_then_block$1(component, ctx) {
+		var link, text, div, text_1, div_1, text_2, div_2, text_3, text_4, text_5, main, header, text_7, div_3, div_4, text_9, text_10, text_11;
 
 		var sidenav_initial_data = {
 		 	menu: ctx.mainNav,
@@ -5491,84 +5996,11 @@ var app = (function () {
 			data: sidenav_initial_data
 		});
 
-		return {
-			c: function create() {
-				sidenav._fragment.c();
-			},
-
-			m: function mount(target, anchor) {
-				sidenav._mount(target, anchor);
-			},
-
-			p: function update(changed, ctx) {
-				var sidenav_changes = {};
-				if (changed.mainNav) sidenav_changes.menu = ctx.mainNav;
-				if (changed.brand) sidenav_changes.brand = ctx.brand;
-				if (changed.user) sidenav_changes.user = ctx.user;
-				sidenav._set(sidenav_changes);
-			},
-
-			u: function unmount() {
-				sidenav._unmount();
-			},
-
-			d: function destroy$$1() {
-				sidenav.destroy(false);
-			}
-		};
-	}
-
-	// (10:1) {:catch error}
-	function create_catch_block$1(component, ctx) {
-		var p;
-
-		return {
-			c: function create() {
-				p = createElement("p");
-				p.textContent = "error";
-			},
-
-			m: function mount(target, anchor) {
-				insertNode(p, target, anchor);
-			},
-
-			p: noop,
-
-			u: function unmount() {
-				detachNode(p);
-			},
-
-			d: noop
-		};
-	}
-
-	// (15:22)     <p>loading</p>   {:then profileUser}
-	function create_pending_block_1(component, ctx) {
-		var p;
-
-		return {
-			c: function create() {
-				p = createElement("p");
-				p.textContent = "loading";
-			},
-
-			m: function mount(target, anchor) {
-				insertNode(p, target, anchor);
-			},
-
-			p: noop,
-
-			u: function unmount() {
-				detachNode(p);
-			},
-
-			d: noop
-		};
-	}
-
-	// (17:2) {:then profileUser}
-	function create_then_block_1(component, ctx) {
-		var div, text, text_1, text_2, main, header, text_4, div_1, div_2, text_6, text_7, text_8;
+		var banner_initial_data = { banner: ctx.profile.banner };
+		var banner = new Banner({
+			root: component.root,
+			data: banner_initial_data
+		});
 
 		var sidebarprofile_initial_data = { profile: ctx.profile, user: ctx.profileUser };
 		var sidebarprofile = new SidebarProfile({
@@ -5608,53 +6040,83 @@ var app = (function () {
 
 		return {
 			c: function create() {
+				link = createElement("link");
+				text = createText("\n\n");
 				div = createElement("div");
-				text = createText("\n\t\t\t\t\t");
+				sidenav._fragment.c();
+				text_1 = createText("\n\t");
+				div_1 = createElement("div");
+				banner._fragment.c();
+				text_2 = createText("\n\t\t");
+				div_2 = createElement("div");
+				text_3 = createText("\n\t\t\t\t");
 				sidebarprofile._fragment.c();
-				text_1 = createText("\n\t\t\t\t");
+				text_4 = createText("\n\t\t\t");
 				sidebar._fragment.c();
-				text_2 = createText("\n\t\t\t\t");
+				text_5 = createText("\n\t\t\t");
 				main = createElement("main");
 				header = createElement("header");
 				headerprofile._fragment.c();
-				text_4 = createText("\n\t\t\t\t\t");
-				div_1 = createElement("div");
-				div_2 = createElement("div");
+				text_7 = createText("\n\t\t\t\t");
+				div_3 = createElement("div");
+				div_4 = createElement("div");
 				contentprofile._fragment.c();
-				text_6 = createText("\n\t\t\t\t\t\t");
-				text_7 = createText("\n\t\t\t\t\t\t\t");
+				text_9 = createText("\n\t\t\t\t\t");
+				text_10 = createText("\n\t\t\t\t\t\t");
 				sidebarcontent._fragment.c();
-				text_8 = createText("\n\t\t\t\t\t\t");
+				text_11 = createText("\n\t\t\t\t\t");
 				sidebar_1._fragment.c();
+				link.href = "https://fonts.googleapis.com/css?family=Palanquin:300";
+				link.rel = "stylesheet";
 				header.className = "row vCentered svelte-1rt8hcy";
-				div_2.className = "content svelte-1rt8hcy";
-				div_1.className = "row";
+				div_4.className = "content svelte-1rt8hcy";
+				div_3.className = "row";
 				main.className = "svelte-1rt8hcy";
-				div.className = "row";
+				div_2.className = "row";
+				div_1.className = "scroll";
+				div.className = "page sidenav svelte-1rt8hcy";
 			},
 
 			m: function mount(target, anchor) {
+				appendNode(link, document.head);
+				insertNode(text, target, anchor);
 				insertNode(div, target, anchor);
-				appendNode(text, sidebar._slotted.default);
+				sidenav._mount(div, null);
+				appendNode(text_1, div);
+				appendNode(div_1, div);
+				banner._mount(div_1, null);
+				appendNode(text_2, div_1);
+				appendNode(div_2, div_1);
+				appendNode(text_3, sidebar._slotted.default);
 				sidebarprofile._mount(sidebar._slotted.default, null);
-				appendNode(text_1, sidebar._slotted.default);
-				sidebar._mount(div, null);
-				appendNode(text_2, div);
-				appendNode(main, div);
+				appendNode(text_4, sidebar._slotted.default);
+				sidebar._mount(div_2, null);
+				appendNode(text_5, div_2);
+				appendNode(main, div_2);
 				appendNode(header, main);
 				headerprofile._mount(header, null);
-				appendNode(text_4, main);
-				appendNode(div_1, main);
-				appendNode(div_2, div_1);
-				contentprofile._mount(div_2, null);
-				appendNode(text_6, div_1);
-				appendNode(text_7, sidebar_1._slotted.default);
+				appendNode(text_7, main);
+				appendNode(div_3, main);
+				appendNode(div_4, div_3);
+				contentprofile._mount(div_4, null);
+				appendNode(text_9, div_3);
+				appendNode(text_10, sidebar_1._slotted.default);
 				sidebarcontent._mount(sidebar_1._slotted.default, null);
-				appendNode(text_8, sidebar_1._slotted.default);
-				sidebar_1._mount(div_1, null);
+				appendNode(text_11, sidebar_1._slotted.default);
+				sidebar_1._mount(div_3, null);
 			},
 
 			p: function update(changed, ctx) {
+				var sidenav_changes = {};
+				if (changed.mainNav) sidenav_changes.menu = ctx.mainNav;
+				if (changed.brand) sidenav_changes.brand = ctx.brand;
+				if (changed.user) sidenav_changes.user = ctx.user;
+				sidenav._set(sidenav_changes);
+
+				var banner_changes = {};
+				if (changed.profile) banner_changes.banner = ctx.profile.banner;
+				banner._set(banner_changes);
+
 				var sidebarprofile_changes = {};
 				if (changed.profile) sidebarprofile_changes.profile = ctx.profile;
 				if (changed.profileUser) sidebarprofile_changes.user = ctx.profileUser;
@@ -5673,10 +6135,14 @@ var app = (function () {
 			},
 
 			u: function unmount() {
+				detachNode(link);
+				detachNode(text);
 				detachNode(div);
 			},
 
 			d: function destroy$$1() {
+				sidenav.destroy(false);
+				banner.destroy(false);
 				sidebarprofile.destroy(false);
 				sidebar.destroy(false);
 				headerprofile.destroy(false);
@@ -5687,38 +6153,14 @@ var app = (function () {
 		};
 	}
 
-	// (36:3) {:catch error}
-	function create_catch_block_1(component, ctx) {
-		var p;
-
-		return {
-			c: function create() {
-				p = createElement("p");
-				p.textContent = "error";
-			},
-
-			m: function mount(target, anchor) {
-				insertNode(p, target, anchor);
-			},
-
-			p: noop,
-
-			u: function unmount() {
-				detachNode(p);
-			},
-
-			d: noop
-		};
-	}
-
 	function App(options) {
 		this._debugName = '<App>';
 		if (!options || (!options.target && !options.root)) throw new Error("'target' is a required option");
 		init(this, options);
 		this._state = assign(data$7(), options.data);
-		if (!('user' in this._state)) console.warn("<App> was created without expected data property 'user'");
 		if (!('mainNav' in this._state)) console.warn("<App> was created without expected data property 'mainNav'");
 		if (!('brand' in this._state)) console.warn("<App> was created without expected data property 'brand'");
+		if (!('user' in this._state)) console.warn("<App> was created without expected data property 'user'");
 		if (!('profile' in this._state)) console.warn("<App> was created without expected data property 'profile'");
 		if (!('profileUser' in this._state)) console.warn("<App> was created without expected data property 'profileUser'");
 		if (!('profileMenu' in this._state)) console.warn("<App> was created without expected data property 'profileMenu'");
@@ -5732,7 +6174,7 @@ var app = (function () {
 		this._fragment = create_main_fragment$36(this, this._state);
 
 		this.root._oncreate.push(() => {
-			oncreate$6.call(this);
+			oncreate$5.call(this);
 			this.fire("update", { changed: assignTrue({}, this._state), current: this._state });
 		});
 
@@ -5750,7 +6192,7 @@ var app = (function () {
 	}
 
 	assign(App.prototype, protoDev);
-	assign(App.prototype, methods$7);
+	assign(App.prototype, methods$4);
 
 	App.prototype._checkReadOnly = function _checkReadOnly(newState) {
 	};

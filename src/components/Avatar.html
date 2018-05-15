@@ -1,12 +1,11 @@
-{#if isReview}
-  <a class="avatar" href="{reviewUser.link}">
-    <img src="{reviewUser.img}" alt="{reviewUser.name}" />
-  </a>
-{:else}
+{#await user}
+  <div class="avatar"></div>
+{:then user}
   <a class="avatar" href="{user.link}">
     <img src="{user.img}" alt="{user.name}" />
   </a>
-{/if}
+{:catch error}
+{/await}
 
 <style>
   .avatar {
@@ -24,21 +23,13 @@
 </style>
 
 <script>
+  import api from './../services/api';
+
   export default {
-    data() {
-      return {
-        isReview: false,
-        reviewUser: ''
-      }
-    },
-    methods: {
-      setReviewUser() {
-        var id = this.get().user;
-        this.root.setReviewUser(id, this);
-      }
-    },
     oncreate() {
-      if (this.get().isReview) this.setReviewUser();
+      if (this.get().isReview) {
+        this.set({user: api.findUser(this.get().user)});
+      }
     }
   }
 </script>
