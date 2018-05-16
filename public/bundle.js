@@ -2154,28 +2154,28 @@ var app = (function () {
 					div_4 = createElement("div");
 				}
 				if (!slot_content_default) {
-					span.className = "icon svelte-176wm8a";
-					button.className = "btn svelte-176wm8a";
+					span.className = "icon svelte-4nx67g";
+					button.className = "btn svelte-4nx67g";
 					h2.className = "title";
-					p.className = "highlight info svelte-176wm8a";
-					div_1.className = "col";
+					p.className = "highlight info svelte-4nx67g";
+					div_1.className = "col svelte-4nx67g";
 					h2_1.className = "title";
-					p_1.className = "highlight info svelte-176wm8a";
-					div_2.className = "col";
-					div.className = "info-row lg row svelte-176wm8a";
+					p_1.className = "highlight info svelte-4nx67g";
+					div_2.className = "col svelte-4nx67g";
+					div.className = "info-row lg row svelte-4nx67g";
 					h2_2.className = "title";
-					span_1.className = "note svelte-176wm8a";
-					p_2.className = "highlight info svelte-176wm8a";
-					div_3.className = "col info-row svelte-176wm8a";
-					header.className = "svelte-176wm8a";
-					span_2.className = "icon svelte-176wm8a";
-					h2_3.className = "title svelte-176wm8a";
-					span_3.className = "icon icon-star svelte-176wm8a";
+					span_1.className = "note svelte-4nx67g";
+					p_2.className = "highlight info svelte-4nx67g";
+					div_3.className = "col info-row row-left svelte-4nx67g";
+					header.className = "svelte-4nx67g";
+					span_2.className = "icon svelte-4nx67g";
+					h2_3.className = "title svelte-4nx67g";
+					span_3.className = "icon icon-star svelte-4nx67g";
 					a.className = "right link";
 					a.href = "/";
-					h2_4.className = "title svelte-176wm8a";
+					h2_4.className = "title svelte-4nx67g";
 					div_4.className = "rows";
-					main.className = "svelte-176wm8a";
+					main.className = "svelte-4nx67g";
 				}
 			},
 
@@ -2309,7 +2309,7 @@ var app = (function () {
 		return {
 			c: function create() {
 				div = createElement("div");
-				div.className = "profile-img img svelte-176wm8a";
+				div.className = "profile-img img svelte-4nx67g";
 			},
 
 			m: function mount(target, anchor) {
@@ -2333,7 +2333,7 @@ var app = (function () {
 		return {
 			c: function create() {
 				img = createElement("img");
-				img.className = "profile-img img svelte-176wm8a";
+				img.className = "profile-img img svelte-4nx67g";
 				img.src = img_src_value = ctx.user.img;
 				img.alt = img_alt_value = ctx.user.name;
 			},
@@ -2554,11 +2554,11 @@ var app = (function () {
 				text_2 = createText("\n\t\t");
 				button_1 = createElement("button");
 				button_1.textContent = "Request";
-				span.className = "icon svelte-z0kbdd";
-				button.className = "btn btn-icon svelte-z0kbdd";
+				span.className = "icon svelte-1g08oeg";
+				button.className = "btn btn-icon svelte-1g08oeg";
 				button_1.className = "btn btn-primary";
 				div_1.className = "row";
-				header.className = header_class_value = "row vCentered sticky " + (ctx.fixed? 'fixed' : '') + " svelte-z0kbdd";
+				header.className = header_class_value = "row vCentered sticky " + (ctx.fixed? 'fixed' : '') + " svelte-1g08oeg";
 			},
 
 			m: function mount(target, anchor) {
@@ -2582,7 +2582,7 @@ var app = (function () {
 					await_block_1.p(changed, assign(assign({}, ctx), resolved));
 				}
 
-				if ((changed.fixed) && header_class_value !== (header_class_value = "row vCentered sticky " + (ctx.fixed? 'fixed' : '') + " svelte-z0kbdd")) {
+				if ((changed.fixed) && header_class_value !== (header_class_value = "row vCentered sticky " + (ctx.fixed? 'fixed' : '') + " svelte-1g08oeg")) {
 					header.className = header_class_value;
 				}
 			},
@@ -2637,8 +2637,8 @@ var app = (function () {
 				text_2 = createText(text_2_value);
 				text_3 = createText(" ");
 				stars._fragment.c();
-				h1.className = "svelte-z0kbdd";
-				p.className = "svelte-z0kbdd";
+				h1.className = "svelte-1g08oeg";
+				p.className = "svelte-1g08oeg";
 			},
 
 			m: function mount(target, anchor) {
