@@ -13,9 +13,7 @@
 				<SidebarProfile profile={profile} user={profileUser} fixed={fixedHeader}/>
 			</Sidebar>
 			<main>
-				<header class="row vCentered">
-					<HeaderProfile profile={profile} user={profileUser} fixed={fixedHeader}/>
-				</header>
+				<HeaderProfile profile={profile} user={profileUser} fixed={fixedHeader}/>
 				<div class="row">
 					<div class="content">
 						<ContentProfile menu={profileMenu} profile={profile} user={profileUser}/>
@@ -209,11 +207,6 @@
 	}
 	main {
 		width: 100%;
-	}
-	header {
-		height: 130px;
-		padding: 30px 35px;
-		border-bottom: 1px solid #F5F5F5;
 	}
 	.content {
 		flex: 2;

@@ -1,18 +1,27 @@
-<div>
-	{#await user}
-	{:then user}
-		<h1>{user.name}</h1>
-		<p>{user.title} <Stars rating={profile.details.rating}/></p>
-	{:catch error}
-	{/await}
-</div>
-<div class="row">
-	<button class="btn btn-icon"><span class="icon"><IconsSvg name="Message"/></span></button>
-	<button class="btn btn-primary">Request</button>
-</div>
+<header class="row vCentered sticky {fixed? 'fixed' : ''}">
+	<div>
+		{#await user}
+		{:then user}
+			<h1>{user.name}</h1>
+			<p>{user.title} <Stars rating={profile.details.rating}/></p>
+		{:catch error}
+		{/await}
+	</div>
+	<div class="row">
+		<button class="btn btn-icon"><span class="icon"><IconsSvg name="Message"/></span></button>
+		<button class="btn btn-primary">Request</button>
+	</div>
+</header>
 
 
 <style>
+	header {
+		height: 130px;
+		padding: 30px 35px;
+		background: white;
+		border-bottom: 1px solid #F5F5F5;
+		z-index: 1;
+	}
 	h1 {
 		font-size: 50px;
 		line-height: 30px;
@@ -37,6 +46,31 @@
 	/* hide message bubble (has message) */
 	.icon :global(.active) {
 		display: none;
+	}
+	/* fixed header */
+	.sticky {
+		position: sticky;
+		top: 0;
+	}
+	header.fixed {
+		height: 100px;
+	}
+	.fixed h1 {
+		font-size: 25px;
+		line-height: 20px;
+	}
+	.fixed p {
+		margin-top: 10px;
+		font-size: 15px;
+		line-height: 15px;
+	}
+	.fixed :global(.icon-stars span) {
+		width: 15px;
+		height: 15px;
+	}
+	/* transitions */
+	header, h1, p, :global(.icon-stars span) {
+		transition: all .2s;
 	}
 </style>
 

@@ -2487,7 +2487,7 @@ var app = (function () {
 
 
 	function create_main_fragment$23(component, ctx) {
-		var div, await_block_1, await_block_type, await_token, promise, resolved, text_1, div_1, button, span, text_2, button_1;
+		var header, div, await_block_1, await_block_type, await_token, promise, resolved, text_1, div_1, button, span, text_2, button_1, header_class_value;
 
 		function replace_await_block(token, type, ctx) {
 			if (token !== await_token) return;
@@ -2541,31 +2541,34 @@ var app = (function () {
 
 		return {
 			c: function create() {
+				header = createElement("header");
 				div = createElement("div");
 
 				await_block_1.c();
 
-				text_1 = createText("\n");
+				text_1 = createText("\n\t");
 				div_1 = createElement("div");
 				button = createElement("button");
 				span = createElement("span");
 				iconssvg._fragment.c();
-				text_2 = createText("\n\t");
+				text_2 = createText("\n\t\t");
 				button_1 = createElement("button");
 				button_1.textContent = "Request";
-				span.className = "icon svelte-1j8i0yl";
-				button.className = "btn btn-icon svelte-1j8i0yl";
+				span.className = "icon svelte-z0kbdd";
+				button.className = "btn btn-icon svelte-z0kbdd";
 				button_1.className = "btn btn-primary";
 				div_1.className = "row";
+				header.className = header_class_value = "row vCentered sticky " + (ctx.fixed? 'fixed' : '') + " svelte-z0kbdd";
 			},
 
 			m: function mount(target, anchor) {
-				insertNode(div, target, anchor);
+				insertNode(header, target, anchor);
+				appendNode(div, header);
 
 				await_block_1.m(div, null);
 
-				insertNode(text_1, target, anchor);
-				insertNode(div_1, target, anchor);
+				appendNode(text_1, header);
+				appendNode(div_1, header);
 				appendNode(button, div_1);
 				appendNode(span, button);
 				iconssvg._mount(span, null);
@@ -2578,15 +2581,16 @@ var app = (function () {
 				if (('user' in changed) && promise !== (promise = ctx.user) && handle_promise(promise, ctx)) ; else {
 					await_block_1.p(changed, assign(assign({}, ctx), resolved));
 				}
+
+				if ((changed.fixed) && header_class_value !== (header_class_value = "row vCentered sticky " + (ctx.fixed? 'fixed' : '') + " svelte-z0kbdd")) {
+					header.className = header_class_value;
+				}
 			},
 
 			u: function unmount() {
-				detachNode(div);
+				detachNode(header);
 
 				await_block_1.u();
-
-				detachNode(text_1);
-				detachNode(div_1);
 			},
 
 			d: function destroy$$1() {
@@ -2598,7 +2602,7 @@ var app = (function () {
 		};
 	}
 
-	// (2:14)   {:then user}
+	// (3:15)    {:then user}
 	function create_pending_block$2(component, ctx) {
 
 		return {
@@ -2614,7 +2618,7 @@ var app = (function () {
 		};
 	}
 
-	// (3:1) {:then user}
+	// (4:2) {:then user}
 	function create_then_block$2(component, ctx) {
 		var h1, text_value = ctx.user.name, text, text_1, p, text_2_value = ctx.user.title, text_2, text_3;
 
@@ -2628,13 +2632,13 @@ var app = (function () {
 			c: function create() {
 				h1 = createElement("h1");
 				text = createText(text_value);
-				text_1 = createText("\n\t\t");
+				text_1 = createText("\n\t\t\t");
 				p = createElement("p");
 				text_2 = createText(text_2_value);
 				text_3 = createText(" ");
 				stars._fragment.c();
-				h1.className = "svelte-1j8i0yl";
-				p.className = "svelte-1j8i0yl";
+				h1.className = "svelte-z0kbdd";
+				p.className = "svelte-z0kbdd";
 			},
 
 			m: function mount(target, anchor) {
@@ -2673,7 +2677,7 @@ var app = (function () {
 		};
 	}
 
-	// (6:1) {:catch error}
+	// (7:2) {:catch error}
 	function create_catch_block$2(component, ctx) {
 
 		return {
@@ -2694,6 +2698,7 @@ var app = (function () {
 		if (!options || (!options.target && !options.root)) throw new Error("'target' is a required option");
 		init(this, options);
 		this._state = assign({}, options.data);
+		if (!('fixed' in this._state)) console.warn("<HeaderProfile> was created without expected data property 'fixed'");
 		if (!('user' in this._state)) console.warn("<HeaderProfile> was created without expected data property 'user'");
 		if (!('profile' in this._state)) console.warn("<HeaderProfile> was created without expected data property 'profile'");
 
@@ -5979,7 +5984,7 @@ var app = (function () {
 		this.set({profileMenu: this.getIcons(this.get().profileMenu)});
 	}
 	function create_main_fragment$36(component, ctx) {
-		var link, text, div, text_1, div_1, text_2, div_2, text_3, div_3, text_4, text_5, text_6, main, header, text_8, div_4, div_5, text_10, text_11, text_12;
+		var link, text, div, text_1, div_1, text_2, div_2, text_3, div_3, text_4, text_5, text_6, main, text_7, div_4, div_5, text_9, text_10, text_11;
 
 		var sidenav_initial_data = {
 		 	menu: ctx.mainNav,
@@ -6064,28 +6069,26 @@ var app = (function () {
 				sidebar._fragment.c();
 				text_6 = createText("\n\t\t\t");
 				main = createElement("main");
-				header = createElement("header");
 				headerprofile._fragment.c();
-				text_8 = createText("\n\t\t\t\t");
+				text_7 = createText("\n\t\t\t\t");
 				div_4 = createElement("div");
 				div_5 = createElement("div");
 				contentprofile._fragment.c();
-				text_10 = createText("\n\t\t\t\t\t");
-				text_11 = createText("\n\t\t\t\t\t\t");
+				text_9 = createText("\n\t\t\t\t\t");
+				text_10 = createText("\n\t\t\t\t\t\t");
 				sidebarcontent._fragment.c();
-				text_12 = createText("\n\t\t\t\t\t");
+				text_11 = createText("\n\t\t\t\t\t");
 				sidebar_1._fragment.c();
 				link.href = "https://fonts.googleapis.com/css?family=Palanquin:300";
 				link.rel = "stylesheet";
-				div_2.className = "scroll-space svelte-19qcrxh";
-				header.className = "row vCentered svelte-19qcrxh";
-				div_5.className = "content svelte-19qcrxh";
+				div_2.className = "scroll-space svelte-gerft6";
+				div_5.className = "content svelte-gerft6";
 				div_4.className = "row";
-				main.className = "svelte-19qcrxh";
-				div_3.className = "row scroll-content svelte-19qcrxh";
+				main.className = "svelte-gerft6";
+				div_3.className = "row scroll-content svelte-gerft6";
 				addListener(div_1, "scroll", scroll_handler);
-				div_1.className = "scroll svelte-19qcrxh";
-				div.className = "page sidenav svelte-19qcrxh";
+				div_1.className = "scroll svelte-gerft6";
+				div.className = "page sidenav svelte-gerft6";
 			},
 
 			m: function mount(target, anchor) {
@@ -6106,16 +6109,15 @@ var app = (function () {
 				sidebar._mount(div_3, null);
 				appendNode(text_6, div_3);
 				appendNode(main, div_3);
-				appendNode(header, main);
-				headerprofile._mount(header, null);
-				appendNode(text_8, main);
+				headerprofile._mount(main, null);
+				appendNode(text_7, main);
 				appendNode(div_4, main);
 				appendNode(div_5, div_4);
 				contentprofile._mount(div_5, null);
-				appendNode(text_10, div_4);
-				appendNode(text_11, sidebar_1._slotted.default);
+				appendNode(text_9, div_4);
+				appendNode(text_10, sidebar_1._slotted.default);
 				sidebarcontent._mount(sidebar_1._slotted.default, null);
-				appendNode(text_12, sidebar_1._slotted.default);
+				appendNode(text_11, sidebar_1._slotted.default);
 				sidebar_1._mount(div_4, null);
 			},
 
