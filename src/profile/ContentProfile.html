@@ -1,5 +1,5 @@
 <nav>
-  <ul class="tab-nav">
+  <ul class="tab-nav animate {fixed ? 'scaleY' : ''}">
     {#each menu as item, i}
     <li>
       <button class="btn menu-item {item.active ? 'active' : ''}" on:click="toggleContent(i)">
@@ -71,6 +71,14 @@
   }
   .tab-content {
     margin-top: 20px;
+  }
+  /* animation */
+  .animate {
+    transition: all .3s;
+    overflow: hidden;
+  }
+  .scaleY {
+    height: 0;
   }
 </style>
 

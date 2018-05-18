@@ -1,14 +1,31 @@
-<div class="banner">
-	<img src="{banner.img}" alt="banner" style="width: {banner.width}%; top: {banner.top}%; left: {banner.left}%"/>
+<div class="banner-wrapper">
+	<div class="banner" style="filter: blur({blur}px)">
+		<img src="{banner.img}" alt="banner" style="width: {banner.width}%; top: {banner.top}%; left: {banner.left}%"/>
+	</div>
 </div>
 
+
 <style>
+	.banner-wrapper {
+		position: fixed;
+		overflow: hidden;
+	}
 	.banner {
 		height: 360px;
-		width: 100%;
+		width: 1260px;
 		overflow: hidden;
 	}
 	img {
 		position: relative;
 	}
 </style>
+
+<script>
+	export default {
+		data() {
+			return {
+				blur: false
+			}
+		}
+	}
+</script>

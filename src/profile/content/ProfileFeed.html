@@ -1,5 +1,5 @@
 {#each profile.posts as post}
-  <article class="post">
+  <article class="post {post.isSponsored ? 'sponsored' : ''}">
     {#if post.isReview}
       <Avatar isReview="true" user={post.review.user}/>
     {:else}

@@ -1,30 +1,55 @@
 <slot>
-	<header>
-		{#await user}
-			<div class="profile-img img"></div>
-		{:then user}
-			<img class="profile-img img" src="{user.img}" alt="{user.name}"/>
-		{:catch error}
-		{/await}
-		<button class="btn">
-			<span class="icon"><IconsSvg name="UserAdd"/></span>
-			Follow
-		</button>
-		<div class="info-row lg row">
-			<div class="col">
-				<h2 class="title">Follower</h2>
-				<p class="highlight info">{profile.details.followers}</p>
+	{#if fixed}
+		<header class="row vCentered sticky {fixed ? 'fixed' : ''}">
+			{#await user}
+				<div class="profile-img img"></div>
+			{:then user}
+				<img class="profile-img img" src="{user.img}" alt="{user.name}"/>
+			{:catch error}
+			{/await}
+			<button class="btn btn-icon">
+				<span class="icon"><IconsSvg name="UserAdd"/></span>
+			</button>
+			<div class="info-row lg row">
+				<div class="col">
+					<button class="btn-dropdown">
+						<h2 class="title">Follower</h2>
+						<span class="dropdown-arrow"></span>
+					</button>
+					<p class="highlight info">{profile.details.followers}</p>
+				</div>
 			</div>
-			<div class="col">
-				<h2 class="title">Folowing</h2>
-				<p class="highlight info">{profile.details.following}</p>
+		</header>
+	{:else}
+		<header>
+			{#await user}
+				<div class="profile-img img"></div>
+			{:then user}
+				<img class="profile-img img animate {animate ? 'scale' : ''}" src="{user.img}" alt="{user.name}"/>
+			{:catch error}
+			{/await}
+			<div class="animate {animate ? 'fade' : ''}">
+				<button class="btn btn-lg">
+					<span class="icon"><IconsSvg name="UserAdd"/></span>
+					Follow
+				</button>
+				<div class="info-row lg row">
+					<div class="col">
+						<h2 class="title">Follower</h2>
+						<p class="highlight info">{profile.details.followers}</p>
+					</div>
+					<div transition:fade class="col">
+						<h2 class="title">Folowing</h2>
+						<p class="highlight info">{profile.details.following}</p>
+					</div>
+				</div>
+				<div class="col info-row row-left">
+					<h2 class="title">Performance</h2>
+					<p class="highlight info">{profile.details.perf} <span class="note">and {profile.details.reviews} reviews</span></p>
+				</div>
 			</div>
-		</div>
-		<div class="col info-row">
-			<h2 class="title">Performance</h2>
-			<p class="highlight info">{profile.details.perf} <span class="note">and {profile.details.reviews} reviews</span></p>
-		</div>
-	</header>
+		</header>
+	{/if}
 
 	<main>
 		<h2 class="title">
@@ -60,7 +85,7 @@
 		z-index: 1;
 		position: relative;
 	}
-	button {
+	.btn-lg {
 		width: 210px;
 		height: 45px;
 		margin: 25px auto;
@@ -69,9 +94,13 @@
 		padding-bottom: 10px;
 		margin-bottom: 20px;
 		border-bottom: 1px solid #F2F2F2;
+		align-items: flex-start;
 	}
 	.info-row.lg {
 		padding-bottom: 20px;
+	}
+	.col {
+		align-items: flex-start;
 	}
 	.highlight.info {
 		margin: 10px 0;
@@ -84,7 +113,7 @@
 		font-size: 15px;
 	}
 	main h2 {
-		margin-top: 30px;
+		/* margin-top: 30px; */
 	}
 	.icon {
 		display: inline-block;
@@ -95,16 +124,77 @@
 	.icon-star {
 		color: #505050;
 	}
+	.btn-dropdown {
+		width: auto;
+		height: auto;
+		margin: 0;
+		padding: 0;
+		background: none;
+		border: none;
+	}
+	/* fixed header */
+	.fixed {
+		height: 100px;
+		background: #FAFAFA;
+		z-index: 1;
+		border-bottom: 1px solid #F5F5F5;
+	}
+	.fixed .profile-img {
+		width: 60px;
+		height: 60px;
+		margin: 0;
+	}
+	.fixed .btn-icon {
+		margin: 0;
+	}
+	.fixed .icon {
+		margin: 0;
+	}
+	.fixed .info-row {
+		margin: 0;
+		padding: 0;
+		border: none;
+	}
+	.fixed .title {
+		font-size: 13px;
+		line-height: 13px;
+	}
+	.fixed .info {
+		font-size: 20px;
+		line-height: 20px;
+		margin: 10px 0 0;
+	}
+	.fixed + main {
+		margin-top: 50px;
+	}
+	/* animations */
+	.animate {
+		transition: all 1s;
+		opacity: 1;
+	}
+	.scale {
+		/* transform: scale(0); */
+		width: 0;
+		height: 0;
+	}
+	.fade {
+		opacity: 0;
+	}
 </style>
 
 <script>
 	import IconsSvg from './../icons/IconsSvg.html';
 	import Tiles from './../components/Tiles.html';
 
+	import {fade} from 'svelte-transitions';
+
 	export default {
 		components: {
 			IconsSvg,
 			Tiles,
+		},
+		transitions: {
+			fade
 		}
 	}
 </script>
