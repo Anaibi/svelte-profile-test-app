@@ -2077,14 +2077,14 @@ var app = (function () {
 					div = createElement("div");
 				}
 				if (!slot_content_default) {
-					span.className = "icon svelte-1ibgd6f";
-					h2.className = "title svelte-1ibgd6f";
-					span_1.className = "icon icon-star svelte-1ibgd6f";
+					span.className = "icon svelte-p80zdo";
+					h2.className = "title svelte-p80zdo";
+					span_1.className = "icon icon-star svelte-p80zdo";
 					a.className = "right link";
 					a.href = "/";
-					h2_1.className = "title svelte-1ibgd6f";
+					h2_1.className = "title svelte-p80zdo";
 					div.className = "rows";
-					main.className = "svelte-1ibgd6f";
+					main.className = "svelte-p80zdo";
 				}
 			},
 
@@ -2161,14 +2161,14 @@ var app = (function () {
 		};
 	}
 
-	// (4:16)      <div class="profile-img img"></div>    {:then user}
+	// (5:17)       <div class="profile-img img"></div>     {:then user}
 	function create_pending_block$1(component, ctx) {
 		var div;
 
 		return {
 			c: function create() {
 				div = createElement("div");
-				div.className = "profile-img img svelte-1ibgd6f";
+				div.className = "profile-img img svelte-p80zdo";
 			},
 
 			m: function mount(target, anchor) {
@@ -2185,14 +2185,14 @@ var app = (function () {
 		};
 	}
 
-	// (6:3) {:then user}
+	// (7:4) {:then user}
 	function create_then_block$1(component, ctx) {
 		var img, img_src_value, img_alt_value;
 
 		return {
 			c: function create() {
 				img = createElement("img");
-				img.className = "profile-img img svelte-1ibgd6f";
+				img.className = "profile-img img svelte-p80zdo";
 				img.src = img_src_value = ctx.user.img;
 				img.alt = img_alt_value = ctx.user.name;
 			},
@@ -2219,7 +2219,7 @@ var app = (function () {
 		};
 	}
 
-	// (8:3) {:catch error}
+	// (9:4) {:catch error}
 	function create_catch_block$1(component, ctx) {
 
 		return {
@@ -2235,14 +2235,14 @@ var app = (function () {
 		};
 	}
 
-	// (25:16)      <div class="profile-img img"></div>    {:then user}
+	// (27:16)      <div class="profile-img img"></div>    {:then user}
 	function create_pending_block_1(component, ctx) {
 		var div;
 
 		return {
 			c: function create() {
 				div = createElement("div");
-				div.className = "profile-img img svelte-1ibgd6f";
+				div.className = "profile-img img svelte-p80zdo";
 			},
 
 			m: function mount(target, anchor) {
@@ -2259,14 +2259,14 @@ var app = (function () {
 		};
 	}
 
-	// (27:3) {:then user}
+	// (29:3) {:then user}
 	function create_then_block_1(component, ctx) {
 		var img, img_class_value, img_src_value, img_alt_value;
 
 		return {
 			c: function create() {
 				img = createElement("img");
-				img.className = img_class_value = "profile-img img animate " + (ctx.animate ? 'scale' : '') + " svelte-1ibgd6f";
+				img.className = img_class_value = "profile-img img animate " + (ctx.animate ? 'scale' : '') + " svelte-p80zdo";
 				img.src = img_src_value = ctx.user.img;
 				img.alt = img_alt_value = ctx.user.name;
 			},
@@ -2276,7 +2276,7 @@ var app = (function () {
 			},
 
 			p: function update(changed, ctx) {
-				if ((changed.animate) && img_class_value !== (img_class_value = "profile-img img animate " + (ctx.animate ? 'scale' : '') + " svelte-1ibgd6f")) {
+				if ((changed.animate) && img_class_value !== (img_class_value = "profile-img img animate " + (ctx.animate ? 'scale' : '') + " svelte-p80zdo")) {
 					img.className = img_class_value;
 				}
 
@@ -2297,7 +2297,7 @@ var app = (function () {
 		};
 	}
 
-	// (29:3) {:catch error}
+	// (31:3) {:catch error}
 	function create_catch_block_1(component, ctx) {
 
 		return {
@@ -2315,7 +2315,7 @@ var app = (function () {
 
 	// (2:1) {#if fixed}
 	function create_if_block$2(component, ctx) {
-		var header, await_block_1, await_block_type, await_token, promise, resolved, text, button, span, text_2, div, div_1, button_1, text_6, p, text_7_value = ctx.profile.details.followers, text_7, header_class_value;
+		var div, header, await_block_1, await_block_type, await_token, promise, resolved, text, button, span, text_2, div_1, div_2, button_1, text_6, p, text_7_value = ctx.profile.details.followers, text_7, div_class_value;
 
 		function replace_await_block(token, type, ctx) {
 			if (token !== await_token) return;
@@ -2369,33 +2369,36 @@ var app = (function () {
 
 		return {
 			c: function create() {
+				div = createElement("div");
 				header = createElement("header");
 
 				await_block_1.c();
 
-				text = createText("\n\t\t\t");
+				text = createText("\n\t\t\t\t");
 				button = createElement("button");
 				span = createElement("span");
 				iconssvg._fragment.c();
-				text_2 = createText("\n\t\t\t");
-				div = createElement("div");
+				text_2 = createText("\n\t\t\t\t");
 				div_1 = createElement("div");
+				div_2 = createElement("div");
 				button_1 = createElement("button");
-				button_1.innerHTML = "<h2 class=\"title svelte-1ibgd6f\">Follower</h2>\n\t\t\t\t\t\t<span class=\"dropdown-arrow\"></span>";
-				text_6 = createText("\n\t\t\t\t\t");
+				button_1.innerHTML = "<h2 class=\"title svelte-p80zdo\">Follower</h2>\n\t\t\t\t\t\t\t<span class=\"dropdown-arrow\"></span>";
+				text_6 = createText("\n\t\t\t\t\t\t");
 				p = createElement("p");
 				text_7 = createText(text_7_value);
-				span.className = "icon svelte-1ibgd6f";
-				button.className = "btn btn-icon svelte-1ibgd6f";
-				button_1.className = "btn-dropdown svelte-1ibgd6f";
-				p.className = "highlight info svelte-1ibgd6f";
-				div_1.className = "col svelte-1ibgd6f";
-				div.className = "info-row lg row svelte-1ibgd6f";
-				header.className = header_class_value = "row vCentered sticky " + (ctx.fixed ? 'fixed' : '') + " svelte-1ibgd6f";
+				span.className = "icon svelte-p80zdo";
+				button.className = "btn btn-icon svelte-p80zdo";
+				button_1.className = "btn-dropdown svelte-p80zdo";
+				p.className = "highlight info svelte-p80zdo";
+				div_2.className = "col svelte-p80zdo";
+				div_1.className = "info-row lg row svelte-p80zdo";
+				header.className = "row vCentered svelte-p80zdo";
+				div.className = div_class_value = "header-wrapper sticky " + (ctx.fixed ? 'fixed' : '') + " svelte-p80zdo";
 			},
 
 			m: function mount(target, anchor) {
-				insertNode(header, target, anchor);
+				insertNode(div, target, anchor);
+				appendNode(header, div);
 
 				await_block_1.m(header, null);
 
@@ -2404,11 +2407,11 @@ var app = (function () {
 				appendNode(span, button);
 				iconssvg._mount(span, null);
 				appendNode(text_2, header);
-				appendNode(div, header);
-				appendNode(div_1, div);
-				appendNode(button_1, div_1);
-				appendNode(text_6, div_1);
-				appendNode(p, div_1);
+				appendNode(div_1, header);
+				appendNode(div_2, div_1);
+				appendNode(button_1, div_2);
+				appendNode(text_6, div_2);
+				appendNode(p, div_2);
 				appendNode(text_7, p);
 			},
 
@@ -2422,13 +2425,13 @@ var app = (function () {
 					text_7.data = text_7_value;
 				}
 
-				if ((changed.fixed) && header_class_value !== (header_class_value = "row vCentered sticky " + (ctx.fixed ? 'fixed' : '') + " svelte-1ibgd6f")) {
-					header.className = header_class_value;
+				if ((changed.fixed) && div_class_value !== (div_class_value = "header-wrapper sticky " + (ctx.fixed ? 'fixed' : '') + " svelte-p80zdo")) {
+					div.className = div_class_value;
 				}
 			},
 
 			u: function unmount() {
-				detachNode(header);
+				detachNode(div);
 
 				await_block_1.u();
 			},
@@ -2442,7 +2445,7 @@ var app = (function () {
 		};
 	}
 
-	// (23:1) {:else}
+	// (25:1) {:else}
 	function create_if_block_1$1(component, ctx) {
 		var header, await_block_1, await_block_type, await_token, promise, resolved, text, div, button, span, text_1, text_2, div_1, div_2, h2, text_4, p, text_5_value = ctx.profile.details.followers, text_5, text_7, div_3, h2_1, text_9, p_1, text_10_value = ctx.profile.details.following, text_10, text_13, div_4, h2_2, text_15, p_2, text_16_value = ctx.profile.details.perf, text_16, text_17, span_1, text_18, text_19_value = ctx.profile.details.reviews, text_19, text_20, div_class_value;
 
@@ -2535,21 +2538,21 @@ var app = (function () {
 				text_18 = createText("and ");
 				text_19 = createText(text_19_value);
 				text_20 = createText(" reviews");
-				span.className = "icon svelte-1ibgd6f";
-				button.className = "btn btn-lg svelte-1ibgd6f";
-				h2.className = "title svelte-1ibgd6f";
-				p.className = "highlight info svelte-1ibgd6f";
-				div_2.className = "col svelte-1ibgd6f";
-				h2_1.className = "title svelte-1ibgd6f";
-				p_1.className = "highlight info svelte-1ibgd6f";
-				div_3.className = "col svelte-1ibgd6f";
-				div_1.className = "info-row lg row svelte-1ibgd6f";
-				h2_2.className = "title svelte-1ibgd6f";
-				span_1.className = "note svelte-1ibgd6f";
-				p_2.className = "highlight info svelte-1ibgd6f";
-				div_4.className = "col info-row row-left svelte-1ibgd6f";
-				div.className = div_class_value = "animate " + (ctx.animate ? 'fade' : '') + " svelte-1ibgd6f";
-				header.className = "svelte-1ibgd6f";
+				span.className = "icon svelte-p80zdo";
+				button.className = "btn btn-lg svelte-p80zdo";
+				h2.className = "title svelte-p80zdo";
+				p.className = "highlight info svelte-p80zdo";
+				div_2.className = "col svelte-p80zdo";
+				h2_1.className = "title svelte-p80zdo";
+				p_1.className = "highlight info svelte-p80zdo";
+				div_3.className = "col svelte-p80zdo";
+				div_1.className = "info-row lg row svelte-p80zdo";
+				h2_2.className = "title svelte-p80zdo";
+				span_1.className = "note svelte-p80zdo";
+				p_2.className = "highlight info svelte-p80zdo";
+				div_4.className = "col info-row row-left svelte-p80zdo";
+				div.className = div_class_value = "animate " + (ctx.animate ? 'fade' : '') + " svelte-p80zdo";
+				header.className = "svelte-p80zdo";
 			},
 
 			m: function mount(target, anchor) {
@@ -2611,7 +2614,7 @@ var app = (function () {
 					text_19.data = text_19_value;
 				}
 
-				if ((changed.animate) && div_class_value !== (div_class_value = "animate " + (ctx.animate ? 'fade' : '') + " svelte-1ibgd6f")) {
+				if ((changed.animate) && div_class_value !== (div_class_value = "animate " + (ctx.animate ? 'fade' : '') + " svelte-p80zdo")) {
 					div.className = div_class_value;
 				}
 			},
@@ -5648,7 +5651,7 @@ var app = (function () {
 				text_1 = createText("\n\n");
 				div = createElement("div");
 				if (switch_instance) switch_instance._fragment.c();
-				ul.className = ul_class_value = "tab-nav animate " + (ctx.fixed ? 'scaleY' : '') + " svelte-zza7p5";
+				ul.className = ul_class_value = "tab-nav animate " + (ctx.animate ? 'scaleY' : '') + " svelte-zza7p5";
 				div.className = "tab-content svelte-zza7p5";
 			},
 
@@ -5691,7 +5694,7 @@ var app = (function () {
 					each_blocks.length = each_value.length;
 				}
 
-				if ((changed.fixed) && ul_class_value !== (ul_class_value = "tab-nav animate " + (ctx.fixed ? 'scaleY' : '') + " svelte-zza7p5")) {
+				if ((changed.animate) && ul_class_value !== (ul_class_value = "tab-nav animate " + (ctx.animate ? 'scaleY' : '') + " svelte-zza7p5")) {
 					ul.className = ul_class_value;
 				}
 
@@ -5925,7 +5928,7 @@ var app = (function () {
 		if (!options || (!options.target && !options.root)) throw new Error("'target' is a required option");
 		init(this, options);
 		this._state = assign(data$7(), options.data);
-		if (!('fixed' in this._state)) console.warn("<ContentProfile> was created without expected data property 'fixed'");
+		if (!('animate' in this._state)) console.warn("<ContentProfile> was created without expected data property 'animate'");
 		if (!('menu' in this._state)) console.warn("<ContentProfile> was created without expected data property 'menu'");
 		if (!('selected' in this._state)) console.warn("<ContentProfile> was created without expected data property 'selected'");
 		if (!('profile' in this._state)) console.warn("<ContentProfile> was created without expected data property 'profile'");
@@ -6249,7 +6252,11 @@ var app = (function () {
 			if (scrollTop > SCROLL_SPACE_SIDEBAR && scrollTop > this.get().lastScrollTop) {
 				this.set({animate: true});
 				event.target.scroll({top: BANNER_H, left: 0, behavior: 'smooth' });
-			} else {
+			}
+			else if (this.get().fixedHeader) {
+				this.set({animate: true});
+			}
+			else if (!this.get().fixedHeader){
 				this.set({animate: false});
 			}
 			this.set({lastScrollTop: scrollTop});
@@ -6312,7 +6319,7 @@ var app = (function () {
 		 	menu: ctx.profileMenu,
 		 	profile: ctx.profile,
 		 	user: ctx.profileUser,
-		 	fixed: ctx.fixedHeader
+		 	animate: ctx.animate
 		 };
 		var contentprofile = new ContentProfile({
 			root: component.root,
@@ -6432,7 +6439,7 @@ var app = (function () {
 				if (changed.profileMenu) contentprofile_changes.menu = ctx.profileMenu;
 				if (changed.profile) contentprofile_changes.profile = ctx.profile;
 				if (changed.profileUser) contentprofile_changes.user = ctx.profileUser;
-				if (changed.fixedHeader) contentprofile_changes.fixed = ctx.fixedHeader;
+				if (changed.animate) contentprofile_changes.animate = ctx.animate;
 				contentprofile._set(contentprofile_changes);
 			},
 

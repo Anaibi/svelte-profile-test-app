@@ -16,7 +16,7 @@
 				<HeaderProfile profile={profile} user={profileUser} fixed={fixedHeader}/>
 				<div class="row">
 					<div class="content">
-						<ContentProfile menu={profileMenu} profile={profile} user={profileUser} fixed={fixedHeader}/>
+						<ContentProfile menu={profileMenu} profile={profile} user={profileUser} animate={animate}/>
 					</div>
 					<Sidebar>
 						<SidebarContent/>
@@ -461,7 +461,11 @@
 				if (scrollTop > SCROLL_SPACE_SIDEBAR && scrollTop > this.get().lastScrollTop) {
 					this.set({animate: true});
 					event.target.scroll({top: BANNER_H, left: 0, behavior: 'smooth' });
-				} else {
+				}
+				else if (this.get().fixedHeader) {
+					this.set({animate: true});
+				}
+				else if (!this.get().fixedHeader){
 					this.set({animate: false});
 				}
 				this.set({lastScrollTop: scrollTop});
