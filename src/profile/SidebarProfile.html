@@ -1,25 +1,27 @@
 <slot>
 	{#if fixed}
-		<header class="row vCentered sticky {fixed ? 'fixed' : ''}">
-			{#await user}
-				<div class="profile-img img"></div>
-			{:then user}
-				<img class="profile-img img" src="{user.img}" alt="{user.name}"/>
-			{:catch error}
-			{/await}
-			<button class="btn btn-icon">
-				<span class="icon"><IconsSvg name="UserAdd"/></span>
-			</button>
-			<div class="info-row lg row">
-				<div class="col">
-					<button class="btn-dropdown">
-						<h2 class="title">Follower</h2>
-						<span class="dropdown-arrow"></span>
-					</button>
-					<p class="highlight info">{profile.details.followers}</p>
+		<div class="header-wrapper sticky {fixed ? 'fixed' : ''}">
+			<header class="row vCentered">
+				{#await user}
+					<div class="profile-img img"></div>
+				{:then user}
+					<img class="profile-img img" src="{user.img}" alt="{user.name}"/>
+				{:catch error}
+				{/await}
+				<button class="btn btn-icon">
+					<span class="icon"><IconsSvg name="UserAdd"/></span>
+				</button>
+				<div class="info-row lg row">
+					<div class="col">
+						<button class="btn-dropdown">
+							<h2 class="title">Follower</h2>
+							<span class="dropdown-arrow"></span>
+						</button>
+						<p class="highlight info">{profile.details.followers}</p>
+					</div>
 				</div>
-			</div>
-		</header>
+			</header>
+		</div>
 	{:else}
 		<header>
 			{#await user}
@@ -38,7 +40,7 @@
 						<h2 class="title">Follower</h2>
 						<p class="highlight info">{profile.details.followers}</p>
 					</div>
-					<div transition:fade class="col">
+					<div class="col">
 						<h2 class="title">Folowing</h2>
 						<p class="highlight info">{profile.details.following}</p>
 					</div>
@@ -133,7 +135,12 @@
 		border: none;
 	}
 	/* fixed header */
-	.fixed {
+	.header-wrapper {
+		padding-bottom: 50px;
+		background: #FAFAFA;
+		z-index: 1;
+	}
+	.fixed header {
 		height: 100px;
 		background: #FAFAFA;
 		z-index: 1;
@@ -164,9 +171,6 @@
 		line-height: 20px;
 		margin: 10px 0 0;
 	}
-	.fixed + main {
-		margin-top: 50px;
-	}
 	/* animations */
 	.animate {
 		transition: all 1s;
@@ -192,9 +196,6 @@
 		components: {
 			IconsSvg,
 			Tiles,
-		},
-		transitions: {
-			fade
 		}
 	}
 </script>

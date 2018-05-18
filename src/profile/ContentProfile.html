@@ -1,5 +1,5 @@
 <nav>
-  <ul class="tab-nav animate {fixed ? 'scaleY' : ''}">
+  <ul class="tab-nav animate {animate ? 'scaleY' : ''}">
     {#each menu as item, i}
     <li>
       <button class="btn menu-item {item.active ? 'active' : ''}" on:click="toggleContent(i)">
