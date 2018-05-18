@@ -1725,10 +1725,10 @@ var app = (function () {
 				setStyle(img, "width", "" + ctx.banner.width + "%");
 				setStyle(img, "top", "" + ctx.banner.top + "%");
 				setStyle(img, "left", "" + ctx.banner.left + "%");
-				img.className = "svelte-1bjtgfi";
-				div_1.className = "banner svelte-1bjtgfi";
+				img.className = "svelte-ya16h3";
+				div_1.className = "banner svelte-ya16h3";
 				setStyle(div_1, "filter", "blur(" + ctx.blur + "px)");
-				div.className = "banner-wrapper svelte-1bjtgfi";
+				div.className = "banner-wrapper svelte-ya16h3";
 			},
 
 			m: function mount(target, anchor) {
@@ -2026,7 +2026,296 @@ var app = (function () {
 
 
 	function create_main_fragment$21(component, ctx) {
-		var slot_content_default = component._slotted.default, slot_content_default_before, slot_content_default_after, header, await_block_1, await_block_type, await_token, promise, resolved, text, button, span, text_1, text_2, div, div_1, h2, text_4, p, text_5_value = ctx.profile.details.followers, text_5, text_7, div_2, h2_1, text_9, p_1, text_10_value = ctx.profile.details.following, text_10, text_13, div_3, h2_2, text_15, p_2, text_16_value = ctx.profile.details.perf, text_16, text_17, span_1, text_18, text_19_value = ctx.profile.details.reviews, text_19, text_20, text_23, main, h2_3, span_2, text_24, text_25, text_26, h2_4, span_3, text_27, a, text_30, div_4;
+		var slot_content_default = component._slotted.default, slot_content_default_before, slot_content_default_after, text, main, h2, span, text_1, text_2, text_3, h2_1, span_1, text_4, a, text_7, div;
+
+		function select_block_type(ctx) {
+			if (ctx.fixed) return create_if_block$2;
+			return create_if_block_1$1;
+		}
+
+		var current_block_type = select_block_type(ctx);
+		var if_block = current_block_type(component, ctx);
+
+		var iconssvg_initial_data = { name: "Camera" };
+		var iconssvg = new IconsSvg({
+			root: component.root,
+			data: iconssvg_initial_data
+		});
+
+		var tiles_initial_data = { tiles: ctx.profile.projects };
+		var tiles = new Tiles({
+			root: component.root,
+			data: tiles_initial_data
+		});
+
+		var iconssvg_1_initial_data = { name: "Star" };
+		var iconssvg_1 = new IconsSvg({
+			root: component.root,
+			data: iconssvg_1_initial_data
+		});
+
+		return {
+			c: function create() {
+				if (!slot_content_default) {
+					if_block.c();
+					text = createText("\n\n\t");
+					main = createElement("main");
+					h2 = createElement("h2");
+					span = createElement("span");
+					iconssvg._fragment.c();
+					text_1 = createText(" Projects");
+					text_2 = createText("\n\t\t");
+					tiles._fragment.c();
+					text_3 = createText("\n\n\t\t");
+					h2_1 = createElement("h2");
+					span_1 = createElement("span");
+					iconssvg_1._fragment.c();
+					text_4 = createText(" Boosts\n\t\t\t");
+					a = createElement("a");
+					a.textContent = "More";
+					text_7 = createText("\n\t\t");
+					div = createElement("div");
+				}
+				if (!slot_content_default) {
+					span.className = "icon svelte-1ibgd6f";
+					h2.className = "title svelte-1ibgd6f";
+					span_1.className = "icon icon-star svelte-1ibgd6f";
+					a.className = "right link";
+					a.href = "/";
+					h2_1.className = "title svelte-1ibgd6f";
+					div.className = "rows";
+					main.className = "svelte-1ibgd6f";
+				}
+			},
+
+			m: function mount(target, anchor) {
+				if (!slot_content_default) {
+					if_block.m(target, anchor);
+					insertNode(text, target, anchor);
+					insertNode(main, target, anchor);
+					appendNode(h2, main);
+					appendNode(span, h2);
+					iconssvg._mount(span, null);
+					appendNode(text_1, h2);
+					appendNode(text_2, main);
+					tiles._mount(main, null);
+					appendNode(text_3, main);
+					appendNode(h2_1, main);
+					appendNode(span_1, h2_1);
+					iconssvg_1._mount(span_1, null);
+					appendNode(text_4, h2_1);
+					appendNode(a, h2_1);
+					appendNode(text_7, main);
+					appendNode(div, main);
+				}
+
+				else {
+					insertNode(slot_content_default_before || (slot_content_default_before = createComment()), target, anchor);
+					insertNode(slot_content_default, target, anchor);
+					insertNode(slot_content_default_after || (slot_content_default_after = createComment()), target, anchor);
+				}
+			},
+
+			p: function update(changed, ctx) {
+				if (!slot_content_default) {
+
+						if (current_block_type === (current_block_type = select_block_type(ctx)) && if_block) {
+						if_block.p(changed, ctx);
+					} else {
+						if_block.u();
+						if_block.d();
+						if_block = current_block_type(component, ctx);
+						if_block.c();
+						if_block.m(text.parentNode, text);
+					}
+
+						var tiles_changes = {};
+					if (changed.profile) tiles_changes.tiles = ctx.profile.projects;
+					tiles._set(tiles_changes);
+
+				}
+			},
+
+			u: function unmount() {
+				if (!slot_content_default) {
+					if_block.u();
+					detachNode(text);
+					detachNode(main);
+				}
+
+				else {
+					reinsertBetween(slot_content_default_before, slot_content_default_after, slot_content_default);
+					detachNode(slot_content_default_before);
+					detachNode(slot_content_default_after);
+				}
+			},
+
+			d: function destroy$$1() {
+				if (!slot_content_default) {
+					if_block.d();
+					iconssvg.destroy(false);
+					tiles.destroy(false);
+					iconssvg_1.destroy(false);
+				}
+			}
+		};
+	}
+
+	// (4:16)      <div class="profile-img img"></div>    {:then user}
+	function create_pending_block$1(component, ctx) {
+		var div;
+
+		return {
+			c: function create() {
+				div = createElement("div");
+				div.className = "profile-img img svelte-1ibgd6f";
+			},
+
+			m: function mount(target, anchor) {
+				insertNode(div, target, anchor);
+			},
+
+			p: noop,
+
+			u: function unmount() {
+				detachNode(div);
+			},
+
+			d: noop
+		};
+	}
+
+	// (6:3) {:then user}
+	function create_then_block$1(component, ctx) {
+		var img, img_src_value, img_alt_value;
+
+		return {
+			c: function create() {
+				img = createElement("img");
+				img.className = "profile-img img svelte-1ibgd6f";
+				img.src = img_src_value = ctx.user.img;
+				img.alt = img_alt_value = ctx.user.name;
+			},
+
+			m: function mount(target, anchor) {
+				insertNode(img, target, anchor);
+			},
+
+			p: function update(changed, ctx) {
+				if ((changed.user) && img_src_value !== (img_src_value = ctx.user.img)) {
+					img.src = img_src_value;
+				}
+
+				if ((changed.user) && img_alt_value !== (img_alt_value = ctx.user.name)) {
+					img.alt = img_alt_value;
+				}
+			},
+
+			u: function unmount() {
+				detachNode(img);
+			},
+
+			d: noop
+		};
+	}
+
+	// (8:3) {:catch error}
+	function create_catch_block$1(component, ctx) {
+
+		return {
+			c: noop,
+
+			m: noop,
+
+			p: noop,
+
+			u: noop,
+
+			d: noop
+		};
+	}
+
+	// (25:16)      <div class="profile-img img"></div>    {:then user}
+	function create_pending_block_1(component, ctx) {
+		var div;
+
+		return {
+			c: function create() {
+				div = createElement("div");
+				div.className = "profile-img img svelte-1ibgd6f";
+			},
+
+			m: function mount(target, anchor) {
+				insertNode(div, target, anchor);
+			},
+
+			p: noop,
+
+			u: function unmount() {
+				detachNode(div);
+			},
+
+			d: noop
+		};
+	}
+
+	// (27:3) {:then user}
+	function create_then_block_1(component, ctx) {
+		var img, img_class_value, img_src_value, img_alt_value;
+
+		return {
+			c: function create() {
+				img = createElement("img");
+				img.className = img_class_value = "profile-img img animate " + (ctx.animate ? 'scale' : '') + " svelte-1ibgd6f";
+				img.src = img_src_value = ctx.user.img;
+				img.alt = img_alt_value = ctx.user.name;
+			},
+
+			m: function mount(target, anchor) {
+				insertNode(img, target, anchor);
+			},
+
+			p: function update(changed, ctx) {
+				if ((changed.animate) && img_class_value !== (img_class_value = "profile-img img animate " + (ctx.animate ? 'scale' : '') + " svelte-1ibgd6f")) {
+					img.className = img_class_value;
+				}
+
+				if ((changed.user) && img_src_value !== (img_src_value = ctx.user.img)) {
+					img.src = img_src_value;
+				}
+
+				if ((changed.user) && img_alt_value !== (img_alt_value = ctx.user.name)) {
+					img.alt = img_alt_value;
+				}
+			},
+
+			u: function unmount() {
+				detachNode(img);
+			},
+
+			d: noop
+		};
+	}
+
+	// (29:3) {:catch error}
+	function create_catch_block_1(component, ctx) {
+
+		return {
+			c: noop,
+
+			m: noop,
+
+			p: noop,
+
+			u: noop,
+
+			d: noop
+		};
+	}
+
+	// (2:1) {#if fixed}
+	function create_if_block$2(component, ctx) {
+		var header, await_block_1, await_block_type, await_token, promise, resolved, text, button, span, text_2, div, div_1, button_1, text_6, p, text_7_value = ctx.profile.details.followers, text_7, header_class_value;
 
 		function replace_await_block(token, type, ctx) {
 			if (token !== await_token) return;
@@ -2078,301 +2367,267 @@ var app = (function () {
 			data: iconssvg_initial_data
 		});
 
-		var iconssvg_1_initial_data = { name: "Camera" };
-		var iconssvg_1 = new IconsSvg({
-			root: component.root,
-			data: iconssvg_1_initial_data
-		});
-
-		var tiles_initial_data = { tiles: ctx.profile.projects };
-		var tiles = new Tiles({
-			root: component.root,
-			data: tiles_initial_data
-		});
-
-		var iconssvg_2_initial_data = { name: "Star" };
-		var iconssvg_2 = new IconsSvg({
-			root: component.root,
-			data: iconssvg_2_initial_data
-		});
-
 		return {
 			c: function create() {
-				if (!slot_content_default) {
-					header = createElement("header");
+				header = createElement("header");
 
-						await_block_1.c();
+				await_block_1.c();
 
-					text = createText("\n\t\t");
-					button = createElement("button");
-					span = createElement("span");
-					iconssvg._fragment.c();
-					text_1 = createText("\n\t\t\tFollow");
-					text_2 = createText("\n\t\t");
-					div = createElement("div");
-					div_1 = createElement("div");
-					h2 = createElement("h2");
-					h2.textContent = "Follower";
-					text_4 = createText("\n\t\t\t\t");
-					p = createElement("p");
-					text_5 = createText(text_5_value);
-					text_7 = createText("\n\t\t\t");
-					div_2 = createElement("div");
-					h2_1 = createElement("h2");
-					h2_1.textContent = "Folowing";
-					text_9 = createText("\n\t\t\t\t");
-					p_1 = createElement("p");
-					text_10 = createText(text_10_value);
-					text_13 = createText("\n\t\t");
-					div_3 = createElement("div");
-					h2_2 = createElement("h2");
-					h2_2.textContent = "Performance";
-					text_15 = createText("\n\t\t\t");
-					p_2 = createElement("p");
-					text_16 = createText(text_16_value);
-					text_17 = createText(" ");
-					span_1 = createElement("span");
-					text_18 = createText("and ");
-					text_19 = createText(text_19_value);
-					text_20 = createText(" reviews");
-					text_23 = createText("\n\n\t");
-					main = createElement("main");
-					h2_3 = createElement("h2");
-					span_2 = createElement("span");
-					iconssvg_1._fragment.c();
-					text_24 = createText(" Projects");
-					text_25 = createText("\n\t\t");
-					tiles._fragment.c();
-					text_26 = createText("\n\n\t\t");
-					h2_4 = createElement("h2");
-					span_3 = createElement("span");
-					iconssvg_2._fragment.c();
-					text_27 = createText(" Boosts\n\t\t\t");
-					a = createElement("a");
-					a.textContent = "More";
-					text_30 = createText("\n\t\t");
-					div_4 = createElement("div");
-				}
-				if (!slot_content_default) {
-					span.className = "icon svelte-4nx67g";
-					button.className = "btn svelte-4nx67g";
-					h2.className = "title";
-					p.className = "highlight info svelte-4nx67g";
-					div_1.className = "col svelte-4nx67g";
-					h2_1.className = "title";
-					p_1.className = "highlight info svelte-4nx67g";
-					div_2.className = "col svelte-4nx67g";
-					div.className = "info-row lg row svelte-4nx67g";
-					h2_2.className = "title";
-					span_1.className = "note svelte-4nx67g";
-					p_2.className = "highlight info svelte-4nx67g";
-					div_3.className = "col info-row row-left svelte-4nx67g";
-					header.className = "svelte-4nx67g";
-					span_2.className = "icon svelte-4nx67g";
-					h2_3.className = "title svelte-4nx67g";
-					span_3.className = "icon icon-star svelte-4nx67g";
-					a.className = "right link";
-					a.href = "/";
-					h2_4.className = "title svelte-4nx67g";
-					div_4.className = "rows";
-					main.className = "svelte-4nx67g";
-				}
+				text = createText("\n\t\t\t");
+				button = createElement("button");
+				span = createElement("span");
+				iconssvg._fragment.c();
+				text_2 = createText("\n\t\t\t");
+				div = createElement("div");
+				div_1 = createElement("div");
+				button_1 = createElement("button");
+				button_1.innerHTML = "<h2 class=\"title svelte-1ibgd6f\">Follower</h2>\n\t\t\t\t\t\t<span class=\"dropdown-arrow\"></span>";
+				text_6 = createText("\n\t\t\t\t\t");
+				p = createElement("p");
+				text_7 = createText(text_7_value);
+				span.className = "icon svelte-1ibgd6f";
+				button.className = "btn btn-icon svelte-1ibgd6f";
+				button_1.className = "btn-dropdown svelte-1ibgd6f";
+				p.className = "highlight info svelte-1ibgd6f";
+				div_1.className = "col svelte-1ibgd6f";
+				div.className = "info-row lg row svelte-1ibgd6f";
+				header.className = header_class_value = "row vCentered sticky " + (ctx.fixed ? 'fixed' : '') + " svelte-1ibgd6f";
 			},
 
 			m: function mount(target, anchor) {
-				if (!slot_content_default) {
-					insertNode(header, target, anchor);
+				insertNode(header, target, anchor);
 
-						await_block_1.m(header, null);
+				await_block_1.m(header, null);
 
-					appendNode(text, header);
-					appendNode(button, header);
-					appendNode(span, button);
-					iconssvg._mount(span, null);
-					appendNode(text_1, button);
-					appendNode(text_2, header);
-					appendNode(div, header);
-					appendNode(div_1, div);
-					appendNode(h2, div_1);
-					appendNode(text_4, div_1);
-					appendNode(p, div_1);
-					appendNode(text_5, p);
-					appendNode(text_7, div);
-					appendNode(div_2, div);
-					appendNode(h2_1, div_2);
-					appendNode(text_9, div_2);
-					appendNode(p_1, div_2);
-					appendNode(text_10, p_1);
-					appendNode(text_13, header);
-					appendNode(div_3, header);
-					appendNode(h2_2, div_3);
-					appendNode(text_15, div_3);
-					appendNode(p_2, div_3);
-					appendNode(text_16, p_2);
-					appendNode(text_17, p_2);
-					appendNode(span_1, p_2);
-					appendNode(text_18, span_1);
-					appendNode(text_19, span_1);
-					appendNode(text_20, span_1);
-					insertNode(text_23, target, anchor);
-					insertNode(main, target, anchor);
-					appendNode(h2_3, main);
-					appendNode(span_2, h2_3);
-					iconssvg_1._mount(span_2, null);
-					appendNode(text_24, h2_3);
-					appendNode(text_25, main);
-					tiles._mount(main, null);
-					appendNode(text_26, main);
-					appendNode(h2_4, main);
-					appendNode(span_3, h2_4);
-					iconssvg_2._mount(span_3, null);
-					appendNode(text_27, h2_4);
-					appendNode(a, h2_4);
-					appendNode(text_30, main);
-					appendNode(div_4, main);
-				}
-
-				else {
-					insertNode(slot_content_default_before || (slot_content_default_before = createComment()), target, anchor);
-					insertNode(slot_content_default, target, anchor);
-					insertNode(slot_content_default_after || (slot_content_default_after = createComment()), target, anchor);
-				}
+				appendNode(text, header);
+				appendNode(button, header);
+				appendNode(span, button);
+				iconssvg._mount(span, null);
+				appendNode(text_2, header);
+				appendNode(div, header);
+				appendNode(div_1, div);
+				appendNode(button_1, div_1);
+				appendNode(text_6, div_1);
+				appendNode(p, div_1);
+				appendNode(text_7, p);
 			},
 
 			p: function update(changed, _ctx) {
 				ctx = _ctx;
-				if (!slot_content_default) {
+				if (('user' in changed) && promise !== (promise = ctx.user) && handle_promise(promise, ctx)) ; else {
+					await_block_1.p(changed, assign(assign({}, ctx), resolved));
+				}
 
-						if (('user' in changed) && promise !== (promise = ctx.user) && handle_promise(promise, ctx)) ; else {
-						await_block_1.p(changed, assign(assign({}, ctx), resolved));
-					}
+				if ((changed.profile) && text_7_value !== (text_7_value = ctx.profile.details.followers)) {
+					text_7.data = text_7_value;
+				}
 
-					if ((changed.profile) && text_5_value !== (text_5_value = ctx.profile.details.followers)) {
-						text_5.data = text_5_value;
-					}
-
-					if ((changed.profile) && text_10_value !== (text_10_value = ctx.profile.details.following)) {
-						text_10.data = text_10_value;
-					}
-
-					if ((changed.profile) && text_16_value !== (text_16_value = ctx.profile.details.perf)) {
-						text_16.data = text_16_value;
-					}
-
-					if ((changed.profile) && text_19_value !== (text_19_value = ctx.profile.details.reviews)) {
-						text_19.data = text_19_value;
-					}
-
-						var tiles_changes = {};
-					if (changed.profile) tiles_changes.tiles = ctx.profile.projects;
-					tiles._set(tiles_changes);
-
+				if ((changed.fixed) && header_class_value !== (header_class_value = "row vCentered sticky " + (ctx.fixed ? 'fixed' : '') + " svelte-1ibgd6f")) {
+					header.className = header_class_value;
 				}
 			},
 
 			u: function unmount() {
-				if (!slot_content_default) {
-					detachNode(header);
+				detachNode(header);
 
-						await_block_1.u();
-
-					detachNode(text_23);
-					detachNode(main);
-				}
-
-				else {
-					reinsertBetween(slot_content_default_before, slot_content_default_after, slot_content_default);
-					detachNode(slot_content_default_before);
-					detachNode(slot_content_default_after);
-				}
+				await_block_1.u();
 			},
 
 			d: function destroy$$1() {
-				if (!slot_content_default) {
+				await_token = null;
+				await_block_1.d();
 
-						await_token = null;
-					await_block_1.d();
-
-					iconssvg.destroy(false);
-					iconssvg_1.destroy(false);
-					tiles.destroy(false);
-					iconssvg_2.destroy(false);
-				}
+				iconssvg.destroy(false);
 			}
 		};
 	}
 
-	// (3:15)     <div class="profile-img img"></div>   {:then user}
-	function create_pending_block$1(component, ctx) {
-		var div;
+	// (23:1) {:else}
+	function create_if_block_1$1(component, ctx) {
+		var header, await_block_1, await_block_type, await_token, promise, resolved, text, div, button, span, text_1, text_2, div_1, div_2, h2, text_4, p, text_5_value = ctx.profile.details.followers, text_5, text_7, div_3, h2_1, text_9, p_1, text_10_value = ctx.profile.details.following, text_10, text_13, div_4, h2_2, text_15, p_2, text_16_value = ctx.profile.details.perf, text_16, text_17, span_1, text_18, text_19_value = ctx.profile.details.reviews, text_19, text_20, div_class_value;
+
+		function replace_await_block(token, type, ctx) {
+			if (token !== await_token) return;
+
+			var old_block = await_block_1;
+			await_block_1 = type && (await_block_type = type)(component, ctx);
+
+			if (old_block) {
+				old_block.u();
+				old_block.d();
+				await_block_1.c();
+				await_block_1.m(header, text);
+
+				component.root.set({});
+			}
+		}
+
+		function handle_promise(promise) {
+			var token = await_token = {};
+
+			if (isPromise(promise)) {
+				promise.then(function(value) {
+					resolved = { user: value };
+					replace_await_block(token, create_then_block_1, assign(assign({}, ctx), resolved));
+				}, function (error) {
+					resolved = { error: error };
+					replace_await_block(token, create_catch_block_1, assign(assign({}, ctx), resolved));
+				});
+
+				// if we previously had a then/catch block, destroy it
+				if (await_block_type !== create_pending_block_1) {
+					replace_await_block(token, create_pending_block_1, ctx);
+					return true;
+				}
+			} else {
+				resolved = { user: promise };
+				if (await_block_type !== create_then_block_1) {
+					replace_await_block(token, create_then_block_1, assign(assign({}, ctx), resolved));
+					return true;
+				}
+			}
+		}
+
+		handle_promise(promise = ctx.user);
+
+		var iconssvg_initial_data = { name: "UserAdd" };
+		var iconssvg = new IconsSvg({
+			root: component.root,
+			data: iconssvg_initial_data
+		});
 
 		return {
 			c: function create() {
+				header = createElement("header");
+
+				await_block_1.c();
+
+				text = createText("\n\t\t\t");
 				div = createElement("div");
-				div.className = "profile-img img svelte-4nx67g";
+				button = createElement("button");
+				span = createElement("span");
+				iconssvg._fragment.c();
+				text_1 = createText("\n\t\t\t\t\tFollow");
+				text_2 = createText("\n\t\t\t\t");
+				div_1 = createElement("div");
+				div_2 = createElement("div");
+				h2 = createElement("h2");
+				h2.textContent = "Follower";
+				text_4 = createText("\n\t\t\t\t\t\t");
+				p = createElement("p");
+				text_5 = createText(text_5_value);
+				text_7 = createText("\n\t\t\t\t\t");
+				div_3 = createElement("div");
+				h2_1 = createElement("h2");
+				h2_1.textContent = "Folowing";
+				text_9 = createText("\n\t\t\t\t\t\t");
+				p_1 = createElement("p");
+				text_10 = createText(text_10_value);
+				text_13 = createText("\n\t\t\t\t");
+				div_4 = createElement("div");
+				h2_2 = createElement("h2");
+				h2_2.textContent = "Performance";
+				text_15 = createText("\n\t\t\t\t\t");
+				p_2 = createElement("p");
+				text_16 = createText(text_16_value);
+				text_17 = createText(" ");
+				span_1 = createElement("span");
+				text_18 = createText("and ");
+				text_19 = createText(text_19_value);
+				text_20 = createText(" reviews");
+				span.className = "icon svelte-1ibgd6f";
+				button.className = "btn btn-lg svelte-1ibgd6f";
+				h2.className = "title svelte-1ibgd6f";
+				p.className = "highlight info svelte-1ibgd6f";
+				div_2.className = "col svelte-1ibgd6f";
+				h2_1.className = "title svelte-1ibgd6f";
+				p_1.className = "highlight info svelte-1ibgd6f";
+				div_3.className = "col svelte-1ibgd6f";
+				div_1.className = "info-row lg row svelte-1ibgd6f";
+				h2_2.className = "title svelte-1ibgd6f";
+				span_1.className = "note svelte-1ibgd6f";
+				p_2.className = "highlight info svelte-1ibgd6f";
+				div_4.className = "col info-row row-left svelte-1ibgd6f";
+				div.className = div_class_value = "animate " + (ctx.animate ? 'fade' : '') + " svelte-1ibgd6f";
+				header.className = "svelte-1ibgd6f";
 			},
 
 			m: function mount(target, anchor) {
-				insertNode(div, target, anchor);
+				insertNode(header, target, anchor);
+
+				await_block_1.m(header, null);
+
+				appendNode(text, header);
+				appendNode(div, header);
+				appendNode(button, div);
+				appendNode(span, button);
+				iconssvg._mount(span, null);
+				appendNode(text_1, button);
+				appendNode(text_2, div);
+				appendNode(div_1, div);
+				appendNode(div_2, div_1);
+				appendNode(h2, div_2);
+				appendNode(text_4, div_2);
+				appendNode(p, div_2);
+				appendNode(text_5, p);
+				appendNode(text_7, div_1);
+				appendNode(div_3, div_1);
+				appendNode(h2_1, div_3);
+				appendNode(text_9, div_3);
+				appendNode(p_1, div_3);
+				appendNode(text_10, p_1);
+				appendNode(text_13, div);
+				appendNode(div_4, div);
+				appendNode(h2_2, div_4);
+				appendNode(text_15, div_4);
+				appendNode(p_2, div_4);
+				appendNode(text_16, p_2);
+				appendNode(text_17, p_2);
+				appendNode(span_1, p_2);
+				appendNode(text_18, span_1);
+				appendNode(text_19, span_1);
+				appendNode(text_20, span_1);
 			},
 
-			p: noop,
-
-			u: function unmount() {
-				detachNode(div);
-			},
-
-			d: noop
-		};
-	}
-
-	// (5:2) {:then user}
-	function create_then_block$1(component, ctx) {
-		var img, img_src_value, img_alt_value;
-
-		return {
-			c: function create() {
-				img = createElement("img");
-				img.className = "profile-img img svelte-4nx67g";
-				img.src = img_src_value = ctx.user.img;
-				img.alt = img_alt_value = ctx.user.name;
-			},
-
-			m: function mount(target, anchor) {
-				insertNode(img, target, anchor);
-			},
-
-			p: function update(changed, ctx) {
-				if ((changed.user) && img_src_value !== (img_src_value = ctx.user.img)) {
-					img.src = img_src_value;
+			p: function update(changed, _ctx) {
+				ctx = _ctx;
+				if (('user' in changed) && promise !== (promise = ctx.user) && handle_promise(promise, ctx)) ; else {
+					await_block_1.p(changed, assign(assign({}, ctx), resolved));
 				}
 
-				if ((changed.user) && img_alt_value !== (img_alt_value = ctx.user.name)) {
-					img.alt = img_alt_value;
+				if ((changed.profile) && text_5_value !== (text_5_value = ctx.profile.details.followers)) {
+					text_5.data = text_5_value;
+				}
+
+				if ((changed.profile) && text_10_value !== (text_10_value = ctx.profile.details.following)) {
+					text_10.data = text_10_value;
+				}
+
+				if ((changed.profile) && text_16_value !== (text_16_value = ctx.profile.details.perf)) {
+					text_16.data = text_16_value;
+				}
+
+				if ((changed.profile) && text_19_value !== (text_19_value = ctx.profile.details.reviews)) {
+					text_19.data = text_19_value;
+				}
+
+				if ((changed.animate) && div_class_value !== (div_class_value = "animate " + (ctx.animate ? 'fade' : '') + " svelte-1ibgd6f")) {
+					div.className = div_class_value;
 				}
 			},
 
 			u: function unmount() {
-				detachNode(img);
+				detachNode(header);
+
+				await_block_1.u();
 			},
 
-			d: noop
-		};
-	}
+			d: function destroy$$1() {
+				await_token = null;
+				await_block_1.d();
 
-	// (7:2) {:catch error}
-	function create_catch_block$1(component, ctx) {
-
-		return {
-			c: noop,
-
-			m: noop,
-
-			p: noop,
-
-			u: noop,
-
-			d: noop
+				iconssvg.destroy(false);
+			}
 		};
 	}
 
@@ -2381,8 +2636,10 @@ var app = (function () {
 		if (!options || (!options.target && !options.root)) throw new Error("'target' is a required option");
 		init(this, options);
 		this._state = assign({}, options.data);
+		if (!('fixed' in this._state)) console.warn("<SidebarProfile> was created without expected data property 'fixed'");
 		if (!('user' in this._state)) console.warn("<SidebarProfile> was created without expected data property 'user'");
 		if (!('profile' in this._state)) console.warn("<SidebarProfile> was created without expected data property 'profile'");
+		if (!('animate' in this._state)) console.warn("<SidebarProfile> was created without expected data property 'animate'");
 
 		this._slotted = options.slots || {};
 
@@ -2554,11 +2811,11 @@ var app = (function () {
 				text_2 = createText("\n\t\t");
 				button_1 = createElement("button");
 				button_1.textContent = "Request";
-				span.className = "icon svelte-1g08oeg";
-				button.className = "btn btn-icon svelte-1g08oeg";
+				span.className = "icon svelte-1c8md90";
+				button.className = "btn btn-icon svelte-1c8md90";
 				button_1.className = "btn btn-primary";
 				div_1.className = "row";
-				header.className = header_class_value = "row vCentered sticky " + (ctx.fixed? 'fixed' : '') + " svelte-1g08oeg";
+				header.className = header_class_value = "row vCentered sticky " + (ctx.fixed? 'fixed' : '') + " svelte-1c8md90";
 			},
 
 			m: function mount(target, anchor) {
@@ -2582,7 +2839,7 @@ var app = (function () {
 					await_block_1.p(changed, assign(assign({}, ctx), resolved));
 				}
 
-				if ((changed.fixed) && header_class_value !== (header_class_value = "row vCentered sticky " + (ctx.fixed? 'fixed' : '') + " svelte-1g08oeg")) {
+				if ((changed.fixed) && header_class_value !== (header_class_value = "row vCentered sticky " + (ctx.fixed? 'fixed' : '') + " svelte-1c8md90")) {
 					header.className = header_class_value;
 				}
 			},
@@ -2637,8 +2894,8 @@ var app = (function () {
 				text_2 = createText(text_2_value);
 				text_3 = createText(" ");
 				stars._fragment.c();
-				h1.className = "svelte-1g08oeg";
-				p.className = "svelte-1g08oeg";
+				h1.className = "svelte-1c8md90";
+				p.className = "svelte-1c8md90";
 			},
 
 			m: function mount(target, anchor) {
@@ -3186,7 +3443,7 @@ var app = (function () {
 			data: iconssvg_initial_data
 		});
 
-		var if_block = (ctx.isSponsored) && create_if_block$2(component, ctx);
+		var if_block = (ctx.isSponsored) && create_if_block$3(component, ctx);
 
 		return {
 			c: function create() {
@@ -3238,7 +3495,7 @@ var app = (function () {
 					if (if_block) {
 						if_block.p(changed, ctx);
 					} else {
-						if_block = create_if_block$2(component, ctx);
+						if_block = create_if_block$3(component, ctx);
 						if_block.c();
 						if_block.m(div, null);
 					}
@@ -3330,7 +3587,7 @@ var app = (function () {
 	}
 
 	// (10:2) {#if isSponsored}
-	function create_if_block$2(component, ctx) {
+	function create_if_block$3(component, ctx) {
 		var p, span, text_1, button, span_1, button_class_value;
 
 		var iconssvg_initial_data = { name: "Bookmark" };
@@ -3463,7 +3720,7 @@ var app = (function () {
 	function create_main_fragment$27(component, ctx) {
 		var div, div_1, text_1, div_2, div_3, div_4, raw_value = ctx.post.content.text, text_4, button;
 
-		var if_block = (ctx.post.recommendations) && create_if_block$3(component, ctx);
+		var if_block = (ctx.post.recommendations) && create_if_block$4(component, ctx);
 
 		return {
 			c: function create() {
@@ -3504,7 +3761,7 @@ var app = (function () {
 					if (if_block) {
 						if_block.p(changed, ctx);
 					} else {
-						if_block = create_if_block$3(component, ctx);
+						if_block = create_if_block$4(component, ctx);
 						if_block.c();
 						if_block.m(div_1, null);
 					}
@@ -3679,7 +3936,7 @@ var app = (function () {
 	}
 
 	// (14:10) {#if post.recommendations.rating}
-	function create_if_block_1$1(component, ctx) {
+	function create_if_block_1$2(component, ctx) {
 
 		var stars_initial_data = { rating: ctx.post.recommendations.rating };
 		var stars = new Stars({
@@ -3747,7 +4004,7 @@ var app = (function () {
 	}
 
 	// (3:4) {#if post.recommendations}
-	function create_if_block$3(component, ctx) {
+	function create_if_block$4(component, ctx) {
 		var div, await_block_1, await_block_type, await_token, promise, resolved, text, div_1, text_1;
 
 		function replace_await_block(token, type, ctx) {
@@ -3794,7 +4051,7 @@ var app = (function () {
 
 		handle_promise(promise = ctx.recommendationUsers);
 
-		var if_block = (ctx.post.recommendations.rating) && create_if_block_1$1(component, ctx);
+		var if_block = (ctx.post.recommendations.rating) && create_if_block_1$2(component, ctx);
 
 		var if_block_1 = (ctx.post.recommendations.total > 0) && create_if_block_2$1(component, ctx);
 
@@ -3835,7 +4092,7 @@ var app = (function () {
 					if (if_block) {
 						if_block.p(changed, ctx);
 					} else {
-						if_block = create_if_block_1$1(component, ctx);
+						if_block = create_if_block_1$2(component, ctx);
 						if_block.c();
 						if_block.m(div_1, text_1);
 					}
@@ -4018,21 +4275,21 @@ var app = (function () {
 			if (isPromise(promise_1)) {
 				promise_1.then(function(value_1) {
 					resolved_1 = { reviewUser: value_1 };
-					replace_await_block_1(token_1, create_then_block_1, assign(assign({}, ctx), resolved_1));
+					replace_await_block_1(token_1, create_then_block_1$1, assign(assign({}, ctx), resolved_1));
 				}, function (error_1) {
 					resolved_1 = { error: error_1 };
-					replace_await_block_1(token_1, create_catch_block_1, assign(assign({}, ctx), resolved_1));
+					replace_await_block_1(token_1, create_catch_block_1$1, assign(assign({}, ctx), resolved_1));
 				});
 
 				// if we previously had a then/catch block, destroy it
-				if (await_block_type_1 !== create_pending_block_1) {
-					replace_await_block_1(token_1, create_pending_block_1, ctx);
+				if (await_block_type_1 !== create_pending_block_1$1) {
+					replace_await_block_1(token_1, create_pending_block_1$1, ctx);
 					return true;
 				}
 			} else {
 				resolved_1 = { reviewUser: promise_1 };
-				if (await_block_type_1 !== create_then_block_1) {
-					replace_await_block_1(token_1, create_then_block_1, assign(assign({}, ctx), resolved_1));
+				if (await_block_type_1 !== create_then_block_1$1) {
+					replace_await_block_1(token_1, create_then_block_1$1, assign(assign({}, ctx), resolved_1));
 					return true;
 				}
 			}
@@ -4216,7 +4473,7 @@ var app = (function () {
 	}
 
 	// (21:25)          <p class="signature italic"><strong></strong></p>       {:then reviewUser}
-	function create_pending_block_1(component, ctx) {
+	function create_pending_block_1$1(component, ctx) {
 		var p;
 
 		return {
@@ -4241,7 +4498,7 @@ var app = (function () {
 	}
 
 	// (23:6) {:then reviewUser}
-	function create_then_block_1(component, ctx) {
+	function create_then_block_1$1(component, ctx) {
 		var p, strong, text_value = ctx.reviewUser.name, text;
 
 		return {
@@ -4273,7 +4530,7 @@ var app = (function () {
 	}
 
 	// (25:6) {:catch error}
-	function create_catch_block_1(component, ctx) {
+	function create_catch_block_1$1(component, ctx) {
 
 		return {
 			c: noop,
@@ -4407,8 +4664,8 @@ var app = (function () {
 		var div, div_1, text_1, div_2, button, span;
 
 		function select_block_type(ctx) {
-			if (ctx.details) return create_if_block$4;
-			return create_if_block_1$2;
+			if (ctx.details) return create_if_block$5;
+			return create_if_block_1$3;
 		}
 
 		var current_block_type = select_block_type(ctx);
@@ -4472,7 +4729,7 @@ var app = (function () {
 	}
 
 	// (3:4) {#if details}
-	function create_if_block$4(component, ctx) {
+	function create_if_block$5(component, ctx) {
 		var button, span, text, span_1, text_1_value = ctx.details.stars > 0 ? ctx.details.stars : '', text_1, button_class_value, text_3, a, span_2, text_4, span_3, text_5_value = ctx.details.comments.total > 0 ? ctx.details.comments.total : '', text_5, a_href_value, text_7, a_1, span_4, text_8, span_5, text_9_value = ctx.details.answers.total > 0 ? ctx.details.answers.total : '', text_9, a_1_href_value;
 
 		var iconssvg_initial_data = { name: "Star" };
@@ -4600,7 +4857,7 @@ var app = (function () {
 	}
 
 	// (16:4) {:else}
-	function create_if_block_1$2(component, ctx) {
+	function create_if_block_1$3(component, ctx) {
 		var button, span, text, span_1, button_class_value, text_2, a, span_2, text_3, span_3, text_5, a_1, span_4, text_6, span_5;
 
 		var iconssvg_initial_data = { name: "Star" };
@@ -4822,11 +5079,11 @@ var app = (function () {
 
 	// (1:0) {#each profile.posts as post}
 	function create_each_block$3(component, ctx) {
-		var article, text, div, text_1, text_2;
+		var article, text, div, text_1, text_2, article_class_value;
 
 		function select_block_type(ctx) {
-			if (ctx.post.isReview) return create_if_block$5;
-			return create_if_block_1$3;
+			if (ctx.post.isReview) return create_if_block$6;
+			return create_if_block_1$4;
 		}
 
 		var current_block_type = select_block_type(ctx);
@@ -4867,7 +5124,7 @@ var app = (function () {
 				text_2 = createText("\n\n      ");
 				postdetails._fragment.c();
 				div.className = "content svelte-1e1v44j";
-				article.className = "post svelte-1e1v44j";
+				article.className = article_class_value = "post " + (ctx.post.isSponsored ? 'sponsored' : '') + " svelte-1e1v44j";
 			},
 
 			m: function mount(target, anchor) {
@@ -4916,6 +5173,10 @@ var app = (function () {
 				var postdetails_changes = {};
 				if (changed.profile) postdetails_changes.details = ctx.post.details;
 				postdetails._set(postdetails_changes);
+
+				if ((changed.profile) && article_class_value !== (article_class_value = "post " + (ctx.post.isSponsored ? 'sponsored' : '') + " svelte-1e1v44j")) {
+					article.className = article_class_value;
+				}
 			},
 
 			u: function unmount() {
@@ -4935,7 +5196,7 @@ var app = (function () {
 	}
 
 	// (3:4) {#if post.isReview}
-	function create_if_block$5(component, ctx) {
+	function create_if_block$6(component, ctx) {
 
 		var avatar_initial_data = { isReview: "true", user: ctx.post.review.user };
 		var avatar = new Avatar({
@@ -4969,7 +5230,7 @@ var app = (function () {
 	}
 
 	// (5:4) {:else}
-	function create_if_block_1$3(component, ctx) {
+	function create_if_block_1$4(component, ctx) {
 
 		var avatar_initial_data = { user: ctx.user };
 		var avatar = new Avatar({
@@ -5351,7 +5612,7 @@ var app = (function () {
 	};
 
 	function create_main_fragment$34(component, ctx) {
-		var nav, ul, text_1, div;
+		var nav, ul, ul_class_value, text_1, div;
 
 		var each_value = ctx.menu;
 
@@ -5387,8 +5648,8 @@ var app = (function () {
 				text_1 = createText("\n\n");
 				div = createElement("div");
 				if (switch_instance) switch_instance._fragment.c();
-				ul.className = "tab-nav svelte-w7r80x";
-				div.className = "tab-content svelte-w7r80x";
+				ul.className = ul_class_value = "tab-nav animate " + (ctx.fixed ? 'scaleY' : '') + " svelte-zza7p5";
+				div.className = "tab-content svelte-zza7p5";
 			},
 
 			m: function mount(target, anchor) {
@@ -5428,6 +5689,10 @@ var app = (function () {
 						each_blocks[i].d();
 					}
 					each_blocks.length = each_value.length;
+				}
+
+				if ((changed.fixed) && ul_class_value !== (ul_class_value = "tab-nav animate " + (ctx.fixed ? 'scaleY' : '') + " svelte-zza7p5")) {
+					ul.className = ul_class_value;
 				}
 
 				var switch_instance_changes = {};
@@ -5473,8 +5738,8 @@ var app = (function () {
 		var li, button, text, span, text_1_value = ctx.item.icon.text, text_1, button_class_value;
 
 		function select_block_type(ctx) {
-			if (ctx.item.icon.svg) return create_if_block$6;
-			if (ctx.item.icon.img) return create_if_block_1$4;
+			if (ctx.item.icon.svg) return create_if_block$7;
+			if (ctx.item.icon.img) return create_if_block_1$5;
 			return create_if_block_2$3;
 		}
 
@@ -5489,13 +5754,13 @@ var app = (function () {
 				text = createText("\n        ");
 				span = createElement("span");
 				text_1 = createText(text_1_value);
-				span.className = "text svelte-w7r80x";
+				span.className = "text svelte-zza7p5";
 
 				button._svelte = { component, ctx };
 
 				addListener(button, "click", click_handler);
-				button.className = button_class_value = "btn menu-item " + (ctx.item.active ? 'active' : '') + " svelte-w7r80x";
-				li.className = "svelte-w7r80x";
+				button.className = button_class_value = "btn menu-item " + (ctx.item.active ? 'active' : '') + " svelte-zza7p5";
+				li.className = "svelte-zza7p5";
 			},
 
 			m: function mount(target, anchor) {
@@ -5523,7 +5788,7 @@ var app = (function () {
 				}
 
 				button._svelte.ctx = ctx;
-				if ((changed.menu) && button_class_value !== (button_class_value = "btn menu-item " + (ctx.item.active ? 'active' : '') + " svelte-w7r80x")) {
+				if ((changed.menu) && button_class_value !== (button_class_value = "btn menu-item " + (ctx.item.active ? 'active' : '') + " svelte-zza7p5")) {
 					button.className = button_class_value;
 				}
 			},
@@ -5541,7 +5806,7 @@ var app = (function () {
 	}
 
 	// (6:8) {#if item.icon.svg}
-	function create_if_block$6(component, ctx) {
+	function create_if_block$7(component, ctx) {
 		var span;
 
 		var iconssvg_initial_data = { name: ctx.item.icon.svg };
@@ -5554,7 +5819,7 @@ var app = (function () {
 			c: function create() {
 				span = createElement("span");
 				iconssvg._fragment.c();
-				span.className = "icon svelte-w7r80x";
+				span.className = "icon svelte-zza7p5";
 			},
 
 			m: function mount(target, anchor) {
@@ -5579,7 +5844,7 @@ var app = (function () {
 	}
 
 	// (10:31) 
-	function create_if_block_1$4(component, ctx) {
+	function create_if_block_1$5(component, ctx) {
 		var span, img, img_src_value, img_alt_value;
 
 		return {
@@ -5588,7 +5853,7 @@ var app = (function () {
 				img = createElement("img");
 				img.src = img_src_value = ctx.item.icon.img;
 				img.alt = img_alt_value = ctx.item.icon.name;
-				span.className = "icon svelte-w7r80x";
+				span.className = "icon svelte-zza7p5";
 			},
 
 			m: function mount(target, anchor) {
@@ -5660,6 +5925,7 @@ var app = (function () {
 		if (!options || (!options.target && !options.root)) throw new Error("'target' is a required option");
 		init(this, options);
 		this._state = assign(data$7(), options.data);
+		if (!('fixed' in this._state)) console.warn("<ContentProfile> was created without expected data property 'fixed'");
 		if (!('menu' in this._state)) console.warn("<ContentProfile> was created without expected data property 'menu'");
 		if (!('selected' in this._state)) console.warn("<ContentProfile> was created without expected data property 'selected'");
 		if (!('profile' in this._state)) console.warn("<ContentProfile> was created without expected data property 'profile'");
@@ -5768,7 +6034,9 @@ var app = (function () {
 	/* src/App.html generated by Svelte v2.4.4 */
 
 	// style values
-	const SCROLL_SPACE = 360; // banner height
+	const BANNER_H = 360;
+	const PROFILE_IMG_H = 225;
+	const SCROLL_SPACE_SIDEBAR = BANNER_H - PROFILE_IMG_H/2;
 
 	// data values
 	const POSTS = [
@@ -5928,7 +6196,10 @@ var app = (function () {
 			profile: PROFILE,
 			// style data
 			fixedHeader: false,
-			blur: 0
+			blur: 0,
+			dim: 225,
+			animate: false,
+			lastScrollTop: 0
 		}
 	}
 	var methods$4 = {
@@ -5962,17 +6233,26 @@ var app = (function () {
 		},
 		scrollAnimation(event) {
 			var scrollTop = event.target.scrollTop;
-			if (scrollTop > SCROLL_SPACE && this.get().fixedHeader) { return; }
+			if (scrollTop > BANNER_H && this.get().fixedHeader) { return; }
 
-			// image animation
-			this.set({blur: scrollTop*6/SCROLL_SPACE});
+			// banner animation
+			this.set({blur: scrollTop*6/BANNER_H});
 
-			// content animation
-			if (scrollTop > SCROLL_SPACE) {
+			// header animation
+			if (scrollTop === BANNER_H) {
 				this.set({fixedHeader: true});
-			} else if (scrollTop < SCROLL_SPACE && this.get().fixedHeader) {
+			} else if (scrollTop < BANNER_H && this.get().fixedHeader) {
 				this.set({fixedHeader: false});
 			}
+
+			// profile image animation
+			if (scrollTop > SCROLL_SPACE_SIDEBAR && scrollTop > this.get().lastScrollTop) {
+				this.set({animate: true});
+				event.target.scroll({top: BANNER_H, left: 0, behavior: 'smooth' });
+			} else {
+				this.set({animate: false});
+			}
+			this.set({lastScrollTop: scrollTop});
 		}
 	};
 
@@ -6005,6 +6285,7 @@ var app = (function () {
 		var sidebarprofile_initial_data = {
 		 	profile: ctx.profile,
 		 	user: ctx.profileUser,
+		 	animate: ctx.animate,
 		 	fixed: ctx.fixedHeader
 		 };
 		var sidebarprofile = new SidebarProfile({
@@ -6030,7 +6311,8 @@ var app = (function () {
 		var contentprofile_initial_data = {
 		 	menu: ctx.profileMenu,
 		 	profile: ctx.profile,
-		 	user: ctx.profileUser
+		 	user: ctx.profileUser,
+		 	fixed: ctx.fixedHeader
 		 };
 		var contentprofile = new ContentProfile({
 			root: component.root,
@@ -6081,14 +6363,14 @@ var app = (function () {
 				sidebar_1._fragment.c();
 				link.href = "https://fonts.googleapis.com/css?family=Palanquin:300";
 				link.rel = "stylesheet";
-				div_2.className = "scroll-space svelte-gerft6";
-				div_5.className = "content svelte-gerft6";
+				div_2.className = "scroll-space svelte-y15pki";
+				div_5.className = "content svelte-y15pki";
 				div_4.className = "row";
-				main.className = "svelte-gerft6";
-				div_3.className = "row scroll-content svelte-gerft6";
+				main.className = "svelte-y15pki";
+				div_3.className = "row scroll-content svelte-y15pki";
 				addListener(div_1, "scroll", scroll_handler);
-				div_1.className = "scroll svelte-gerft6";
-				div.className = "page sidenav svelte-gerft6";
+				div_1.className = "scroll svelte-y15pki";
+				div.className = "page sidenav svelte-y15pki";
 			},
 
 			m: function mount(target, anchor) {
@@ -6136,6 +6418,7 @@ var app = (function () {
 				var sidebarprofile_changes = {};
 				if (changed.profile) sidebarprofile_changes.profile = ctx.profile;
 				if (changed.profileUser) sidebarprofile_changes.user = ctx.profileUser;
+				if (changed.animate) sidebarprofile_changes.animate = ctx.animate;
 				if (changed.fixedHeader) sidebarprofile_changes.fixed = ctx.fixedHeader;
 				sidebarprofile._set(sidebarprofile_changes);
 
@@ -6149,6 +6432,7 @@ var app = (function () {
 				if (changed.profileMenu) contentprofile_changes.menu = ctx.profileMenu;
 				if (changed.profile) contentprofile_changes.profile = ctx.profile;
 				if (changed.profileUser) contentprofile_changes.user = ctx.profileUser;
+				if (changed.fixedHeader) contentprofile_changes.fixed = ctx.fixedHeader;
 				contentprofile._set(contentprofile_changes);
 			},
 
@@ -6183,6 +6467,7 @@ var app = (function () {
 		if (!('profile' in this._state)) console.warn("<App> was created without expected data property 'profile'");
 		if (!('blur' in this._state)) console.warn("<App> was created without expected data property 'blur'");
 		if (!('profileUser' in this._state)) console.warn("<App> was created without expected data property 'profileUser'");
+		if (!('animate' in this._state)) console.warn("<App> was created without expected data property 'animate'");
 		if (!('fixedHeader' in this._state)) console.warn("<App> was created without expected data property 'fixedHeader'");
 		if (!('profileMenu' in this._state)) console.warn("<App> was created without expected data property 'profileMenu'");
 

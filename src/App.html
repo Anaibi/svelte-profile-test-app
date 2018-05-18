@@ -10,13 +10,13 @@
 		<div class="scroll-space"></div>
 		<div class="row scroll-content">
 			<Sidebar>
-				<SidebarProfile profile={profile} user={profileUser} fixed={fixedHeader}/>
+				<SidebarProfile profile={profile} user={profileUser} animate={animate} fixed={fixedHeader}/>
 			</Sidebar>
 			<main>
 				<HeaderProfile profile={profile} user={profileUser} fixed={fixedHeader}/>
 				<div class="row">
 					<div class="content">
-						<ContentProfile menu={profileMenu} profile={profile} user={profileUser}/>
+						<ContentProfile menu={profileMenu} profile={profile} user={profileUser} fixed={fixedHeader}/>
 					</div>
 					<Sidebar>
 						<SidebarContent/>
@@ -80,7 +80,7 @@
 		color: #3299CC;
 		background: white;
 	}
-	:global(.btn-icon) {
+	:global(.btn.btn-icon) {
 		width: 45px;
 		margin-right: 15px;
 	}
@@ -155,6 +155,10 @@
 		padding-right: 100%;
 		margin-right: -100%;
 	}
+	:global(.sticky) {
+		position: sticky;
+		top: 0;
+	}
 	:global(.highlight) {
 		color: #3299CC;
 	}
@@ -226,8 +230,12 @@
 
 	import api from './services/api';
 
+	import {fade} from 'svelte-transitions';
+
 	// style values
-	const SCROLL_SPACE = 360; // banner height
+	const BANNER_H = 360;
+	const PROFILE_IMG_H = 225;
+	const SCROLL_SPACE_SIDEBAR = BANNER_H - PROFILE_IMG_H/2;
 
 	// data values
 	const POSTS = [
@@ -374,6 +382,9 @@
 			ContentProfile,
 			SidebarContent,
 		},
+		transitions: {
+			fade
+		},
 		data() {
 			return {
 				brand: {img: '', link: ''},
@@ -397,7 +408,10 @@
 				profile: PROFILE,
 				// style data
 				fixedHeader: false,
-				blur: 0
+				blur: 0,
+				dim: 225,
+				animate: false,
+				lastScrollTop: 0
 			}
 		},
 		methods: {
@@ -431,17 +445,26 @@
 			},
 			scrollAnimation(event) {
 				var scrollTop = event.target.scrollTop;
-				if (scrollTop > SCROLL_SPACE && this.get().fixedHeader) { return; }
+				if (scrollTop > BANNER_H && this.get().fixedHeader) { return; }
 
-				// image animation
-				this.set({blur: scrollTop*6/SCROLL_SPACE});
+				// banner animation
+				this.set({blur: scrollTop*6/BANNER_H});
 
-				// content animation
-				if (scrollTop > SCROLL_SPACE) {
+				// header animation
+				if (scrollTop === BANNER_H) {
 					this.set({fixedHeader: true});
-				} else if (scrollTop < SCROLL_SPACE && this.get().fixedHeader) {
+				} else if (scrollTop < BANNER_H && this.get().fixedHeader) {
 					this.set({fixedHeader: false});
 				}
+
+				// profile image animation
+				if (scrollTop > SCROLL_SPACE_SIDEBAR && scrollTop > this.get().lastScrollTop) {
+					this.set({animate: true});
+					event.target.scroll({top: BANNER_H, left: 0, behavior: 'smooth' });
+				} else {
+					this.set({animate: false});
+				}
+				this.set({lastScrollTop: scrollTop});
 			}
 		},
 		oncreate() {
