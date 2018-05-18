@@ -83,19 +83,27 @@ export default {
   getUsers() {
     //python -m SimpleHTTPServer
     //
-    // return fetch('http://localhost:8080/users.json').then(res=>{
-      // return res.json();
+    // console.log(JSON.stringify(USERS));
+    return fetch('http://localhost:5000/data/users.json')
+      .then(res => { console.log(res.json);
+        return res.json();
+      });
+    // return new Promise((resolve) => {
+    //   resolve(USERS);
     // });
-    return new Promise((resolve) => {
-      resolve(USERS);
-    });
   },
   findUser(id){
     return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(USERS.find(x => x.id === id));
-      }, 1500);
+      // setTimeout(() => {
+      //   resolve(USERS.find(x => x.id === id));
+      // }, 1500);
       // resolve(USERS.find(x => x.id === id));
+      var users = this.getUsers(),
+          user = '';
+      users.then((users) => {
+        user = users.find(x => x.id === id);
+      });
+      resolve(user);
     });
   },
   findUsers(ids) {
