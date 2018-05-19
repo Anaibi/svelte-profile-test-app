@@ -2814,11 +2814,11 @@ var app = (function () {
 				text_2 = createText("\n\t\t");
 				button_1 = createElement("button");
 				button_1.textContent = "Request";
-				span.className = "icon svelte-1c8md90";
-				button.className = "btn btn-icon svelte-1c8md90";
+				span.className = "icon svelte-h37lq2";
+				button.className = "btn btn-icon svelte-h37lq2";
 				button_1.className = "btn btn-primary";
 				div_1.className = "row";
-				header.className = header_class_value = "row vCentered sticky " + (ctx.fixed? 'fixed' : '') + " svelte-1c8md90";
+				header.className = header_class_value = "row vCentered sticky " + (ctx.fixed? 'fixed' : '') + " svelte-h37lq2";
 			},
 
 			m: function mount(target, anchor) {
@@ -2842,7 +2842,7 @@ var app = (function () {
 					await_block_1.p(changed, assign(assign({}, ctx), resolved));
 				}
 
-				if ((changed.fixed) && header_class_value !== (header_class_value = "row vCentered sticky " + (ctx.fixed? 'fixed' : '') + " svelte-1c8md90")) {
+				if ((changed.fixed) && header_class_value !== (header_class_value = "row vCentered sticky " + (ctx.fixed? 'fixed' : '') + " svelte-h37lq2")) {
 					header.className = header_class_value;
 				}
 			},
@@ -2897,8 +2897,8 @@ var app = (function () {
 				text_2 = createText(text_2_value);
 				text_3 = createText(" ");
 				stars._fragment.c();
-				h1.className = "svelte-1c8md90";
-				p.className = "svelte-1c8md90";
+				h1.className = "svelte-h37lq2";
+				p.className = "svelte-h37lq2";
 			},
 
 			m: function mount(target, anchor) {
@@ -6157,7 +6157,7 @@ var app = (function () {
 			this.set({blur: scrollTop*6/BANNER_H});
 
 			// header animation
-			if (scrollTop === BANNER_H) {
+			if (scrollTop >= BANNER_H) {
 				this.set({fixedHeader: true});
 			} else if (scrollTop < BANNER_H && this.get().fixedHeader) {
 				this.set({fixedHeader: false});

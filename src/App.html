@@ -451,7 +451,7 @@
 				this.set({blur: scrollTop*6/BANNER_H});
 
 				// header animation
-				if (scrollTop === BANNER_H) {
+				if (scrollTop >= BANNER_H) {
 					this.set({fixedHeader: true});
 				} else if (scrollTop < BANNER_H && this.get().fixedHeader) {
 					this.set({fixedHeader: false});
