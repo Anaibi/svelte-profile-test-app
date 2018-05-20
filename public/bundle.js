@@ -3058,6 +3058,12 @@ var app = (function () {
 	      });
 
 	    })
+	  },
+	  getPosts(id) {
+	    return fetch(`http://localhost:5000/data/posts_user_${id}.json`)
+	      .then(res => {
+	        return res.json();
+	      });
 	  }
 	};
 
@@ -4926,76 +4932,119 @@ var app = (function () {
 	function data$6() {
 	  return {
 	    isReview: false,
-	    reviewUser: ''
+	    reviewUser: '',
+	    posts: ''
 	  }
 	}
+	var methods$3 = {
+	  setPosts() {
+	    api.getPosts(this.root.get().profileId)
+	      .then(posts => {
+	        this.set({posts});
+	      });
+	  }
+	};
+
+	function oncreate$5() {
+	  this.setPosts();
+	}
 	function create_main_fragment$31(component, ctx) {
-		var each_anchor;
+		var await_block_anchor, await_block_1, await_block_type, await_token, promise, resolved;
 
-		var each_value = ctx.profile.posts;
+		function replace_await_block(token, type, ctx) {
+			if (token !== await_token) return;
 
-		var each_blocks = [];
+			var old_block = await_block_1;
+			await_block_1 = type && (await_block_type = type)(component, ctx);
 
-		for (var i = 0; i < each_value.length; i += 1) {
-			each_blocks[i] = create_each_block$3(component, get_each_context$3(ctx, each_value, i));
+			if (old_block) {
+				old_block.u();
+				old_block.d();
+				await_block_1.c();
+				await_block_1.m(await_block_anchor.parentNode, await_block_anchor);
+
+				component.root.set({});
+			}
 		}
+
+		function handle_promise(promise) {
+			var token = await_token = {};
+
+			if (isPromise(promise)) {
+				promise.then(function(value) {
+					resolved = { posts: value };
+					replace_await_block(token, create_then_block$7, assign(assign({}, ctx), resolved));
+				}, function (error) {
+					resolved = { error: error };
+					replace_await_block(token, create_catch_block$7, assign(assign({}, ctx), resolved));
+				});
+
+				// if we previously had a then/catch block, destroy it
+				if (await_block_type !== create_pending_block$7) {
+					replace_await_block(token, create_pending_block$7, ctx);
+					return true;
+				}
+			} else {
+				resolved = { posts: promise };
+				if (await_block_type !== create_then_block$7) {
+					replace_await_block(token, create_then_block$7, assign(assign({}, ctx), resolved));
+					return true;
+				}
+			}
+		}
+
+		handle_promise(promise = ctx.posts);
 
 		return {
 			c: function create() {
-				for (var i = 0; i < each_blocks.length; i += 1) {
-					each_blocks[i].c();
-				}
+				await_block_anchor = createComment();
 
-				each_anchor = createComment();
+				await_block_1.c();
 			},
 
 			m: function mount(target, anchor) {
-				for (var i = 0; i < each_blocks.length; i += 1) {
-					each_blocks[i].m(target, anchor);
-				}
+				insertNode(await_block_anchor, target, anchor);
 
-				insertNode(each_anchor, target, anchor);
+				await_block_1.m(target, anchor);
 			},
 
-			p: function update(changed, ctx) {
-				if (changed.profile || changed.user) {
-					each_value = ctx.profile.posts;
-
-					for (var i = 0; i < each_value.length; i += 1) {
-						const child_ctx = get_each_context$3(ctx, each_value, i);
-
-						if (each_blocks[i]) {
-							each_blocks[i].p(changed, child_ctx);
-						} else {
-							each_blocks[i] = create_each_block$3(component, child_ctx);
-							each_blocks[i].c();
-							each_blocks[i].m(each_anchor.parentNode, each_anchor);
-						}
-					}
-
-					for (; i < each_blocks.length; i += 1) {
-						each_blocks[i].u();
-						each_blocks[i].d();
-					}
-					each_blocks.length = each_value.length;
+			p: function update(changed, _ctx) {
+				ctx = _ctx;
+				if (('posts' in changed) && promise !== (promise = ctx.posts) && handle_promise(promise, ctx)) ; else {
+					await_block_1.p(changed, assign(assign({}, ctx), resolved));
 				}
 			},
 
 			u: function unmount() {
-				for (var i = 0; i < each_blocks.length; i += 1) {
-					each_blocks[i].u();
-				}
+				detachNode(await_block_anchor);
 
-				detachNode(each_anchor);
+				await_block_1.u();
 			},
 
 			d: function destroy$$1() {
-				destroyEach(each_blocks);
+				await_token = null;
+				await_block_1.d();
 			}
 		};
 	}
 
-	// (1:0) {#each profile.posts as post}
+	// (1:14)  {:then posts}
+	function create_pending_block$7(component, ctx) {
+
+		return {
+			c: noop,
+
+			m: noop,
+
+			p: noop,
+
+			u: noop,
+
+			d: noop
+		};
+	}
+
+	// (3:2) {#each posts as post}
 	function create_each_block$3(component, ctx) {
 		var article, text, div, text_1, text_2, article_class_value;
 
@@ -5034,12 +5083,12 @@ var app = (function () {
 			c: function create() {
 				article = createElement("article");
 				if_block.c();
-				text = createText("\n\n    ");
+				text = createText("\n\n      ");
 				div = createElement("div");
 				if_block_1.c();
-				text_1 = createText("\n\n      ");
+				text_1 = createText("\n\n        ");
 				if_block_2.c();
-				text_2 = createText("\n\n      ");
+				text_2 = createText("\n\n        ");
 				postdetails._fragment.c();
 				div.className = "content svelte-1e1v44j";
 				article.className = article_class_value = "post " + (ctx.post.isSponsored ? 'sponsored' : '') + " svelte-1e1v44j";
@@ -5089,10 +5138,10 @@ var app = (function () {
 				}
 
 				var postdetails_changes = {};
-				if (changed.profile) postdetails_changes.details = ctx.post.details;
+				if (changed.posts) postdetails_changes.details = ctx.post.details;
 				postdetails._set(postdetails_changes);
 
-				if ((changed.profile) && article_class_value !== (article_class_value = "post " + (ctx.post.isSponsored ? 'sponsored' : '') + " svelte-1e1v44j")) {
+				if ((changed.posts) && article_class_value !== (article_class_value = "post " + (ctx.post.isSponsored ? 'sponsored' : '') + " svelte-1e1v44j")) {
 					article.className = article_class_value;
 				}
 			},
@@ -5113,7 +5162,7 @@ var app = (function () {
 		};
 	}
 
-	// (3:4) {#if post.isReview}
+	// (5:6) {#if post.isReview}
 	function create_if_block$6(component, ctx) {
 
 		var avatar_initial_data = { isReview: "true", user: ctx.post.review.user };
@@ -5133,7 +5182,7 @@ var app = (function () {
 
 			p: function update(changed, ctx) {
 				var avatar_changes = {};
-				if (changed.profile) avatar_changes.user = ctx.post.review.user;
+				if (changed.posts) avatar_changes.user = ctx.post.review.user;
 				avatar._set(avatar_changes);
 			},
 
@@ -5147,7 +5196,7 @@ var app = (function () {
 		};
 	}
 
-	// (5:4) {:else}
+	// (7:6) {:else}
 	function create_if_block_1$4(component, ctx) {
 
 		var avatar_initial_data = { user: ctx.user };
@@ -5181,7 +5230,7 @@ var app = (function () {
 		};
 	}
 
-	// (10:6) {#if post.isReview}
+	// (12:8) {#if post.isReview}
 	function create_if_block_2$2(component, ctx) {
 
 		var posttitle_initial_data = {
@@ -5205,8 +5254,8 @@ var app = (function () {
 
 			p: function update(changed, ctx) {
 				var posttitle_changes = {};
-				if (changed.profile) posttitle_changes.user = ctx.post.review.user;
-				if (changed.profile) posttitle_changes.date = ctx.post.date;
+				if (changed.posts) posttitle_changes.user = ctx.post.review.user;
+				if (changed.posts) posttitle_changes.date = ctx.post.date;
 				posttitle._set(posttitle_changes);
 			},
 
@@ -5220,7 +5269,7 @@ var app = (function () {
 		};
 	}
 
-	// (12:6) {:else}
+	// (14:8) {:else}
 	function create_if_block_3(component, ctx) {
 
 		var posttitle_initial_data = {
@@ -5244,9 +5293,9 @@ var app = (function () {
 
 			p: function update(changed, ctx) {
 				var posttitle_changes = {};
-				if (changed.profile) posttitle_changes.isSponsored = ctx.post.isSponsored;
+				if (changed.posts) posttitle_changes.isSponsored = ctx.post.isSponsored;
 				if (changed.user) posttitle_changes.user = ctx.user;
-				if (changed.profile) posttitle_changes.date = ctx.post.date;
+				if (changed.posts) posttitle_changes.date = ctx.post.date;
 				posttitle._set(posttitle_changes);
 			},
 
@@ -5260,7 +5309,7 @@ var app = (function () {
 		};
 	}
 
-	// (16:6) {#if post.isReview}
+	// (18:8) {#if post.isReview}
 	function create_if_block_4(component, ctx) {
 
 		var reviewpost_initial_data = {
@@ -5284,7 +5333,7 @@ var app = (function () {
 
 			p: function update(changed, ctx) {
 				var reviewpost_changes = {};
-				if (changed.profile) reviewpost_changes.post = ctx.post;
+				if (changed.posts) reviewpost_changes.post = ctx.post;
 				if (changed.user) reviewpost_changes.user = ctx.user;
 				if (changed.profile) reviewpost_changes.rating = ctx.profile.details.rating;
 				reviewpost._set(reviewpost_changes);
@@ -5300,7 +5349,7 @@ var app = (function () {
 		};
 	}
 
-	// (18:32) 
+	// (20:34) 
 	function create_if_block_5(component, ctx) {
 
 		var sponsoredpost_initial_data = { post: ctx.post };
@@ -5320,7 +5369,7 @@ var app = (function () {
 
 			p: function update(changed, ctx) {
 				var sponsoredpost_changes = {};
-				if (changed.profile) sponsoredpost_changes.post = ctx.post;
+				if (changed.posts) sponsoredpost_changes.post = ctx.post;
 				sponsoredpost._set(sponsoredpost_changes);
 			},
 
@@ -5334,7 +5383,7 @@ var app = (function () {
 		};
 	}
 
-	// (20:6) {:else}
+	// (22:8) {:else}
 	function create_if_block_6(component, ctx) {
 
 		var post_initial_data = { post: ctx.post };
@@ -5354,7 +5403,7 @@ var app = (function () {
 
 			p: function update(changed, ctx) {
 				var post_changes = {};
-				if (changed.profile) post_changes.post = ctx.post;
+				if (changed.posts) post_changes.post = ctx.post;
 				post._set(post_changes);
 			},
 
@@ -5365,6 +5414,89 @@ var app = (function () {
 			d: function destroy$$1() {
 				post.destroy(false);
 			}
+		};
+	}
+
+	// (2:0) {:then posts}
+	function create_then_block$7(component, ctx) {
+		var each_anchor;
+
+		var each_value = ctx.posts;
+
+		var each_blocks = [];
+
+		for (var i = 0; i < each_value.length; i += 1) {
+			each_blocks[i] = create_each_block$3(component, get_each_context$3(ctx, each_value, i));
+		}
+
+		return {
+			c: function create() {
+				for (var i = 0; i < each_blocks.length; i += 1) {
+					each_blocks[i].c();
+				}
+
+				each_anchor = createComment();
+			},
+
+			m: function mount(target, anchor) {
+				for (var i = 0; i < each_blocks.length; i += 1) {
+					each_blocks[i].m(target, anchor);
+				}
+
+				insertNode(each_anchor, target, anchor);
+			},
+
+			p: function update(changed, ctx) {
+				if (changed.posts || changed.user || changed.profile) {
+					each_value = ctx.posts;
+
+					for (var i = 0; i < each_value.length; i += 1) {
+						const child_ctx = get_each_context$3(ctx, each_value, i);
+
+						if (each_blocks[i]) {
+							each_blocks[i].p(changed, child_ctx);
+						} else {
+							each_blocks[i] = create_each_block$3(component, child_ctx);
+							each_blocks[i].c();
+							each_blocks[i].m(each_anchor.parentNode, each_anchor);
+						}
+					}
+
+					for (; i < each_blocks.length; i += 1) {
+						each_blocks[i].u();
+						each_blocks[i].d();
+					}
+					each_blocks.length = each_value.length;
+				}
+			},
+
+			u: function unmount() {
+				for (var i = 0; i < each_blocks.length; i += 1) {
+					each_blocks[i].u();
+				}
+
+				detachNode(each_anchor);
+			},
+
+			d: function destroy$$1() {
+				destroyEach(each_blocks);
+			}
+		};
+	}
+
+	// (30:0) {:catch error}
+	function create_catch_block$7(component, ctx) {
+
+		return {
+			c: noop,
+
+			m: noop,
+
+			p: noop,
+
+			u: noop,
+
+			d: noop
 		};
 	}
 
@@ -5381,8 +5513,9 @@ var app = (function () {
 		if (!options || (!options.target && !options.root)) throw new Error("'target' is a required option");
 		init(this, options);
 		this._state = assign(data$6(), options.data);
-		if (!('profile' in this._state)) console.warn("<ProfileFeed> was created without expected data property 'profile'");
+		if (!('posts' in this._state)) console.warn("<ProfileFeed> was created without expected data property 'posts'");
 		if (!('user' in this._state)) console.warn("<ProfileFeed> was created without expected data property 'user'");
+		if (!('profile' in this._state)) console.warn("<ProfileFeed> was created without expected data property 'profile'");
 
 		if (!options.root) {
 			this._oncreate = [];
@@ -5391,6 +5524,11 @@ var app = (function () {
 		}
 
 		this._fragment = create_main_fragment$31(this, this._state);
+
+		this.root._oncreate.push(() => {
+			oncreate$5.call(this);
+			this.fire("update", { changed: assignTrue({}, this._state), current: this._state });
+		});
 
 		if (options.target) {
 			if (options.hydrate) throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -5406,6 +5544,7 @@ var app = (function () {
 	}
 
 	assign(ProfileFeed.prototype, protoDev);
+	assign(ProfileFeed.prototype, methods$3);
 
 	ProfileFeed.prototype._checkReadOnly = function _checkReadOnly(newState) {
 	};
@@ -5512,7 +5651,7 @@ var app = (function () {
 	    selected: ProfileFeed
 	  }
 	}
-	var methods$3 = {
+	var methods$4 = {
 	  toggleContent(i) {
 	    var menu = this.get().menu;
 	    var clicked = menu[i];
@@ -5871,7 +6010,7 @@ var app = (function () {
 	}
 
 	assign(ContentProfile.prototype, protoDev);
-	assign(ContentProfile.prototype, methods$3);
+	assign(ContentProfile.prototype, methods$4);
 
 	ContentProfile.prototype._checkReadOnly = function _checkReadOnly(newState) {
 	};
@@ -5957,95 +6096,95 @@ var app = (function () {
 	const SCROLL_SPACE_SIDEBAR = BANNER_H - PROFILE_IMG_H/2;
 
 	// data values
-	const POSTS = [
-		{ post_id: '',
-			date: '2018-05-09T12:00:00Z',
-			content: {
-				text: '<p>New portfolio update with my last projects <strong>#architecture</strong> <strong>#portfolio</strong> <a class="link" href="https://www.architizes.com/MarioMendez" target="_blank">https://www.architizes.com/MarioMendez</a></p>'
-			},
-			details: {
-				stars: 2,
-				comments: {
-					total: 11,
-					link: ''
-				},
-				answers: {
-					total: 0,
-					link: ''
-				}
-			}
-		},
-		{ post_id: '',
-			isSponsored: true,
-			date: '2018-05-06T13:00:00Z',
-			content: {
-				text: '<p><strong>Architecture Services</strong></p><p>Design and planning consultance, see more at ...<p>',
-				img: 'https://i.imgur.com/vZ8suUE.jpg'
-			},
-			details: {
-				stars: 36,
-				comments: {
-					total: 2,
-					link: ''
-				},
-				answers: {
-					total: 5,
-					link: ''
-				}
-			},
-			recommendations: {
-				// would be an array of 42 elements/users id
-				users: ['03', '04', '05', '10', '11'],
-				rating: 4.6,
-				// total = users.length
-				total: 42
-			}
-		},
-		{	post_id: '001',
-			isReview: true,
-			date: '2018-05-03T13:00:00Z',
-			review: {
-				user: '03',
-				content: {
-					text: 'It was a pleasure to work with Mario. Very professional and talented architect. I really suggest him!'
-				},
-				rating: 5,
-			},
-			details: {
-				stars: 6,
-				comments: {
-					total: 2,
-					link: ''
-				},
-				answers: {
-					total: 2,
-					link: ''
-				}
-			}
-		},
-		{	post_id: '002',
-			isReview: true,
-			date: '2018-05-02T14:00:00Z',
-			review: {
-				user: '04',
-				content: {
-					text: 'I worked with him for a project ...'
-				},
-				rating: 5,
-			}
-		},
-		{	post_id: '003',
-			isReview: true,
-			date: '2018-05-01T14:00:00Z',
-			review: {
-				user: '05',
-				content: {
-					text: 'I contacted him for a project ...'
-				},
-				rating: 4,
-			}
-		}
-	];
+	// const POSTS = [
+	// 	{ post_id: '',
+	// 		date: '2018-05-09T12:00:00Z',
+	// 		content: {
+	// 			text: '<p>New portfolio update with my last projects <strong>#architecture</strong> <strong>#portfolio</strong> <a class="link" href="https://www.architizes.com/MarioMendez" target="_blank">https://www.architizes.com/MarioMendez</a></p>'
+	// 		},
+	// 		details: {
+	// 			stars: 2,
+	// 			comments: {
+	// 				total: 11,
+	// 				link: ''
+	// 			},
+	// 			answers: {
+	// 				total: 0,
+	// 				link: ''
+	// 			}
+	// 		}
+	// 	},
+	// 	{ post_id: '',
+	// 		isSponsored: true,
+	// 		date: '2018-05-06T13:00:00Z',
+	// 		content: {
+	// 			text: '<p><strong>Architecture Services</strong></p><p>Design and planning consultance, see more at ...<p>',
+	// 			img: 'https://i.imgur.com/vZ8suUE.jpg'
+	// 		},
+	// 		details: {
+	// 			stars: 36,
+	// 			comments: {
+	// 				total: 2,
+	// 				link: ''
+	// 			},
+	// 			answers: {
+	// 				total: 5,
+	// 				link: ''
+	// 			}
+	// 		},
+	// 		recommendations: {
+	// 			// would be an array of 42 elements/users id
+	// 			users: ['03', '04', '05', '10', '11'],
+	// 			rating: 4.6,
+	// 			// total = users.length
+	// 			total: 42
+	// 		}
+	// 	},
+	// 	{	post_id: '001',
+	// 		isReview: true,
+	// 		date: '2018-05-03T13:00:00Z',
+	// 		review: {
+	// 			user: '03',
+	// 			content: {
+	// 				text: 'It was a pleasure to work with Mario. Very professional and talented architect. I really suggest him!'
+	// 			},
+	// 			rating: 5,
+	// 		},
+	// 		details: {
+	// 			stars: 6,
+	// 			comments: {
+	// 				total: 2,
+	// 				link: ''
+	// 			},
+	// 			answers: {
+	// 				total: 2,
+	// 				link: ''
+	// 			}
+	// 		}
+	// 	},
+	// 	{	post_id: '002',
+	// 		isReview: true,
+	// 		date: '2018-05-02T14:00:00Z',
+	// 		review: {
+	// 			user: '04',
+	// 			content: {
+	// 				text: 'I worked with him for a project ...'
+	// 			},
+	// 			rating: 5,
+	// 		}
+	// 	},
+	// 	{	post_id: '003',
+	// 		isReview: true,
+	// 		date: '2018-05-01T14:00:00Z',
+	// 		review: {
+	// 			user: '05',
+	// 			content: {
+	// 				text: 'I contacted him for a project ...'
+	// 			},
+	// 			rating: 4,
+	// 		}
+	// 	}
+	// ];
 
 	const REVIEWS = [];
 
@@ -6077,7 +6216,7 @@ var app = (function () {
 			left: 0
 		},
 		projects: PROJECTS,
-		posts: POSTS,
+		// posts: POSTS,
 		reviews: REVIEWS
 	};
 
@@ -6120,7 +6259,7 @@ var app = (function () {
 			lastScrollTop: 0
 		}
 	}
-	var methods$4 = {
+	var methods$5 = {
 		getIcons(menu) {
 			var icons = this.get().icons;
 			if (menu.length === 0) return;
@@ -6178,7 +6317,7 @@ var app = (function () {
 		}
 	};
 
-	function oncreate$5() {
+	function oncreate$6() {
 		this.setUser(this.get().userId);
 		this.setProfileUser(this.get().profileId);
 
@@ -6402,7 +6541,7 @@ var app = (function () {
 		this._fragment = create_main_fragment$36(this, this._state);
 
 		this.root._oncreate.push(() => {
-			oncreate$5.call(this);
+			oncreate$6.call(this);
 			this.fire("update", { changed: assignTrue({}, this._state), current: this._state });
 		});
 
@@ -6420,7 +6559,7 @@ var app = (function () {
 	}
 
 	assign(App.prototype, protoDev);
-	assign(App.prototype, methods$4);
+	assign(App.prototype, methods$5);
 
 	App.prototype._checkReadOnly = function _checkReadOnly(newState) {
 	};

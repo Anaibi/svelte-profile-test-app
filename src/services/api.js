@@ -24,5 +24,11 @@ export default {
       });
 
     })
+  },
+  getPosts(id) {
+    return fetch(`http://localhost:5000/data/posts_user_${id}.json`)
+      .then(res => {
+        return res.json();
+      });
   }
 };
