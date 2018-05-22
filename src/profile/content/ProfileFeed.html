@@ -1,4 +1,6 @@
 {#await posts}
+  <!-- todo add loading element -->
+  <p>LOADIING POSTS</p>
 {:then posts}
   {#each posts as post}
     <article class="post {post.isSponsored ? 'sponsored' : ''}">
@@ -16,7 +18,7 @@
         {/if}
 
         {#if post.isReview}
-          <ReviewPost post={post} user={user} rating={profile.details.rating}/>
+          <ReviewPost post={post} user={user}/>
         {:elseif post.isSponsored}
           <SponsoredPost post={post}/>
         {:else}
@@ -56,7 +58,6 @@
     data() {
       return {
         isReview: false,
-        reviewUser: '',
         posts: ''
       }
     },
@@ -68,16 +69,8 @@
       Post,
       PostDetails
     },
-    methods: {
-      setPosts() {
-        api.getPosts(this.root.get().profileId)
-          .then(posts => {
-            this.set({posts});
-          });
-      }
-    },
     oncreate() {
-      this.setPosts();
+      this.set({posts: api.getPosts(this.root.get().profileId)});
     }
   }
 </script>

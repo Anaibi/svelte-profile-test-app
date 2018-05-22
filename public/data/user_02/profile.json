@@ -1,0 +1,15 @@
+{
+  "details": {
+    "rating": 4.8,
+    "followers": 320,
+    "following": 147,
+    "performance": 56,
+    "reviews": 42
+  },
+  "banner": {
+    "img": "https://i.imgur.com/MbMnM74.jpg",
+    "width": 130,
+    "top" : -60,
+    "left": 0
+  }
+}

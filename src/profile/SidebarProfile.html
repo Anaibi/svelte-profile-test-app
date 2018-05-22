@@ -17,7 +17,7 @@
 							<h2 class="title">Follower</h2>
 							<span class="dropdown-arrow"></span>
 						</button>
-						<p class="highlight info">{profile.details.followers}</p>
+						<p class="highlight info">{details.followers}</p>
 					</div>
 				</div>
 			</header>
@@ -38,16 +38,16 @@
 				<div class="info-row lg row">
 					<div class="col">
 						<h2 class="title">Follower</h2>
-						<p class="highlight info">{profile.details.followers}</p>
+						<p class="highlight info">{details.followers}</p>
 					</div>
 					<div class="col">
 						<h2 class="title">Folowing</h2>
-						<p class="highlight info">{profile.details.following}</p>
+						<p class="highlight info">{details.following}</p>
 					</div>
 				</div>
 				<div class="col info-row row-left">
 					<h2 class="title">Performance</h2>
-					<p class="highlight info">{profile.details.perf} <span class="note">and {profile.details.reviews} reviews</span></p>
+					<p class="highlight info">{details.performance} <span class="note">and {details.reviews} reviews</span></p>
 				</div>
 			</div>
 		</header>
@@ -57,7 +57,11 @@
 		<h2 class="title">
 			<span class="icon"><IconsSvg name="Camera"/></span> Projects
 		</h2>
-		<Tiles tiles={profile.projects}/>
+		{#await projects}
+		{:then projects}
+			<Tiles tiles={projects}/>
+		{:catch error}
+		{/await}
 
 		<h2 class="title">
 			<span class="icon icon-star"><IconsSvg name="Star"/></span> Boosts
@@ -190,12 +194,28 @@
 	import IconsSvg from './../icons/IconsSvg.html';
 	import Tiles from './../components/Tiles.html';
 
+	import api from './../services/api';
+
 	import {fade} from 'svelte-transitions';
 
 	export default {
+		data() {
+			return {
+				projects: ''
+			}
+		},
 		components: {
 			IconsSvg,
 			Tiles,
+		},
+		methods: {
+			setProjects() {
+				var projects = api.getProjects(this.root.get().profileId)
+				this.set({projects});
+			}
+		},
+		oncreate() {
+			this.setProjects();
 		}
 	}
 </script>
