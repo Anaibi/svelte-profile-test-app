@@ -1,9 +1,15 @@
+
 <div class="banner-wrapper">
 	<div class="banner" style="filter: blur({blur}px)">
 		<img src="{banner.img}" alt="banner" style="width: {banner.width}%; top: {banner.top}%; left: {banner.left}%"/>
 	</div>
 </div>
 
+<!-- <div class="banner-wrapper">
+	<div class="banner" style="filter: blur({blur}px)">
+		<img src="{banner.img}" alt="banner" style="width: {banner.width}%; top: {banner.top}%; left: {banner.left}%"/>
+	</div>
+</div> -->
 
 <style>
 	.banner-wrapper {
@@ -24,8 +30,19 @@
 	export default {
 		data() {
 			return {
-				blur: false
+				blur: false,
+				banner: ''
 			}
+		},
+		oncreate() {
+			// var banner = {}; this.set({banner});
+			// var profile = this.get().profile;
+			// console.log(profile);
+				// .then(profile => {
+				// 	this.set({banner: profile.banner});
+				// });
+			// profile.then(profile => { console.log(profile)});
+
 		}
 	}
 </script>

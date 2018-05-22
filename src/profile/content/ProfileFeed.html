@@ -1,30 +1,36 @@
-{#each profile.posts as post}
-  <article class="post {post.isSponsored ? 'sponsored' : ''}">
-    {#if post.isReview}
-      <Avatar isReview="true" user={post.review.user}/>
-    {:else}
-      <Avatar user={user}/>
-    {/if}
-
-    <div class="content">
+{#await posts}
+  <!-- todo add loading element -->
+  <p>LOADIING POSTS</p>
+{:then posts}
+  {#each posts as post}
+    <article class="post {post.isSponsored ? 'sponsored' : ''}">
       {#if post.isReview}
-        <PostTitle isReview="true" user={post.review.user} date={post.date}/>
+        <Avatar isReview="true" user={post.review.user}/>
       {:else}
-        <PostTitle isSponsored={post.isSponsored} user={user} date={post.date}/>
+        <Avatar user={user}/>
       {/if}
 
-      {#if post.isReview}
-        <ReviewPost post={post} user={user} rating={profile.details.rating}/>
-      {:elseif post.isSponsored}
-        <SponsoredPost post={post}/>
-      {:else}
-        <Post post={post}/>
-      {/if}
+      <div class="content">
+        {#if post.isReview}
+          <PostTitle isReview="true" user={post.review.user} date={post.date}/>
+        {:else}
+          <PostTitle isSponsored={post.isSponsored} user={user} date={post.date}/>
+        {/if}
 
-      <PostDetails details={post.details}/>
-    </div>
-  </article>
-{/each}
+        {#if post.isReview}
+          <ReviewPost post={post} user={user}/>
+        {:elseif post.isSponsored}
+          <SponsoredPost post={post}/>
+        {:else}
+          <Post post={post}/>
+        {/if}
+
+        <PostDetails details={post.details}/>
+      </div>
+    </article>
+  {/each}
+{:catch error}
+{/await}
 
 <style>
   .post {
@@ -52,7 +58,7 @@
     data() {
       return {
         isReview: false,
-        reviewUser: ''
+        posts: ''
       }
     },
     components: {
@@ -62,6 +68,9 @@
       ReviewPost,
       Post,
       PostDetails
+    },
+    oncreate() {
+      this.set({posts: api.getPosts(this.root.get().profileId)});
     }
   }
 </script>

@@ -1,0 +1,88 @@
+[
+  {
+    "id": "",
+    "date": "2018-05-09T12:00:00Z",
+    "content": {
+      "text": "<p>New portfolio update with my last projects <strong>#architecture</strong> <strong>#portfolio</strong> <a class=\"link\" href=\"https://www.architizes.com/MarioMendez\" target=\"_blank\">https://www.architizes.com/MarioMendez</a></p>"
+    },
+    "details": {
+      "stars": 2,
+      "comments": {
+        "total": 11,
+        "link": ""
+      },
+      "answers": {
+        "total": 0,
+        "link": ""
+      }
+    }
+  }, {
+    "id": "",
+    "isSponsored": true,
+    "date": "2018-05-06T13:00:00Z",
+    "content": {
+      "text": "<p><strong>Architecture Services</strong></p><p>Design and planning consultance, see more at ...<p>",
+      "img": "https://i.imgur.com/vZ8suUE.jpg"
+    },
+    "details": {
+      "stars": 36,
+      "comments": {
+        "total": 2,
+        "link": ""
+      },
+      "answers": {
+        "total": 5,
+        "link": ""
+      }
+    },
+    "recommendations": {
+      "users": ["03","04","05","10","11"],
+      "rating": 4.6,
+      "total": 42
+    }
+  }, {
+    "id": "001",
+    "isReview": true,
+    "date": "2018-05-03T13:00:00Z",
+    "review": {
+      "user": "03",
+      "content": {
+        "text": "It was a pleasure to work with Mario. Very professional and talented architect. I really suggest him!"
+      },
+      "rating": 4.8
+    },
+    "details": {
+      "stars": 6,
+      "comments": {
+        "total": 2,
+        "link": ""
+      },
+      "answers": {
+        "total": 2,
+        "link": ""
+      }
+    }
+  }, {
+    "id": "002",
+    "isReview": true,
+    "date": "2018-05-02T14:00:00Z",
+    "review": {
+      "user": "04",
+      "content": {
+        "text": "I worked with him for a project ..."
+      },
+      "rating": 5
+    }
+  }, {
+    "id": "003",
+    "isReview": true,
+    "date": "2018-05-01T14:00:00Z",
+    "review": {
+      "user": "05",
+      "content": {
+        "text": "I contacted him for a project ..."
+      },
+      "rating":4
+    }
+  }
+]
