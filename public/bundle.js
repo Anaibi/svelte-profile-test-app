@@ -6371,7 +6371,7 @@ var app = (function () {
 		this.set({profileMenu: this.getIcons(this.get().profileMenu)});
 	}
 	function create_main_fragment$36(component, ctx) {
-		var link, text, div, text_1, div_1, text_2, div_2, text_3, div_3, text_4, text_5, text_6, main, text_7, div_4, div_5, text_9, text_10, text_11;
+		var link, link_1, text, div, text_1, div_1, text_2, div_2, text_3, div_3, text_4, text_5, text_6, main, text_7, div_4, div_5, text_9, text_10, text_11;
 
 		var sidenav_initial_data = {
 		 	menu: ctx.mainNav,
@@ -6441,6 +6441,7 @@ var app = (function () {
 		return {
 			c: function create() {
 				link = createElement("link");
+				link_1 = createElement("link");
 				text = createText("\n\n");
 				div = createElement("div");
 				sidenav._fragment.c();
@@ -6467,20 +6468,23 @@ var app = (function () {
 				sidebarcontent._fragment.c();
 				text_11 = createText("\n\t\t      ");
 				sidebar_1._fragment.c();
-				link.href = "https://fonts.googleapis.com/css?family=Palanquin:300";
 				link.rel = "stylesheet";
-				div_2.className = "scroll-space svelte-y15pki";
-				div_5.className = "content svelte-y15pki";
+				link.href = "main.css";
+				link_1.href = "https://fonts.googleapis.com/css?family=Palanquin:300";
+				link_1.rel = "stylesheet";
+				div_2.className = "scroll-space svelte-1re0z29";
+				div_5.className = "content svelte-1re0z29";
 				div_4.className = "row";
-				main.className = "svelte-y15pki";
-				div_3.className = "row scroll-content svelte-y15pki";
+				main.className = "svelte-1re0z29";
+				div_3.className = "row scroll-content svelte-1re0z29";
 				addListener(div_1, "scroll", scroll_handler);
-				div_1.className = "scroll svelte-y15pki";
-				div.className = "page sidenav svelte-y15pki";
+				div_1.className = "scroll svelte-1re0z29";
+				div.className = "page sidenav svelte-1re0z29";
 			},
 
 			m: function mount(target, anchor) {
 				appendNode(link, document.head);
+				appendNode(link_1, document.head);
 				insertNode(text, target, anchor);
 				insertNode(div, target, anchor);
 				sidenav._mount(div, null);
@@ -6543,6 +6547,7 @@ var app = (function () {
 
 			u: function unmount() {
 				detachNode(link);
+				detachNode(link_1);
 				detachNode(text);
 				detachNode(div);
 			},
