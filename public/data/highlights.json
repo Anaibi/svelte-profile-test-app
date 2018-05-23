@@ -1,0 +1,26 @@
+[
+  {
+    "id": "02",
+    "img": "https://i.imgur.com/vZ8suUE.jpg",
+    "title": "Architecture Services",
+    "description": "Design and planning consultance, see more at ...",
+    "link": "",
+    "tags": ["architect", "architecture", "consultancy", "design", "nyc"]
+  },
+  {
+    "id": "100",
+    "img": "",
+    "title": "",
+    "description": "",
+    "link": "",
+    "tags": ["books", "editors", "design", "nyc"]
+  },
+  {
+    "id": "200",
+    "img": "",
+    "title": "Urban Planning Consultants",
+    "description": "An award-winning integrated planning and design studio based in NYC.",
+    "link": "",
+    "tags": ["architecture", "consultancy", "design", "nyc"]
+  }
+]

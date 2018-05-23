@@ -1,7 +1,29 @@
 <main>
   <slot>
-    <h2 class="title">Today Highlight <a class="right link" href="/">More</a></h2>
-    <h2 class="title">Who to Follow <a class="right link" href="/">More</a></h2>
+    <section>
+      <h2 class="title">Today Highlight <a class="right link" href="/">More</a></h2>
+      <img src="{highlight.img}" alt="{highlight.title}"/>
+      <p><a href="{highlight.link}">{highlight.title}</a></p>
+      <p>{highlight.description}</p>
+    </section>
+
+    <section>
+      <h2 class="title">Who to Follow <a class="right link" href="/">More</a></h2>
+      <ul>
+        {#each usersFollow as user}
+          <FollowListItem user={user}/>
+        {/each}
+      </ul>
+    </section>
+
+    <section>
+      <h2 class="title">Now hiring <a class="right link" href="/">More</a></h2>
+      <ul>
+        {#each usersHiring as user}
+          <HiringListItem user={user}/>
+        {/each}
+      </ul>
+    </section>
   </slot>
 </main>
 
@@ -11,3 +33,87 @@
     padding: 30px 40px 10px;
   }
 </style>
+
+<script>
+  import FollowListItem from './components/FollowListItem.html';
+  import HiringListItem from './components/HiringListItem.html';
+
+  import api from './services/api';
+
+  const MAX_FOLLOW_ITEMS = 5;
+  const MAX_HIRING_ITEMS = 5;
+
+  export default {
+    data() {
+      return {
+        highlight: '',
+        usersFollow: [],
+        usersHiring: []
+      }
+    },
+    components: {
+      FollowListItem,
+      HiringListItem
+    },
+    methods: {
+      setContent() {
+        api.findUser(this.get().id)
+          .then(user => {
+            var tags = user.tags;
+            this.getHighlightContent(tags);
+            this.getFollowContent(tags);
+            this.getHiringContent(tags);
+          });
+      },
+      getHighlightContent(tags) {
+        var highlight,
+            commonTags = 0,
+            intersection = [];
+        api.getHighlights()
+          .then(posts => {
+            posts.forEach(post => {
+              if (post.id === this.get().id) return;
+              intersection = tags.filter(el => post.tags.includes(el));
+              if (intersection.length > commonTags) highlight = post;
+            });
+            this.set({highlight})
+          });
+      },
+      getFollowContent(tags) {
+        var intersection = [],
+            usersFollow = [];
+        api.getUsers()
+          .then(users => {
+            users.every(user => {
+              if (usersFollow.length < MAX_FOLLOW_ITEMS) {
+                if (user.id === this.get().id) return true;
+                intersection = tags.filter(el => user.tags.includes(el));
+                if (intersection.length > 0) usersFollow.push(user);
+                return true;
+              } else return false;
+            });
+            this.set({usersFollow});
+          });
+      },
+      getHiringContent(tags) {
+        var intersection = [],
+            usersHiring = [];
+        api.getHiring()
+          .then(users => {
+            users.every(user => {
+              if (usersHiring.length < MAX_HIRING_ITEMS) {
+                if (user.id === this.get().id) return true;
+                intersection = tags.filter(el => user.tags.includes(el));
+                if (intersection.length > 0) usersHiring.push(user);
+                return true;
+              } else return false;
+            });
+            this.set({usersHiring});
+          });
+      }
+    },
+    oncreate() {
+      this.setContent();
+    }
+  }
+</script>

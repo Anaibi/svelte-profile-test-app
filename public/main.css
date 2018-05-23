@@ -1,0 +1,158 @@
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Palanquin', sans-serif;
+  color: #888888;
+  background: #D0D5D9;
+}
+* {
+  box-sizing: border-box;
+}
+h1, h2, p {
+  margin: 0;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+.img {
+  /* center alt text if no image */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 12px;
+  background: lightgray;
+}
+button {
+  margin: 0;
+  padding: 0;
+}
+button:hover {
+  cursor: pointer;
+}
+.btn {
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #505050;
+  background: linear-gradient(white, #F9F9F9);
+  border: 1px solid #EBEBEB;
+  box-shadow: 1px 1px 1px 1px EBEBEB;
+  border-radius: 3px;
+  font-size: 21px;
+  line-height: 21px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.btn:hover {
+  color: #3299CC;
+  background: white;
+}
+.btn.btn-icon {
+  width: 45px;
+  margin-right: 15px;
+}
+.btn-icon:hover {
+  color: #3299CC;
+  background: white;
+}
+.btn-icon .icon {
+  width: 18px;
+  height: 18px;
+  line-height: 18px;
+}
+.btn-primary {
+  width: 160px;
+  background: #41B1E3;
+  border-color: #41B1E3;
+  color: white;
+  font-size: 18px;
+  line-height: 18px;
+}
+.btn-primary:hover {
+  background: #3299CC;
+}
+.link,
+a.link {
+  display: inline-flex;
+  align-items: center;
+  background: transparent;
+  border: none;
+  color: #41B1E3;
+  text-transform: none;
+}
+.link:hover,
+a.link:hover {
+  color: #3299CC;
+  text-decoration: none;
+}
+.ellipsis {
+  display: flex;
+}
+.ellipsis:after {
+  content: '...';
+  margin-left: 2px;
+  align-self: flex-end;
+  letter-spacing: 2px;
+  color: inherit;
+}
+.ellipsis-content {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.row {
+  display: flex;
+  justify-content: space-between;
+}
+.row.vCentered {
+  align-items: center;
+}
+.row-bottom {
+  align-items: flex-end;
+}
+.col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.scroll {
+  overflow: scroll;
+  /* hide scrollbar */
+  padding-right: 100%;
+  margin-right: -100%;
+}
+.sticky {
+  position: sticky;
+  top: 0;
+}
+.highlight {
+  color: #3299CC;
+}
+.italic {
+  font-style: italic;
+}
+.box {
+  margin-top: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 5px 5px 2px #F1F1F1;
+  overflow: hidden;
+}
+/* same as box but with shadow all around */
+.box-2 {
+  margin-top: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px 3px #F1F1F1;
+  overflow: hidden;
+}
+.user-name {
+  color: #323232;
+  font-weight: bold;
+}
+.note {
+  color: #CCCCCC;
+  font-family: sans-serif;
+}

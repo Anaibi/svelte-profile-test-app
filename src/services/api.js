@@ -45,5 +45,38 @@ export default {
       .then(res => {
         return res.json();
       });
+  },
+  getHighlights() {
+    return fetch(`${DATA_PATH}/highlights.json`)
+      .then(res => {
+        return res.json();
+      });
+  },
+  // getHighlight(id, tags) {
+  //   var result,
+  //       commonTags = 0,
+  //       intersection = [];
+  //   return fetch(`${DATA_PATH}/highlights.json`)
+  //     .then(res => {
+  //       // return res.json();
+  //       res.json()
+  //         .then(highlights => {
+  //           highlights.forEach(highlight => {
+  //             if (highlight.id === id) return;
+  //             intersection = tags.filter(el => highlight.tags.includes(el));
+  //             if (intersection.length > commonTags) {
+  //               result = highlight;
+  //               commonTags = intersection.length;
+  //             }
+  //           });
+  //           return result;
+  //         });
+  //     });
+  // }
+  getHiring() {
+    return fetch(`${DATA_PATH}/hiring.json`)
+      .then(res => {
+        return res.json();
+      });
   }
 };
