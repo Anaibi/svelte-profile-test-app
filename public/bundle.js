@@ -2043,12 +2043,15 @@ var app = (function () {
 	Tiles.prototype._checkReadOnly = function _checkReadOnly(newState) {
 	};
 
+	const PATH = 'http://localhost:5000';
+	const DATA_PATH = PATH + '/data';
+
 	var api = {
 	  getUsers() {
 	    //python -m SimpleHTTPServer
 	    //
 	    // console.log(JSON.stringify(USERS));
-	    return fetch('http://localhost:5000/data/users.json')
+	    return fetch(`${DATA_PATH}/users.json`)
 	      .then(res => {
 	        return res.json();
 	      });
@@ -2071,19 +2074,19 @@ var app = (function () {
 	    })
 	  },
 	  getPosts(id) {
-	    return fetch(`http://localhost:5000/data/user_${id}/posts.json`)
+	    return fetch(`${DATA_PATH}/user_${id}/posts.json`)
 	      .then(res => {
 	        return res.json();
 	      });
 	  },
 	  getProfile(id) {
-	    return fetch(`http://localhost:5000/data/user_${id}/profile.json`)
+	    return fetch(`${DATA_PATH}/user_${id}/profile.json`)
 	      .then(res => {
 	        return res.json();
 	      });
 	  },
 	  getProjects(id) {
-	    return fetch(`http://localhost:5000/data/user_${id}/projects.json`)
+	    return fetch(`${DATA_PATH}/user_${id}/projects.json`)
 	      .then(res => {
 	        return res.json();
 	      });
@@ -6444,10 +6447,10 @@ var app = (function () {
 				text = createText("\n\n");
 				div = createElement("div");
 				sidenav._fragment.c();
-				text_1 = createText("\n\n\t");
+				text_1 = createText("\n\t");
 				div_1 = createElement("div");
 				banner._fragment.c();
-				text_2 = createText("\n\n\t\t");
+				text_2 = createText("\n\t\t");
 				div_2 = createElement("div");
 				text_3 = createText("\n\t\t");
 				div_3 = createElement("div");
