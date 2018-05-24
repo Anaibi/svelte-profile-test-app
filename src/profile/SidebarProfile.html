@@ -67,8 +67,15 @@
 			<span class="icon icon-star"><IconsSvg name="Star"/></span> Boosts
 			<a class="right link" href="/">More</a>
 		</h2>
-		<div class="rows">
-		</div>
+		<ul class="rows">
+			{#await boosts}
+			{:then boosts}
+				{#each boosts as boost}
+					<BoostListItem boost={boost}/>
+				{/each}
+			{:catch error}
+			{/await}
+		</ul>
 	</main>
 </slot>
 
@@ -193,6 +200,7 @@
 <script>
 	import IconsSvg from './../icons/IconsSvg.html';
 	import Tiles from './../components/Tiles.html';
+	import BoostListItem from './../components/BoostListItem.html';
 
 	import api from './../services/api';
 
@@ -201,21 +209,28 @@
 	export default {
 		data() {
 			return {
-				projects: ''
+				projects: '',
+				boosts: []
 			}
 		},
 		components: {
 			IconsSvg,
 			Tiles,
+			BoostListItem
 		},
 		methods: {
 			setProjects() {
 				var projects = api.getProjects(this.root.get().profileId)
 				this.set({projects});
-			}
+			},
+			setBoosts() {
+				var boosts = api.getBoosts(this.root.get().profileId);
+				this.set({boosts});
+			},
 		},
 		oncreate() {
 			this.setProjects();
+			this.setBoosts();
 		}
 	}
 </script>

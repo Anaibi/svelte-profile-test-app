@@ -7,8 +7,7 @@
     "location": "New York",
     "link": "",
     "tags": ["architect", "architecture", "nyc"]
-  },
-  {
+  }, {
     "id": "300",
     "img": "",
     "name": "Sam Whit",
@@ -16,8 +15,7 @@
     "location": "New York",
     "link": "",
     "tags": ["architect", "architecture", "design", "nyc"]
-  },
-  {
+  }, {
     "id": "301",
     "img": "",
     "name": "Brook Lead",
@@ -25,8 +23,7 @@
     "location": "New York",
     "link": "",
     "tags": ["developer", "web design", "nyc"]
-  },
-  {
+  }, {
     "id": "301",
     "img": "",
     "name": "Isla Sain",
@@ -34,8 +31,7 @@
     "location": "Miami",
     "link": "",
     "tags": ["health", "cook", "chef", "miami"]
-  },
-  {
+  }, {
     "id": "310",
     "img": "",
     "name": "Lou Know",

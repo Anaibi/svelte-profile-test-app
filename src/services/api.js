@@ -78,5 +78,11 @@ export default {
       .then(res => {
         return res.json();
       });
+  },
+  getBoosts(id) {
+    return fetch(`${DATA_PATH}/user_${id}/boosts.json`)
+      .then(res => {
+        return res.json();
+      });
   }
 };
