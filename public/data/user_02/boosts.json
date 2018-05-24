@@ -1,0 +1,30 @@
+[
+  {
+    "date": "2018-05-03T13:00:00Z",
+    "review": {
+      "user": "03",
+      "content": {
+        "text": "It was a pleasure to work with Mario. Very professional and talented architect. I really suggest him!"
+      },
+      "rating": 4.8
+    }
+  }, {
+    "date": "2018-05-02T14:00:00Z",
+    "review": {
+      "user": "04",
+      "content": {
+        "text": "I worked with him for a project ..."
+      },
+      "rating": 5
+    }
+  }, {
+    "date": "2018-05-01T14:00:00Z",
+    "review": {
+      "user": "05",
+      "content": {
+        "text": "I contacted him for a project ..."
+      },
+      "rating":4
+    }
+  }
+]

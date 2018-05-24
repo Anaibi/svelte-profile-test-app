@@ -5,10 +5,8 @@
 
 <div class="page sidenav">
 	<SideNav menu={mainNav} brand={brand} user={user}/>
-
 	<div class="scroll" on:scroll="scrollAnimation(event)">
 		<Banner banner={banner} blur={blur}/>
-
 		<div class="scroll-space"></div>
 		<div class="row scroll-content">
 		  <Sidebar>
@@ -21,7 +19,7 @@
 		        <ContentProfile menu={profileMenu} user={profileUser} animate={animate}/>
 		      </div>
 		      <Sidebar>
-		        <SidebarContent/>
+		        <SidebarContent id={profileId}/>
 		      </Sidebar>
 		    </div>
 		  </main>
@@ -125,6 +123,7 @@
 				profileUser: '',
 				banner: '',
 				profileDetails: '',
+				profileTags: '',
 				// style data
 				fixedHeader: false,
 				blur: 0,
@@ -145,28 +144,16 @@
 				return menu;
 			},
 			setUser(id) {
-				if (!id) {
-					console.log('missing user id', this);
-					return;
-				}
 				var user = api.findUser(id);
 				if (!user) console.log('no user with id ', id, this);
 				else this.set({user});
 			},
 			setProfileUser(id) {
-				if (!id) {
-					console.log('missing profile user id', this);
-					return;
-				}
 				var profileUser = api.findUser(id);
 				if (!profileUser) console.log('no profile user with id ', id, this);
 				else this.set({profileUser});
 			},
 			setProfileInfo(id) {
-				if (!id) {
-					console.log('missing profile user id', this);
-					return;
-				}
 				api.getProfile(id).
 					then(profile => {
 						this.set({
@@ -204,9 +191,20 @@
 			}
 		},
 		oncreate() {
-			this.setUser(this.get().userId);
-			this.setProfileUser(this.get().profileId);
-			this.setProfileInfo(this.get().profileId)
+			var userId = this.get().userId;
+			if (!userId) {
+				console.log('missing user id', this);
+			} else {
+				this.setUser(this.get().userId);
+			}
+
+			var profileId = this.get().profileId;
+			if (!profileId) {
+				console.log('missing profile user id', this);
+			} else {
+				this.setProfileUser(profileId);
+				this.setProfileInfo(profileId);
+			}
 
 			this.set({mainNav: this.getIcons(this.get().mainNav)});
 			this.set({profileMenu: this.getIcons(this.get().profileMenu)});

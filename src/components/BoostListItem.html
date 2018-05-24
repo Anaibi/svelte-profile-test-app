@@ -1,0 +1,40 @@
+<li class="row">
+  {#await user}
+  {:then user}
+    <Avatar user={user}/>
+  {:catch error}
+  {/await}
+  <div class="col">
+    <p>{boost.review.content.text}</p>
+    <Stars rating={boost.review.rating}/>
+  </div>
+  <button></button>
+</li>
+
+<script>
+  import Avatar from './Avatar.html';
+  import Stars from './Stars.html';
+
+  import api from './../services/api';
+
+  export default {
+    data() {
+      return {
+        user: ''
+      }
+    },
+    components: {
+      Avatar,
+      Stars
+    },
+    methods: {
+      setUser() {
+        var user = api.findUser(this.get().boost.review.user);
+        this.set({user});
+      }
+    },
+    oncreate() {
+      this.setUser();
+    }
+  }
+</script>
